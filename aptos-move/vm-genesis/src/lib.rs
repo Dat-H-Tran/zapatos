@@ -4,7 +4,7 @@
 
 #![forbid(unsafe_code)]
 
-mod genesis_context;
+pub mod genesis_context; //////// 0L ////////
 
 use crate::genesis_context::GenesisStateView;
 use aptos_crypto::{
@@ -295,7 +295,7 @@ pub fn encode_genesis_change_set(
     change_set
 }
 
-fn validate_genesis_config(genesis_config: &GenesisConfiguration) {
+pub fn validate_genesis_config(genesis_config: &GenesisConfiguration) { //////// 0L ////////
     assert!(
         genesis_config.min_stake <= genesis_config.max_stake,
         "Min stake must be smaller than or equal to max stake"
@@ -360,7 +360,7 @@ fn exec_function(
         });
 }
 
-fn initialize(
+pub fn initialize( //////// 0L ////////
     session: &mut SessionExt<impl MoveResolver>,
     chain_id: ChainId,
     genesis_config: &GenesisConfiguration,
@@ -426,7 +426,7 @@ pub fn default_features() -> Vec<FeatureFlag> {
     ]
 }
 
-fn initialize_features(session: &mut SessionExt<impl MoveResolver>) {
+pub fn initialize_features(session: &mut SessionExt<impl MoveResolver>) { //////// 0L ////////
     let features: Vec<u64> = default_features()
         .into_iter()
         .map(|feature| feature as u64)
@@ -445,7 +445,7 @@ fn initialize_features(session: &mut SessionExt<impl MoveResolver>) {
     );
 }
 
-fn initialize_aptos_coin(session: &mut SessionExt<impl MoveResolver>) {
+pub fn initialize_aptos_coin(session: &mut SessionExt<impl MoveResolver>) { //////// 0L ////////
     exec_function(
         session,
         GENESIS_MODULE_NAME,
@@ -455,7 +455,7 @@ fn initialize_aptos_coin(session: &mut SessionExt<impl MoveResolver>) {
     );
 }
 
-fn set_genesis_end(session: &mut SessionExt<impl MoveResolver>) {
+pub fn set_genesis_end(session: &mut SessionExt<impl MoveResolver>) { //////// 0L ////////
     exec_function(
         session,
         GENESIS_MODULE_NAME,
@@ -465,7 +465,7 @@ fn set_genesis_end(session: &mut SessionExt<impl MoveResolver>) {
     );
 }
 
-fn initialize_core_resources_and_aptos_coin(
+pub fn initialize_core_resources_and_aptos_coin( //////// 0L ////////
     session: &mut SessionExt<impl MoveResolver>,
     core_resources_key: &Ed25519PublicKey,
 ) {
@@ -483,7 +483,7 @@ fn initialize_core_resources_and_aptos_coin(
 }
 
 /// Create and initialize Association and Core Code accounts.
-fn initialize_on_chain_governance(
+pub fn initialize_on_chain_governance( //////// 0L ////////
     session: &mut SessionExt<impl MoveResolver>,
     genesis_config: &GenesisConfiguration,
 ) {
@@ -501,7 +501,7 @@ fn initialize_on_chain_governance(
     );
 }
 
-fn create_accounts(session: &mut SessionExt<impl MoveResolver>, accounts: &[AccountBalance]) {
+pub fn create_accounts(session: &mut SessionExt<impl MoveResolver>, accounts: &[AccountBalance]) { //////// 0L ////////
     let accounts_bytes = bcs::to_bytes(accounts).expect("AccountMaps can be serialized");
     let mut serialized_values = serialize_values(&vec![MoveValue::Signer(CORE_CODE_ADDRESS)]);
     serialized_values.push(accounts_bytes);
@@ -514,7 +514,7 @@ fn create_accounts(session: &mut SessionExt<impl MoveResolver>, accounts: &[Acco
     );
 }
 
-fn create_employee_validators(
+pub fn create_employee_validators( //////// 0L ////////
     session: &mut SessionExt<impl MoveResolver>,
     employees: &[EmployeePool],
     genesis_config: &GenesisConfiguration,
@@ -538,7 +538,7 @@ fn create_employee_validators(
 /// Creates and initializes each validator owner and validator operator. This method creates all
 /// the required accounts, sets the validator operators for each validator owner, and sets the
 /// validator config on-chain.
-fn create_and_initialize_validators(
+pub fn create_and_initialize_validators( //////// 0L ////////
     session: &mut SessionExt<impl MoveResolver>,
     validators: &[Validator],
 ) {
@@ -554,7 +554,7 @@ fn create_and_initialize_validators(
     );
 }
 
-fn create_and_initialize_validators_with_commission(
+pub fn create_and_initialize_validators_with_commission( //////// 0L ////////
     session: &mut SessionExt<impl MoveResolver>,
     validators: &[ValidatorWithCommissionRate],
 ) {
@@ -573,7 +573,7 @@ fn create_and_initialize_validators_with_commission(
     );
 }
 
-fn allow_core_resources_to_set_version(session: &mut SessionExt<impl MoveResolver>) {
+pub fn allow_core_resources_to_set_version(session: &mut SessionExt<impl MoveResolver>) { //////// 0L ////////
     exec_function(
         session,
         VERSION_MODULE_NAME,
@@ -584,7 +584,7 @@ fn allow_core_resources_to_set_version(session: &mut SessionExt<impl MoveResolve
 }
 
 /// Publish the framework release bundle.
-fn publish_framework(session: &mut SessionExt<impl MoveResolver>, framework: &ReleaseBundle) {
+pub fn publish_framework(session: &mut SessionExt<impl MoveResolver>, framework: &ReleaseBundle) { //////// 0L ////////
     for pack in &framework.packages {
         publish_package(session, pack)
     }
@@ -619,7 +619,7 @@ fn publish_package(session: &mut SessionExt<impl MoveResolver>, pack: &ReleasePa
 }
 
 /// Trigger a reconfiguration. This emits an event that will be passed along to the storage layer.
-fn emit_new_block_and_epoch_event(session: &mut SessionExt<impl MoveResolver>) {
+pub fn emit_new_block_and_epoch_event(session: &mut SessionExt<impl MoveResolver>) { //////// 0L ////////
     exec_function(
         session,
         "block",
@@ -639,7 +639,7 @@ fn emit_new_block_and_epoch_event(session: &mut SessionExt<impl MoveResolver>) {
 }
 
 /// Verify the consistency of the genesis `WriteSet`
-fn verify_genesis_write_set(events: &[ContractEvent]) {
+pub fn verify_genesis_write_set(events: &[ContractEvent]) { //////// 0L ////////
     let new_epoch_events: Vec<&ContractEvent> = events
         .iter()
         .filter(|e| e.key() == &NewEpochEvent::event_key())
@@ -835,7 +835,7 @@ pub fn generate_mainnet_genesis(
     (genesis, test_validators)
 }
 
-fn mainnet_genesis_config() -> GenesisConfiguration {
+pub fn mainnet_genesis_config() -> GenesisConfiguration { //////// 0L ////////
     // TODO: Update once mainnet numbers are decided. These numbers are just placeholders.
     GenesisConfiguration {
         allow_new_validators: true,
