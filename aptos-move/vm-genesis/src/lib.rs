@@ -4,7 +4,7 @@
 
 #![forbid(unsafe_code)]
 
-mod genesis_context;
+pub mod genesis_context; //////// 0L ////////
 
 use crate::genesis_context::GenesisStateView;
 use aptos_crypto::{
