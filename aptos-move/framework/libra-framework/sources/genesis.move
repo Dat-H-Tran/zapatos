@@ -1,9 +1,9 @@
 module aptos_framework::genesis {
     use std::error;
-    use std::fixed_point32;
+    // use std::fixed_point32;
     use std::vector;
 
-    use aptos_std::simple_map;
+    // use aptos_std::simple_map;
 
     use aptos_framework::account;
     use aptos_framework::aggregator_factory;
@@ -18,15 +18,15 @@ module aptos_framework::genesis {
     use aptos_framework::gas_schedule;
     use aptos_framework::reconfiguration;
     use aptos_framework::stake;
-    use aptos_framework::staking_contract;
-    use aptos_framework::staking_config;
+    // use aptos_framework::staking_contract;
+    // use aptos_framework::staking_config;
     use aptos_framework::state_storage;
     use aptos_framework::storage_gas;
     use aptos_framework::timestamp;
     use aptos_framework::transaction_fee;
     use aptos_framework::transaction_validation;
     use aptos_framework::version;
-    use aptos_framework::vesting;
+    // use aptos_framework::vesting;
 
     const EDUPLICATE_ACCOUNT: u64 = 1;
     const EACCOUNT_DOES_NOT_EXIST: u64 = 2;
@@ -105,16 +105,16 @@ module aptos_framework::genesis {
         consensus_config::initialize(&aptos_framework_account, consensus_config);
         version::initialize(&aptos_framework_account, initial_version);
         stake::initialize(&aptos_framework_account);
-        staking_config::initialize(
-            &aptos_framework_account,
-            minimum_stake,
-            maximum_stake,
-            recurring_lockup_duration_secs,
-            allow_validator_set_change,
-            rewards_rate,
-            rewards_rate_denominator,
-            voting_power_increase_limit,
-        );
+        // staking_config::initialize(
+        //     &aptos_framework_account,
+        //     minimum_stake,
+        //     maximum_stake,
+        //     recurring_lockup_duration_secs,
+        //     allow_validator_set_change,
+        //     rewards_rate,
+        //     rewards_rate_denominator,
+        //     voting_power_increase_limit,
+        // );
         storage_gas::initialize(&aptos_framework_account);
         gas_schedule::initialize(&aptos_framework_account, gas_schedule);
 
@@ -190,95 +190,95 @@ module aptos_framework::genesis {
         }
     }
 
-    fun create_employee_validators(
-        employee_vesting_start: u64,
-        employee_vesting_period_duration: u64,
-        employees: vector<EmployeeAccountMap>,
-    ) {
-        let i = 0;
-        let num_employee_groups = vector::length(&employees);
-        let unique_accounts = vector::empty();
+    // fun create_employee_validators(
+    //     employee_vesting_start: u64,
+    //     employee_vesting_period_duration: u64,
+    //     employees: vector<EmployeeAccountMap>,
+    // ) {
+    //     let i = 0;
+    //     let num_employee_groups = vector::length(&employees);
+    //     let unique_accounts = vector::empty();
 
-        while (i < num_employee_groups) {
-            let j = 0;
-            let employee_group = vector::borrow(&employees, i);
-            let num_employees_in_group = vector::length(&employee_group.accounts);
+    //     while (i < num_employee_groups) {
+    //         let j = 0;
+    //         let employee_group = vector::borrow(&employees, i);
+    //         let num_employees_in_group = vector::length(&employee_group.accounts);
 
-            let buy_ins = simple_map::create();
+    //         let buy_ins = simple_map::create();
 
-            while (j < num_employees_in_group) {
-                let account = vector::borrow(&employee_group.accounts, j);
-                assert!(
-                    !vector::contains(&unique_accounts, account),
-                    error::already_exists(EDUPLICATE_ACCOUNT),
-                );
-                vector::push_back(&mut unique_accounts, *account);
+    //         while (j < num_employees_in_group) {
+    //             let account = vector::borrow(&employee_group.accounts, j);
+    //             assert!(
+    //                 !vector::contains(&unique_accounts, account),
+    //                 error::already_exists(EDUPLICATE_ACCOUNT),
+    //             );
+    //             vector::push_back(&mut unique_accounts, *account);
 
-                let employee = create_signer(*account);
-                let total = coin::balance<AptosCoin>(*account);
-                let coins = coin::withdraw<AptosCoin>(&employee, total);
-                simple_map::add(&mut buy_ins, *account, coins);
+    //             let employee = create_signer(*account);
+    //             let total = coin::balance<AptosCoin>(*account);
+    //             let coins = coin::withdraw<AptosCoin>(&employee, total);
+    //             simple_map::add(&mut buy_ins, *account, coins);
 
-                j = j + 1;
-            };
+    //             j = j + 1;
+    //         };
 
-            let j = 0;
-            let num_vesting_events = vector::length(&employee_group.vesting_schedule_numerator);
-            let schedule = vector::empty();
+    //         let j = 0;
+    //         let num_vesting_events = vector::length(&employee_group.vesting_schedule_numerator);
+    //         let schedule = vector::empty();
 
-            while (j < num_vesting_events) {
-                let numerator = vector::borrow(&employee_group.vesting_schedule_numerator, j);
-                let event = fixed_point32::create_from_rational(*numerator, employee_group.vesting_schedule_denominator);
-                vector::push_back(&mut schedule, event);
+    //         while (j < num_vesting_events) {
+    //             let numerator = vector::borrow(&employee_group.vesting_schedule_numerator, j);
+    //             let event = fixed_point32::create_from_rational(*numerator, employee_group.vesting_schedule_denominator);
+    //             vector::push_back(&mut schedule, event);
 
-                j = j + 1;
-            };
+    //             j = j + 1;
+    //         };
 
-            let vesting_schedule = vesting::create_vesting_schedule(
-                schedule,
-                employee_vesting_start,
-                employee_vesting_period_duration,
-            );
+    //         // let vesting_schedule = vesting::create_vesting_schedule(
+    //         //     schedule,
+    //         //     employee_vesting_start,
+    //         //     employee_vesting_period_duration,
+    //         // );
 
-            let admin = employee_group.validator.validator_config.owner_address;
-            let admin_signer = &create_signer(admin);
-            let contract_address = vesting::create_vesting_contract(
-                admin_signer,
-                &employee_group.accounts,
-                buy_ins,
-                vesting_schedule,
-                admin,
-                employee_group.validator.validator_config.operator_address,
-                employee_group.validator.validator_config.voter_address,
-                employee_group.validator.commission_percentage,
-                x"",
-            );
-            let pool_address = vesting::stake_pool_address(contract_address);
+    //         let admin = employee_group.validator.validator_config.owner_address;
+    //         let admin_signer = &create_signer(admin);
+    //         // let contract_address = vesting::create_vesting_contract(
+    //         //     admin_signer,
+    //         //     &employee_group.accounts,
+    //         //     buy_ins,
+    //         //     vesting_schedule,
+    //         //     admin,
+    //         //     employee_group.validator.validator_config.operator_address,
+    //         //     employee_group.validator.validator_config.voter_address,
+    //         //     employee_group.validator.commission_percentage,
+    //         //     x"",
+    //         // );
+    //         // let pool_address = vesting::stake_pool_address(contract_address);
 
-            if (employee_group.beneficiary_resetter != @0x0) {
-                vesting::set_beneficiary_resetter(admin_signer, contract_address, employee_group.beneficiary_resetter);
-            };
+    //         // if (employee_group.beneficiary_resetter != @0x0) {
+    //         //     vesting::set_beneficiary_resetter(admin_signer, contract_address, employee_group.beneficiary_resetter);
+    //         // };
 
-            let validator = &employee_group.validator.validator_config;
-            assert!(
-                account::exists_at(validator.owner_address),
-                error::not_found(EACCOUNT_DOES_NOT_EXIST),
-            );
-            assert!(
-                account::exists_at(validator.operator_address),
-                error::not_found(EACCOUNT_DOES_NOT_EXIST),
-            );
-            assert!(
-                account::exists_at(validator.voter_address),
-                error::not_found(EACCOUNT_DOES_NOT_EXIST),
-            );
-            if (employee_group.validator.join_during_genesis) {
-                initialize_validator(pool_address, validator);
-            };
+    //         let validator = &employee_group.validator.validator_config;
+    //         assert!(
+    //             account::exists_at(validator.owner_address),
+    //             error::not_found(EACCOUNT_DOES_NOT_EXIST),
+    //         );
+    //         assert!(
+    //             account::exists_at(validator.operator_address),
+    //             error::not_found(EACCOUNT_DOES_NOT_EXIST),
+    //         );
+    //         // assert!(
+    //         //     account::exists_at(validator.voter_address),
+    //         //     error::not_found(EACCOUNT_DOES_NOT_EXIST),
+    //         // );
+    //         // if (employee_group.validator.join_during_genesis) {
+    //         //     initialize_validator(pool_address, validator);
+    //         // };
 
-            i = i + 1;
-        }
-    }
+    //         i = i + 1;
+    //     }
+    // }
 
     fun create_initialize_validators_with_commission(
         aptos_framework: &signer,
@@ -343,17 +343,7 @@ module aptos_framework::genesis {
         create_account(aptos_framework, validator.voter_address, 0);
 
         // Initialize the stake pool and join the validator set.
-        let pool_address = if (use_staking_contract) {
-            staking_contract::create_staking_contract(
-                owner,
-                validator.operator_address,
-                validator.voter_address,
-                validator.stake_amount,
-                commission_config.commission_percentage,
-                x"",
-            );
-            staking_contract::stake_pool_address(validator.owner_address, validator.operator_address)
-        } else {
+        let pool_address = {
             stake::initialize_stake_owner(
                 owner,
                 validator.stake_amount,
