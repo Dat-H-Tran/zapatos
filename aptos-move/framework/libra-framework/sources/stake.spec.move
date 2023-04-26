@@ -56,23 +56,23 @@ spec aptos_framework::stake {
     }
 
     // Only active validator can update locked_until_secs.
-    spec increase_lockup_with_cap(owner_cap: &OwnerCapability) {
-        let config = global<staking_config::StakingConfig>(@aptos_framework);
-        let pool_address = owner_cap.pool_address;
-        let pre_stake_pool = global<StakePool>(pool_address);
-        let post stake_pool = global<StakePool>(pool_address);
-        let now_seconds = timestamp::spec_now_seconds();
-        let lockup = config.recurring_lockup_duration_secs;
-        modifies global<StakePool>(pool_address);
+    // spec increase_lockup_with_cap(owner_cap: &OwnerCapability) {
+    //     // let config = global<staking_config::StakingConfig>(@aptos_framework);
+    //     let pool_address = owner_cap.pool_address;
+    //     let pre_stake_pool = global<StakePool>(pool_address);
+    //     let post stake_pool = global<StakePool>(pool_address);
+    //     let now_seconds = timestamp::spec_now_seconds();
+    //     let lockup = config.recurring_lockup_duration_secs;
+    //     modifies global<StakePool>(pool_address);
 
-        aborts_if !exists<StakePool>(pool_address);
-        aborts_if pre_stake_pool.locked_until_secs >= lockup + now_seconds;
-        aborts_if lockup + now_seconds > MAX_U64;
-        aborts_if !exists<timestamp::CurrentTimeMicroseconds>(@aptos_framework);
-        aborts_if !exists<staking_config::StakingConfig>(@aptos_framework);
+    //     aborts_if !exists<StakePool>(pool_address);
+    //     aborts_if pre_stake_pool.locked_until_secs >= lockup + now_seconds;
+    //     aborts_if lockup + now_seconds > MAX_U64;
+    //     aborts_if !exists<timestamp::CurrentTimeMicroseconds>(@aptos_framework);
+    //     // aborts_if !exists<staking_config::StakingConfig>(@aptos_framework);
 
-        ensures stake_pool.locked_until_secs == lockup + now_seconds;
-    }
+    //     ensures stake_pool.locked_until_secs == lockup + now_seconds;
+    // }
 
     spec update_network_and_fullnode_addresses(
         operator: &signer,
@@ -137,7 +137,7 @@ spec aptos_framework::stake {
         // The following resource requirement cannot be discharged by the global
         // invariants because this function is called during genesis.
         include ResourceRequirement;
-        include staking_config::StakingRewardsConfigRequirement;
+        // include staking_config::StakingRewardsConfigRequirement;
         // This function should never abort.
         aborts_if false;
     }
@@ -149,13 +149,13 @@ spec aptos_framework::stake {
         aborts_if false;
     }
 
-    spec update_stake_pool {
-        include ResourceRequirement;
-        include staking_config::StakingRewardsConfigRequirement;
-        aborts_if !exists<StakePool>(pool_address);
-        aborts_if !exists<ValidatorConfig>(pool_address);
-        aborts_if global<ValidatorConfig>(pool_address).validator_index >= len(validator_perf.validators);
-    }
+    // spec update_stake_pool {
+    //     include ResourceRequirement;
+    //     // include staking_config::StakingRewardsConfigRequirement;
+    //     aborts_if !exists<StakePool>(pool_address);
+    //     aborts_if !exists<ValidatorConfig>(pool_address);
+    //     aborts_if global<ValidatorConfig>(pool_address).validator_index >= len(validator_perf.validators);
+    // }
 
     spec distribute_rewards {
         include ResourceRequirement;
@@ -263,21 +263,21 @@ spec aptos_framework::stake {
         aborts_if !exists<ValidatorFees>(@aptos_framework);
     }
 
-    spec update_voting_power_increase(increase_amount: u64) {
-        let aptos = @aptos_framework;
-        let pre_validator_set = global<ValidatorSet>(aptos);
-        let post validator_set = global<ValidatorSet>(aptos);
-        let staking_config = global<staking_config::StakingConfig>(aptos);
-        let voting_power_increase_limit = staking_config.voting_power_increase_limit;
+    // spec update_voting_power_increase(increase_amount: u64) {
+    //     let aptos = @aptos_framework;
+    //     let pre_validator_set = global<ValidatorSet>(aptos);
+    //     let post validator_set = global<ValidatorSet>(aptos);
+    //     // let staking_config = global<staking_config::StakingConfig>(aptos);
+    //     let voting_power_increase_limit = staking_config.voting_power_increase_limit;
 
-        // Correctly modified total_joining_power and the value of total_voting_power is legal.
-        ensures validator_set.total_voting_power > 0 ==> validator_set.total_joining_power <= validator_set.total_voting_power * voting_power_increase_limit / 100;
-        ensures validator_set.total_joining_power == pre_validator_set.total_joining_power + increase_amount;
-    }
+    //     // Correctly modified total_joining_power and the value of total_voting_power is legal.
+    //     ensures validator_set.total_voting_power > 0 ==> validator_set.total_joining_power <= validator_set.total_voting_power * voting_power_increase_limit / 100;
+    //     ensures validator_set.total_joining_power == pre_validator_set.total_joining_power + increase_amount;
+    // }
 
-    spec assert_stake_pool_exists(pool_address: address) {
-        aborts_if !stake_pool_exists(pool_address);
-    }
+    // spec assert_stake_pool_exists(pool_address: address) {
+    //     aborts_if !stake_pool_exists(pool_address);
+    // }
 
     spec configure_allowed_validators(aptos_framework: &signer, accounts: vector<address>) {
         let aptos_framework_address = signer::address_of(aptos_framework);
@@ -347,8 +347,8 @@ spec aptos_framework::stake {
         requires exists<AptosCoinCapabilities>(@aptos_framework);
         requires exists<ValidatorPerformance>(@aptos_framework);
         requires exists<ValidatorSet>(@aptos_framework);
-        requires exists<StakingConfig>(@aptos_framework);
-        requires exists<StakingRewardsConfig>(@aptos_framework) || !features::spec_reward_rate_decrease_enabled();
+        // requires exists<StakingConfig>(@aptos_framework);
+        // requires exists<StakingRewardsConfig>(@aptos_framework) || !features::spec_reward_rate_decrease_enabled();
         requires exists<timestamp::CurrentTimeMicroseconds>(@aptos_framework);
         requires exists<ValidatorFees>(@aptos_framework);
     }

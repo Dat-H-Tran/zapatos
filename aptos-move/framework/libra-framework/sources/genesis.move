@@ -68,13 +68,13 @@ module aptos_framework::genesis {
         initial_version: u64,
         consensus_config: vector<u8>,
         epoch_interval_microsecs: u64,
-        minimum_stake: u64,
-        maximum_stake: u64,
-        recurring_lockup_duration_secs: u64,
-        allow_validator_set_change: bool,
-        rewards_rate: u64,
-        rewards_rate_denominator: u64,
-        voting_power_increase_limit: u64,
+        _minimum_stake: u64,
+        _maximum_stake: u64,
+        _recurring_lockup_duration_secs: u64,
+        _allow_validator_set_change: bool,
+        _rewards_rate: u64,
+        _rewards_rate_denominator: u64,
+        _voting_power_increase_limit: u64,
     ) {
         // Initialize the aptos framework account. This is the account where system resources and modules will be
         // deployed to. This will be entirely managed by on-chain governance and no entities have the key or privileges
@@ -334,7 +334,7 @@ module aptos_framework::genesis {
     fun create_initialize_validator(
         aptos_framework: &signer,
         commission_config: &ValidatorConfigurationWithCommission,
-        use_staking_contract: bool,
+        _use_staking_contract: bool,
     ) {
         let validator = &commission_config.validator_config;
 
@@ -403,9 +403,9 @@ module aptos_framework::genesis {
         required_proposer_stake: u64,
         voting_duration_secs: u64,
         accounts: vector<AccountMap>,
-        employee_vesting_start: u64,
-        employee_vesting_period_duration: u64,
-        employees: vector<EmployeeAccountMap>,
+        _employee_vesting_start: u64,
+        _employee_vesting_period_duration: u64,
+        _employees: vector<EmployeeAccountMap>,
         validators: vector<ValidatorConfigurationWithCommission>
     ) {
         initialize(
@@ -431,7 +431,7 @@ module aptos_framework::genesis {
             voting_duration_secs
         );
         create_accounts(aptos_framework, accounts);
-        create_employee_validators(employee_vesting_start, employee_vesting_period_duration, employees);
+        // create_employee_validators(employee_vesting_start, employee_vesting_period_duration, employees);
         create_initialize_validators_with_commission(aptos_framework, true, validators);
         set_genesis_end(aptos_framework);
     }

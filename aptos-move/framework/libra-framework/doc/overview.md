@@ -26,7 +26,6 @@ For on overview of the Move language, see the [Move Book][move-book].
 -  [`0x1::coin`](coin.md#0x1_coin)
 -  [`0x1::consensus_config`](consensus_config.md#0x1_consensus_config)
 -  [`0x1::create_signer`](create_signer.md#0x1_create_signer)
--  [`0x1::delegation_pool`](delegation_pool.md#0x1_delegation_pool)
 -  [`0x1::event`](event.md#0x1_event)
 -  [`0x1::fungible_asset`](fungible_asset.md#0x1_fungible_asset)
 -  [`0x1::gas_schedule`](gas_schedule.md#0x1_gas_schedule)
@@ -41,9 +40,6 @@ For on overview of the Move language, see the [Move Book][move-book].
 -  [`0x1::reconfiguration`](reconfiguration.md#0x1_reconfiguration)
 -  [`0x1::resource_account`](resource_account.md#0x1_resource_account)
 -  [`0x1::stake`](stake.md#0x1_stake)
--  [`0x1::staking_config`](staking_config.md#0x1_staking_config)
--  [`0x1::staking_contract`](staking_contract.md#0x1_staking_contract)
--  [`0x1::staking_proxy`](staking_proxy.md#0x1_staking_proxy)
 -  [`0x1::state_storage`](state_storage.md#0x1_state_storage)
 -  [`0x1::storage_gas`](storage_gas.md#0x1_storage_gas)
 -  [`0x1::system_addresses`](system_addresses.md#0x1_system_addresses)
@@ -53,7 +49,6 @@ For on overview of the Move language, see the [Move Book][move-book].
 -  [`0x1::transaction_validation`](transaction_validation.md#0x1_transaction_validation)
 -  [`0x1::util`](util.md#0x1_util)
 -  [`0x1::version`](version.md#0x1_version)
--  [`0x1::vesting`](vesting.md#0x1_vesting)
 -  [`0x1::voting`](voting.md#0x1_voting)
 
 
