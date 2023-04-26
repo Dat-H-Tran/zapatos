@@ -57,19 +57,23 @@ impl ReleaseTarget {
     /// rust bindings generated from the package should be stored.
     pub fn packages(self) -> Vec<(&'static str, Option<&'static str>)> {
         let result = vec![
-            ("move-stdlib", None),
-            ("aptos-stdlib", None),
+            // ("move-stdlib", None),
+            // ("aptos-stdlib", None),
+            // (
+            //     "aptos-framework",
+            //     Some("cached-packages/src/aptos_framework_sdk_builder.rs"),
+            // ),
+            // (
+            //     "aptos-token",
+            //     Some("cached-packages/src/aptos_token_sdk_builder.rs"),
+            // ),
+            // (
+            //     "aptos-token-objects",
+            //     Some("cached-packages/src/aptos_token_objects_sdk_builder.rs"),
+            // ),
             (
-                "aptos-framework",
-                Some("cached-packages/src/aptos_framework_sdk_builder.rs"),
-            ),
-            (
-                "aptos-token",
-                Some("cached-packages/src/aptos_token_sdk_builder.rs"),
-            ),
-            (
-                "aptos-token-objects",
-                Some("cached-packages/src/aptos_token_objects_sdk_builder.rs"),
+                "libra-framework",
+                Some("cached-packages/src/libra_framework_sdk_builder.rs"),
             ),
         ];
         // Currently we don't have experimental packages only included in particular targets.
