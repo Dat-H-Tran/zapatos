@@ -243,35 +243,6 @@ pub enum EntryFunctionCall {
         coin_type: TypeTag,
     },
 
-    /// Withdraw an `amount` of coin `CoinType` from `account` and burn it.
-    ManagedCoinBurn {
-        coin_type: TypeTag,
-        amount: u64,
-    },
-
-    /// Initialize new coin `CoinType` in Aptos Blockchain.
-    /// Mint and Burn Capabilities will be stored under `account` in `Capabilities` resource.
-    ManagedCoinInitialize {
-        coin_type: TypeTag,
-        name: Vec<u8>,
-        symbol: Vec<u8>,
-        decimals: u8,
-        monitor_supply: bool,
-    },
-
-    /// Create new coins `CoinType` and deposit them into dst_addr's account.
-    ManagedCoinMint {
-        coin_type: TypeTag,
-        dst_addr: AccountAddress,
-        amount: u64,
-    },
-
-    /// Creating a resource that stores balance of `CoinType` on user's account, withdraw and deposit event handlers.
-    /// Required if user wants to start accepting deposits of `CoinType` in his account.
-    ManagedCoinRegister {
-        coin_type: TypeTag,
-    },
-
     /// Similar to add_owners, but only allow adding one owner.
     MultisigAccountAddOwner {
         new_owner: AccountAddress,
@@ -640,20 +611,6 @@ impl EntryFunctionCall {
                 amount,
             } => coin_transfer(coin_type, to, amount),
             CoinUpgradeSupply { coin_type } => coin_upgrade_supply(coin_type),
-            ManagedCoinBurn { coin_type, amount } => managed_coin_burn(coin_type, amount),
-            ManagedCoinInitialize {
-                coin_type,
-                name,
-                symbol,
-                decimals,
-                monitor_supply,
-            } => managed_coin_initialize(coin_type, name, symbol, decimals, monitor_supply),
-            ManagedCoinMint {
-                coin_type,
-                dst_addr,
-                amount,
-            } => managed_coin_mint(coin_type, dst_addr, amount),
-            ManagedCoinRegister { coin_type } => managed_coin_register(coin_type),
             MultisigAccountAddOwner { new_owner } => multisig_account_add_owner(new_owner),
             MultisigAccountAddOwners { new_owners } => multisig_account_add_owners(new_owners),
             MultisigAccountApproveTransaction {
@@ -1358,90 +1315,6 @@ pub fn coin_upgrade_supply(coin_type: TypeTag) -> TransactionPayload {
             ident_str!("coin").to_owned(),
         ),
         ident_str!("upgrade_supply").to_owned(),
-        vec![coin_type],
-        vec![],
-    ))
-}
-
-/// Withdraw an `amount` of coin `CoinType` from `account` and burn it.
-pub fn managed_coin_burn(coin_type: TypeTag, amount: u64) -> TransactionPayload {
-    TransactionPayload::EntryFunction(EntryFunction::new(
-        ModuleId::new(
-            AccountAddress::new([
-                0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                0, 0, 0, 1,
-            ]),
-            ident_str!("managed_coin").to_owned(),
-        ),
-        ident_str!("burn").to_owned(),
-        vec![coin_type],
-        vec![bcs::to_bytes(&amount).unwrap()],
-    ))
-}
-
-/// Initialize new coin `CoinType` in Aptos Blockchain.
-/// Mint and Burn Capabilities will be stored under `account` in `Capabilities` resource.
-pub fn managed_coin_initialize(
-    coin_type: TypeTag,
-    name: Vec<u8>,
-    symbol: Vec<u8>,
-    decimals: u8,
-    monitor_supply: bool,
-) -> TransactionPayload {
-    TransactionPayload::EntryFunction(EntryFunction::new(
-        ModuleId::new(
-            AccountAddress::new([
-                0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                0, 0, 0, 1,
-            ]),
-            ident_str!("managed_coin").to_owned(),
-        ),
-        ident_str!("initialize").to_owned(),
-        vec![coin_type],
-        vec![
-            bcs::to_bytes(&name).unwrap(),
-            bcs::to_bytes(&symbol).unwrap(),
-            bcs::to_bytes(&decimals).unwrap(),
-            bcs::to_bytes(&monitor_supply).unwrap(),
-        ],
-    ))
-}
-
-/// Create new coins `CoinType` and deposit them into dst_addr's account.
-pub fn managed_coin_mint(
-    coin_type: TypeTag,
-    dst_addr: AccountAddress,
-    amount: u64,
-) -> TransactionPayload {
-    TransactionPayload::EntryFunction(EntryFunction::new(
-        ModuleId::new(
-            AccountAddress::new([
-                0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                0, 0, 0, 1,
-            ]),
-            ident_str!("managed_coin").to_owned(),
-        ),
-        ident_str!("mint").to_owned(),
-        vec![coin_type],
-        vec![
-            bcs::to_bytes(&dst_addr).unwrap(),
-            bcs::to_bytes(&amount).unwrap(),
-        ],
-    ))
-}
-
-/// Creating a resource that stores balance of `CoinType` on user's account, withdraw and deposit event handlers.
-/// Required if user wants to start accepting deposits of `CoinType` in his account.
-pub fn managed_coin_register(coin_type: TypeTag) -> TransactionPayload {
-    TransactionPayload::EntryFunction(EntryFunction::new(
-        ModuleId::new(
-            AccountAddress::new([
-                0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                0, 0, 0, 1,
-            ]),
-            ident_str!("managed_coin").to_owned(),
-        ),
-        ident_str!("register").to_owned(),
         vec![coin_type],
         vec![],
     ))
@@ -2432,53 +2305,6 @@ mod decoder {
         }
     }
 
-    pub fn managed_coin_burn(payload: &TransactionPayload) -> Option<EntryFunctionCall> {
-        if let TransactionPayload::EntryFunction(script) = payload {
-            Some(EntryFunctionCall::ManagedCoinBurn {
-                coin_type: script.ty_args().get(0)?.clone(),
-                amount: bcs::from_bytes(script.args().get(0)?).ok()?,
-            })
-        } else {
-            None
-        }
-    }
-
-    pub fn managed_coin_initialize(payload: &TransactionPayload) -> Option<EntryFunctionCall> {
-        if let TransactionPayload::EntryFunction(script) = payload {
-            Some(EntryFunctionCall::ManagedCoinInitialize {
-                coin_type: script.ty_args().get(0)?.clone(),
-                name: bcs::from_bytes(script.args().get(0)?).ok()?,
-                symbol: bcs::from_bytes(script.args().get(1)?).ok()?,
-                decimals: bcs::from_bytes(script.args().get(2)?).ok()?,
-                monitor_supply: bcs::from_bytes(script.args().get(3)?).ok()?,
-            })
-        } else {
-            None
-        }
-    }
-
-    pub fn managed_coin_mint(payload: &TransactionPayload) -> Option<EntryFunctionCall> {
-        if let TransactionPayload::EntryFunction(script) = payload {
-            Some(EntryFunctionCall::ManagedCoinMint {
-                coin_type: script.ty_args().get(0)?.clone(),
-                dst_addr: bcs::from_bytes(script.args().get(0)?).ok()?,
-                amount: bcs::from_bytes(script.args().get(1)?).ok()?,
-            })
-        } else {
-            None
-        }
-    }
-
-    pub fn managed_coin_register(payload: &TransactionPayload) -> Option<EntryFunctionCall> {
-        if let TransactionPayload::EntryFunction(script) = payload {
-            Some(EntryFunctionCall::ManagedCoinRegister {
-                coin_type: script.ty_args().get(0)?.clone(),
-            })
-        } else {
-            None
-        }
-    }
-
     pub fn multisig_account_add_owner(payload: &TransactionPayload) -> Option<EntryFunctionCall> {
         if let TransactionPayload::EntryFunction(script) = payload {
             Some(EntryFunctionCall::MultisigAccountAddOwner {
@@ -2984,22 +2810,6 @@ static SCRIPT_FUNCTION_DECODER_MAP: once_cell::sync::Lazy<EntryFunctionDecoderMa
         map.insert(
             "coin_upgrade_supply".to_string(),
             Box::new(decoder::coin_upgrade_supply),
-        );
-        map.insert(
-            "managed_coin_burn".to_string(),
-            Box::new(decoder::managed_coin_burn),
-        );
-        map.insert(
-            "managed_coin_initialize".to_string(),
-            Box::new(decoder::managed_coin_initialize),
-        );
-        map.insert(
-            "managed_coin_mint".to_string(),
-            Box::new(decoder::managed_coin_mint),
-        );
-        map.insert(
-            "managed_coin_register".to_string(),
-            Box::new(decoder::managed_coin_register),
         );
         map.insert(
             "multisig_account_add_owner".to_string(),
