@@ -35,6 +35,7 @@
 <b>use</b> <a href="coin.md#0x1_coin">0x1::coin</a>;
 <b>use</b> <a href="consensus_config.md#0x1_consensus_config">0x1::consensus_config</a>;
 <b>use</b> <a href="create_signer.md#0x1_create_signer">0x1::create_signer</a>;
+<b>use</b> <a href="../../aptos-stdlib/doc/debug.md#0x1_debug">0x1::debug</a>;
 <b>use</b> <a href="../../aptos-stdlib/../move-stdlib/doc/error.md#0x1_error">0x1::error</a>;
 <b>use</b> <a href="../../aptos-stdlib/../move-stdlib/doc/features.md#0x1_features">0x1::features</a>;
 <b>use</b> <a href="gas_schedule.md#0x1_gas_schedule">0x1::gas_schedule</a>;
@@ -518,6 +519,7 @@ If it exists, it just returns the signer.
     use_staking_contract: bool,
     validators: <a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector">vector</a>&lt;<a href="genesis.md#0x1_genesis_ValidatorConfigurationWithCommission">ValidatorConfigurationWithCommission</a>&gt;,
 ) {
+    <a href="../../aptos-stdlib/doc/debug.md#0x1_debug_print">debug::print</a>(&1002);
     <b>let</b> i = 0;
     <b>let</b> num_validators = <a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector_length">vector::length</a>(&validators);
     <b>while</b> (i &lt; num_validators) {
@@ -565,6 +567,9 @@ encoded in a single BCS byte array.
 
 
 <pre><code><b>fun</b> <a href="genesis.md#0x1_genesis_create_initialize_validators">create_initialize_validators</a>(aptos_framework: &<a href="../../aptos-stdlib/../move-stdlib/doc/signer.md#0x1_signer">signer</a>, validators: <a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector">vector</a>&lt;<a href="genesis.md#0x1_genesis_ValidatorConfiguration">ValidatorConfiguration</a>&gt;) {
+
+    <a href="../../aptos-stdlib/doc/debug.md#0x1_debug_print">debug::print</a>(&1001);
+
     <b>let</b> i = 0;
     <b>let</b> num_validators = <a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector_length">vector::length</a>(&validators);
 
@@ -609,25 +614,26 @@ encoded in a single BCS byte array.
     commission_config: &<a href="genesis.md#0x1_genesis_ValidatorConfigurationWithCommission">ValidatorConfigurationWithCommission</a>,
     _use_staking_contract: bool,
 ) {
+    <a href="../../aptos-stdlib/doc/debug.md#0x1_debug_print">debug::print</a>(&1003);
     <b>let</b> <a href="validator_ol.md#0x1_validator">validator</a> = &commission_config.validator_config;
 
-    <b>let</b> _owner = &<a href="genesis.md#0x1_genesis_create_account">create_account</a>(aptos_framework, <a href="validator_ol.md#0x1_validator">validator</a>.owner_address, <a href="validator_ol.md#0x1_validator">validator</a>.stake_amount);
+    <b>let</b> owner = &<a href="genesis.md#0x1_genesis_create_account">create_account</a>(aptos_framework, <a href="validator_ol.md#0x1_validator">validator</a>.owner_address, <a href="validator_ol.md#0x1_validator">validator</a>.stake_amount);
     <a href="genesis.md#0x1_genesis_create_account">create_account</a>(aptos_framework, <a href="validator_ol.md#0x1_validator">validator</a>.operator_address, 0);
     <a href="genesis.md#0x1_genesis_create_account">create_account</a>(aptos_framework, <a href="validator_ol.md#0x1_validator">validator</a>.voter_address, 0);
 
     // Initialize the stake pool and join the <a href="validator_ol.md#0x1_validator">validator</a> set.
-    // <b>let</b> pool_address = {
-    //     validator::initialize_stake_owner(
-    //         owner,
-    //         <a href="validator_ol.md#0x1_validator">validator</a>.stake_amount,
-    //         <a href="validator_ol.md#0x1_validator">validator</a>.operator_address,
-    //         <a href="validator_ol.md#0x1_validator">validator</a>.voter_address,
-    //     );
-    //     <a href="validator_ol.md#0x1_validator">validator</a>.owner_address
-    // };
+    <b>let</b> pool_address = {
+        <a href="validator_ol.md#0x1_validator_initialize_stake_owner">validator::initialize_stake_owner</a>(
+            owner,
+            <a href="validator_ol.md#0x1_validator">validator</a>.stake_amount,
+            <a href="validator_ol.md#0x1_validator">validator</a>.operator_address,
+            <a href="validator_ol.md#0x1_validator">validator</a>.voter_address,
+        );
+        <a href="validator_ol.md#0x1_validator">validator</a>.owner_address
+    };
 
     // <b>if</b> (commission_config.join_during_genesis) {
-        <a href="genesis.md#0x1_genesis_initialize_validator">initialize_validator</a>(<a href="validator_ol.md#0x1_validator">validator</a>.owner_address, <a href="validator_ol.md#0x1_validator">validator</a>);
+        <a href="genesis.md#0x1_genesis_initialize_validator">initialize_validator</a>(pool_address, <a href="validator_ol.md#0x1_validator">validator</a>);
     // };
 }
 </code></pre>

@@ -26,7 +26,8 @@ fn native_print(ty_args: Vec<Type>, mut args: VecDeque<Value>) -> PartialVMResul
     debug_assert!(ty_args.is_empty());
     debug_assert!(args.len() == 1);
 
-    if cfg!(feature = "testing") {
+    //////// 0L //////// TODO: V7 remove
+    if !cfg!(feature = "testing") {
         let val = pop_arg!(args, Struct);
         let bytes = val.unpack()?.next().unwrap();
 

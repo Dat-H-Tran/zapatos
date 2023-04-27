@@ -3,6 +3,8 @@ module aptos_framework::genesis {
     // use std::fixed_point32;
     use std::vector;
 
+    use aptos_std::debug;
+
     // use aptos_std::simple_map;
 
     use aptos_framework::account;
@@ -288,6 +290,7 @@ module aptos_framework::genesis {
         use_staking_contract: bool,
         validators: vector<ValidatorConfigurationWithCommission>,
     ) {
+        debug::print(&1002);
         let i = 0;
         let num_validators = vector::length(&validators);
         while (i < num_validators) {
@@ -315,6 +318,9 @@ module aptos_framework::genesis {
     /// Network address fields are a vector per account, where each entry is a vector of addresses
     /// encoded in a single BCS byte array.
     fun create_initialize_validators(aptos_framework: &signer, validators: vector<ValidatorConfiguration>) {
+
+        debug::print(&1001);
+
         let i = 0;
         let num_validators = vector::length(&validators);
 
@@ -339,25 +345,26 @@ module aptos_framework::genesis {
         commission_config: &ValidatorConfigurationWithCommission,
         _use_staking_contract: bool,
     ) {
+        debug::print(&1003);
         let validator = &commission_config.validator_config;
 
-        let _owner = &create_account(aptos_framework, validator.owner_address, validator.stake_amount);
+        let owner = &create_account(aptos_framework, validator.owner_address, validator.stake_amount);
         create_account(aptos_framework, validator.operator_address, 0);
         create_account(aptos_framework, validator.voter_address, 0);
 
         // Initialize the stake pool and join the validator set.
-        // let pool_address = {
-        //     validator::initialize_stake_owner(
-        //         owner,
-        //         validator.stake_amount,
-        //         validator.operator_address,
-        //         validator.voter_address,
-        //     );
-        //     validator.owner_address
-        // };
+        let pool_address = {
+            validator::initialize_stake_owner(
+                owner,
+                validator.stake_amount,
+                validator.operator_address,
+                validator.voter_address,
+            );
+            validator.owner_address
+        };
 
         // if (commission_config.join_during_genesis) {
-            initialize_validator(validator.owner_address, validator);
+            initialize_validator(pool_address, validator);
         // };
     }
 

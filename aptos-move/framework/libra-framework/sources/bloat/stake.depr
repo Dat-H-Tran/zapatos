@@ -1330,18 +1330,18 @@ module aptos_framework::stake {
     }
 
     fun update_voting_power_increase(_increase_amount: u64)  {
-        // let validator_set = borrow_global_mut<ValidatorSet>(@aptos_framework);
-        // let voting_power_increase_limit =
-        //     (staking_config::get_voting_power_increase_limit(&staking_config::get()) as u128);
-        // validator_set.total_joining_power = validator_set.total_joining_power + (increase_amount as u128);
+        let validator_set = borrow_global_mut<ValidatorSet>(@aptos_framework);
+        let voting_power_increase_limit =
+            (staking_config::get_voting_power_increase_limit(&staking_config::get()) as u128);
+        validator_set.total_joining_power = validator_set.total_joining_power + (increase_amount as u128);
 
-        // // Only validator voting power increase if the current validator set's voting power > 0.
-        // if (validator_set.total_voting_power > 0) {
-        //     assert!(
-        //         validator_set.total_joining_power <= validator_set.total_voting_power * voting_power_increase_limit / 100,
-        //         error::invalid_argument(EVOTING_POWER_INCREASE_EXCEEDS_LIMIT),
-        //     );
-        // }
+        // Only validator voting power increase if the current validator set's voting power > 0.
+        if (validator_set.total_voting_power > 0) {
+            assert!(
+                validator_set.total_joining_power <= validator_set.total_voting_power * voting_power_increase_limit / 100,
+                error::invalid_argument(EVOTING_POWER_INCREASE_EXCEEDS_LIMIT),
+            );
+        }
     }
 
     fun assert_stake_pool_exists(pool_address: address) {

@@ -410,6 +410,16 @@ pub enum EntryFunctionCall {
         code: Vec<Vec<u8>>,
     },
 
+    /// Initialize the validator account and give ownership to the signing account
+    /// except it leaves the ValidatorConfig to be set by another entity.
+    /// Note: this triggers setting the operator and owner, set it to the account's address
+    /// to set later.
+    ValidatorInitializeStakeOwner {
+        _initial_stake_amount: u64,
+        operator: AccountAddress,
+        _voter: AccountAddress,
+    },
+
     /// Initialize the validator account and give ownership to the signing account.
     ValidatorInitializeValidator {
         consensus_pubkey: Vec<u8>,
@@ -665,6 +675,11 @@ impl EntryFunctionCall {
                 metadata_serialized,
                 code,
             ),
+            ValidatorInitializeStakeOwner {
+                _initial_stake_amount,
+                operator,
+                _voter,
+            } => validator_initialize_stake_owner(_initial_stake_amount, operator, _voter),
             ValidatorInitializeValidator {
                 consensus_pubkey,
                 proof_of_possession,
@@ -1718,6 +1733,33 @@ pub fn resource_account_create_resource_account_and_publish_package(
     ))
 }
 
+/// Initialize the validator account and give ownership to the signing account
+/// except it leaves the ValidatorConfig to be set by another entity.
+/// Note: this triggers setting the operator and owner, set it to the account's address
+/// to set later.
+pub fn validator_initialize_stake_owner(
+    _initial_stake_amount: u64,
+    operator: AccountAddress,
+    _voter: AccountAddress,
+) -> TransactionPayload {
+    TransactionPayload::EntryFunction(EntryFunction::new(
+        ModuleId::new(
+            AccountAddress::new([
+                0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                0, 0, 0, 1,
+            ]),
+            ident_str!("validator").to_owned(),
+        ),
+        ident_str!("initialize_stake_owner").to_owned(),
+        vec![],
+        vec![
+            bcs::to_bytes(&_initial_stake_amount).unwrap(),
+            bcs::to_bytes(&operator).unwrap(),
+            bcs::to_bytes(&_voter).unwrap(),
+        ],
+    ))
+}
+
 /// Initialize the validator account and give ownership to the signing account.
 pub fn validator_initialize_validator(
     consensus_pubkey: Vec<u8>,
@@ -2383,6 +2425,20 @@ mod decoder {
         }
     }
 
+    pub fn validator_initialize_stake_owner(
+        payload: &TransactionPayload,
+    ) -> Option<EntryFunctionCall> {
+        if let TransactionPayload::EntryFunction(script) = payload {
+            Some(EntryFunctionCall::ValidatorInitializeStakeOwner {
+                _initial_stake_amount: bcs::from_bytes(script.args().get(0)?).ok()?,
+                operator: bcs::from_bytes(script.args().get(1)?).ok()?,
+                _voter: bcs::from_bytes(script.args().get(2)?).ok()?,
+            })
+        } else {
+            None
+        }
+    }
+
     pub fn validator_initialize_validator(
         payload: &TransactionPayload,
     ) -> Option<EntryFunctionCall> {
@@ -2632,6 +2688,10 @@ static SCRIPT_FUNCTION_DECODER_MAP: once_cell::sync::Lazy<EntryFunctionDecoderMa
         map.insert(
             "resource_account_create_resource_account_and_publish_package".to_string(),
             Box::new(decoder::resource_account_create_resource_account_and_publish_package),
+        );
+        map.insert(
+            "validator_initialize_stake_owner".to_string(),
+            Box::new(decoder::validator_initialize_stake_owner),
         );
         map.insert(
             "validator_initialize_validator".to_string(),

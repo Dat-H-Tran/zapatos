@@ -27,6 +27,8 @@ module aptos_framework::validator {
     use aptos_std::bls12381;
     // use aptos_std::math64::min;
     use aptos_std::table::{Self, Table};
+    use aptos_std::debug;
+
 
     use aptos_framework::aptos_coin::AptosCoin;
     use aptos_framework::account;
@@ -279,6 +281,40 @@ module aptos_framework::validator {
             validators: vector::empty(),
         });
     }
+
+        /// Initialize the validator account and give ownership to the signing account
+    /// except it leaves the ValidatorConfig to be set by another entity.
+    /// Note: this triggers setting the operator and owner, set it to the account's address
+    /// to set later.
+    public entry fun initialize_stake_owner(
+        owner: &signer,
+        _initial_stake_amount: u64,
+        operator: address,
+        _voter: address,
+    ) acquires StakePool {
+        debug::print(&2000);
+        initialize_owner(owner);
+        move_to(owner, ValidatorConfig {
+            consensus_pubkey: vector::empty(),
+            network_addresses: vector::empty(),
+            fullnode_addresses: vector::empty(),
+            validator_index: 0,
+        });
+
+        // if (initial_stake_amount > 0) {
+        //     add_stake(owner, initial_stake_amount);
+        // };
+
+        let account_address = signer::address_of(owner);
+        if (account_address != operator) {
+            set_operator(owner, operator)
+        };
+        // if (account_address != voter) {
+        //     set_delegated_voter(owner, voter)
+        // };
+    }
+
+
 
     /// Initialize the validator account and give ownership to the signing account.
     public entry fun initialize_validator(

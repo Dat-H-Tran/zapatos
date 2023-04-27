@@ -545,6 +545,7 @@ pub fn create_and_initialize_validators( //////// 0L ////////
     let validators_bytes = bcs::to_bytes(validators).expect("Validators can be serialized");
     let mut serialized_values = serialize_values(&vec![MoveValue::Signer(CORE_CODE_ADDRESS)]);
     serialized_values.push(validators_bytes);
+
     exec_function(
         session,
         GENESIS_MODULE_NAME,

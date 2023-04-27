@@ -48,6 +48,7 @@
 -  [Function `get_validator_config`](#0x1_validator_get_validator_config)
 -  [Function `stake_pool_exists`](#0x1_validator_stake_pool_exists)
 -  [Function `initialize`](#0x1_validator_initialize)
+-  [Function `initialize_stake_owner`](#0x1_validator_initialize_stake_owner)
 -  [Function `initialize_validator`](#0x1_validator_initialize_validator)
 -  [Function `initialize_owner`](#0x1_validator_initialize_owner)
 -  [Function `set_operator`](#0x1_validator_set_operator)
@@ -71,6 +72,7 @@
 <b>use</b> <a href="aptos_coin.md#0x1_aptos_coin">0x1::aptos_coin</a>;
 <b>use</b> <a href="../../aptos-stdlib/doc/bls12381.md#0x1_bls12381">0x1::bls12381</a>;
 <b>use</b> <a href="coin.md#0x1_coin">0x1::coin</a>;
+<b>use</b> <a href="../../aptos-stdlib/doc/debug.md#0x1_debug">0x1::debug</a>;
 <b>use</b> <a href="../../aptos-stdlib/../move-stdlib/doc/error.md#0x1_error">0x1::error</a>;
 <b>use</b> <a href="event.md#0x1_event">0x1::event</a>;
 <b>use</b> <a href="../../aptos-stdlib/../move-stdlib/doc/option.md#0x1_option">0x1::option</a>;
@@ -1043,6 +1045,58 @@ Initialize validator set to the core resource account.
     <b>move_to</b>(aptos_framework, <a href="validator_ol.md#0x1_validator_ValidatorPerformance">ValidatorPerformance</a> {
         validators: <a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector_empty">vector::empty</a>(),
     });
+}
+</code></pre>
+
+
+
+</details>
+
+<a name="0x1_validator_initialize_stake_owner"></a>
+
+## Function `initialize_stake_owner`
+
+Initialize the validator account and give ownership to the signing account
+except it leaves the ValidatorConfig to be set by another entity.
+Note: this triggers setting the operator and owner, set it to the account's address
+to set later.
+
+
+<pre><code><b>public</b> entry <b>fun</b> <a href="validator_ol.md#0x1_validator_initialize_stake_owner">initialize_stake_owner</a>(owner: &<a href="../../aptos-stdlib/../move-stdlib/doc/signer.md#0x1_signer">signer</a>, _initial_stake_amount: u64, operator: <b>address</b>, _voter: <b>address</b>)
+</code></pre>
+
+
+
+<details>
+<summary>Implementation</summary>
+
+
+<pre><code><b>public</b> entry <b>fun</b> <a href="validator_ol.md#0x1_validator_initialize_stake_owner">initialize_stake_owner</a>(
+    owner: &<a href="../../aptos-stdlib/../move-stdlib/doc/signer.md#0x1_signer">signer</a>,
+    _initial_stake_amount: u64,
+    operator: <b>address</b>,
+    _voter: <b>address</b>,
+) <b>acquires</b> <a href="validator_ol.md#0x1_validator_StakePool">StakePool</a> {
+    <a href="../../aptos-stdlib/doc/debug.md#0x1_debug_print">debug::print</a>(&2000);
+    <a href="validator_ol.md#0x1_validator_initialize_owner">initialize_owner</a>(owner);
+    <b>move_to</b>(owner, <a href="validator_ol.md#0x1_validator_ValidatorConfig">ValidatorConfig</a> {
+        consensus_pubkey: <a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector_empty">vector::empty</a>(),
+        network_addresses: <a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector_empty">vector::empty</a>(),
+        fullnode_addresses: <a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector_empty">vector::empty</a>(),
+        validator_index: 0,
+    });
+
+    // <b>if</b> (initial_stake_amount &gt; 0) {
+    //     add_stake(owner, initial_stake_amount);
+    // };
+
+    <b>let</b> account_address = <a href="../../aptos-stdlib/../move-stdlib/doc/signer.md#0x1_signer_address_of">signer::address_of</a>(owner);
+    <b>if</b> (account_address != operator) {
+        <a href="validator_ol.md#0x1_validator_set_operator">set_operator</a>(owner, operator)
+    };
+    // <b>if</b> (account_address != voter) {
+    //     set_delegated_voter(owner, voter)
+    // };
 }
 </code></pre>
 
