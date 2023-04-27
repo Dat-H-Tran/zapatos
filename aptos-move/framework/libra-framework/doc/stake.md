@@ -1,7 +1,7 @@
 
-<a name="0x1_stake"></a>
+<a name="0x1_stake_old"></a>
 
-# Module `0x1::stake`
+# Module `0x1::stake_old`
 
 
 * Validator lifecycle:
@@ -24,83 +24,83 @@
 * 10. An owner can always switch designated voter by calling stake::set_designated_voter.
 
 
--  [Resource `OwnerCapability`](#0x1_stake_OwnerCapability)
--  [Resource `StakePool`](#0x1_stake_StakePool)
--  [Resource `ValidatorConfig`](#0x1_stake_ValidatorConfig)
--  [Struct `ValidatorInfo`](#0x1_stake_ValidatorInfo)
--  [Resource `ValidatorSet`](#0x1_stake_ValidatorSet)
--  [Resource `AptosCoinCapabilities`](#0x1_stake_AptosCoinCapabilities)
--  [Struct `IndividualValidatorPerformance`](#0x1_stake_IndividualValidatorPerformance)
--  [Resource `ValidatorPerformance`](#0x1_stake_ValidatorPerformance)
--  [Struct `RegisterValidatorCandidateEvent`](#0x1_stake_RegisterValidatorCandidateEvent)
--  [Struct `SetOperatorEvent`](#0x1_stake_SetOperatorEvent)
--  [Struct `AddStakeEvent`](#0x1_stake_AddStakeEvent)
--  [Struct `ReactivateStakeEvent`](#0x1_stake_ReactivateStakeEvent)
--  [Struct `RotateConsensusKeyEvent`](#0x1_stake_RotateConsensusKeyEvent)
--  [Struct `UpdateNetworkAndFullnodeAddressesEvent`](#0x1_stake_UpdateNetworkAndFullnodeAddressesEvent)
--  [Struct `IncreaseLockupEvent`](#0x1_stake_IncreaseLockupEvent)
--  [Struct `JoinValidatorSetEvent`](#0x1_stake_JoinValidatorSetEvent)
--  [Struct `DistributeRewardsEvent`](#0x1_stake_DistributeRewardsEvent)
--  [Struct `UnlockStakeEvent`](#0x1_stake_UnlockStakeEvent)
--  [Struct `WithdrawStakeEvent`](#0x1_stake_WithdrawStakeEvent)
--  [Struct `LeaveValidatorSetEvent`](#0x1_stake_LeaveValidatorSetEvent)
--  [Resource `ValidatorFees`](#0x1_stake_ValidatorFees)
--  [Resource `AllowedValidators`](#0x1_stake_AllowedValidators)
+-  [Resource `OwnerCapability`](#0x1_stake_old_OwnerCapability)
+-  [Resource `StakePool`](#0x1_stake_old_StakePool)
+-  [Resource `ValidatorConfig`](#0x1_stake_old_ValidatorConfig)
+-  [Struct `ValidatorInfo`](#0x1_stake_old_ValidatorInfo)
+-  [Resource `ValidatorSet`](#0x1_stake_old_ValidatorSet)
+-  [Resource `AptosCoinCapabilities`](#0x1_stake_old_AptosCoinCapabilities)
+-  [Struct `IndividualValidatorPerformance`](#0x1_stake_old_IndividualValidatorPerformance)
+-  [Resource `ValidatorPerformance`](#0x1_stake_old_ValidatorPerformance)
+-  [Struct `RegisterValidatorCandidateEvent`](#0x1_stake_old_RegisterValidatorCandidateEvent)
+-  [Struct `SetOperatorEvent`](#0x1_stake_old_SetOperatorEvent)
+-  [Struct `AddStakeEvent`](#0x1_stake_old_AddStakeEvent)
+-  [Struct `ReactivateStakeEvent`](#0x1_stake_old_ReactivateStakeEvent)
+-  [Struct `RotateConsensusKeyEvent`](#0x1_stake_old_RotateConsensusKeyEvent)
+-  [Struct `UpdateNetworkAndFullnodeAddressesEvent`](#0x1_stake_old_UpdateNetworkAndFullnodeAddressesEvent)
+-  [Struct `IncreaseLockupEvent`](#0x1_stake_old_IncreaseLockupEvent)
+-  [Struct `JoinValidatorSetEvent`](#0x1_stake_old_JoinValidatorSetEvent)
+-  [Struct `DistributeRewardsEvent`](#0x1_stake_old_DistributeRewardsEvent)
+-  [Struct `UnlockStakeEvent`](#0x1_stake_old_UnlockStakeEvent)
+-  [Struct `WithdrawStakeEvent`](#0x1_stake_old_WithdrawStakeEvent)
+-  [Struct `LeaveValidatorSetEvent`](#0x1_stake_old_LeaveValidatorSetEvent)
+-  [Resource `ValidatorFees`](#0x1_stake_old_ValidatorFees)
+-  [Resource `AllowedValidators`](#0x1_stake_old_AllowedValidators)
 -  [Constants](#@Constants_0)
--  [Function `initialize_validator_fees`](#0x1_stake_initialize_validator_fees)
--  [Function `add_transaction_fee`](#0x1_stake_add_transaction_fee)
--  [Function `get_lockup_secs`](#0x1_stake_get_lockup_secs)
--  [Function `get_remaining_lockup_secs`](#0x1_stake_get_remaining_lockup_secs)
--  [Function `get_stake`](#0x1_stake_get_stake)
--  [Function `get_validator_state`](#0x1_stake_get_validator_state)
--  [Function `get_current_epoch_voting_power`](#0x1_stake_get_current_epoch_voting_power)
--  [Function `get_delegated_voter`](#0x1_stake_get_delegated_voter)
--  [Function `get_operator`](#0x1_stake_get_operator)
--  [Function `get_owned_pool_address`](#0x1_stake_get_owned_pool_address)
--  [Function `get_validator_index`](#0x1_stake_get_validator_index)
--  [Function `get_current_epoch_proposal_counts`](#0x1_stake_get_current_epoch_proposal_counts)
--  [Function `get_validator_config`](#0x1_stake_get_validator_config)
--  [Function `stake_pool_exists`](#0x1_stake_stake_pool_exists)
--  [Function `initialize`](#0x1_stake_initialize)
--  [Function `store_aptos_coin_mint_cap`](#0x1_stake_store_aptos_coin_mint_cap)
--  [Function `remove_validators`](#0x1_stake_remove_validators)
--  [Function `initialize_stake_owner`](#0x1_stake_initialize_stake_owner)
--  [Function `initialize_validator`](#0x1_stake_initialize_validator)
--  [Function `initialize_owner`](#0x1_stake_initialize_owner)
--  [Function `extract_owner_cap`](#0x1_stake_extract_owner_cap)
--  [Function `deposit_owner_cap`](#0x1_stake_deposit_owner_cap)
--  [Function `destroy_owner_cap`](#0x1_stake_destroy_owner_cap)
--  [Function `set_operator`](#0x1_stake_set_operator)
--  [Function `set_operator_with_cap`](#0x1_stake_set_operator_with_cap)
--  [Function `set_delegated_voter`](#0x1_stake_set_delegated_voter)
--  [Function `set_delegated_voter_with_cap`](#0x1_stake_set_delegated_voter_with_cap)
--  [Function `add_stake`](#0x1_stake_add_stake)
--  [Function `add_stake_with_cap`](#0x1_stake_add_stake_with_cap)
--  [Function `reactivate_stake`](#0x1_stake_reactivate_stake)
--  [Function `reactivate_stake_with_cap`](#0x1_stake_reactivate_stake_with_cap)
--  [Function `rotate_consensus_key`](#0x1_stake_rotate_consensus_key)
--  [Function `update_network_and_fullnode_addresses`](#0x1_stake_update_network_and_fullnode_addresses)
--  [Function `join_validator_set`](#0x1_stake_join_validator_set)
--  [Function `join_validator_set_internal`](#0x1_stake_join_validator_set_internal)
--  [Function `unlock`](#0x1_stake_unlock)
--  [Function `unlock_with_cap`](#0x1_stake_unlock_with_cap)
--  [Function `withdraw`](#0x1_stake_withdraw)
--  [Function `withdraw_with_cap`](#0x1_stake_withdraw_with_cap)
--  [Function `is_current_epoch_validator`](#0x1_stake_is_current_epoch_validator)
--  [Function `update_performance_statistics`](#0x1_stake_update_performance_statistics)
--  [Function `on_new_epoch`](#0x1_stake_on_new_epoch)
--  [Function `update_stake_pool`](#0x1_stake_update_stake_pool)
--  [Function `calculate_rewards_amount`](#0x1_stake_calculate_rewards_amount)
--  [Function `distribute_rewards`](#0x1_stake_distribute_rewards)
--  [Function `append`](#0x1_stake_append)
--  [Function `find_validator`](#0x1_stake_find_validator)
--  [Function `generate_validator_info`](#0x1_stake_generate_validator_info)
--  [Function `get_next_epoch_voting_power`](#0x1_stake_get_next_epoch_voting_power)
--  [Function `update_voting_power_increase`](#0x1_stake_update_voting_power_increase)
--  [Function `assert_stake_pool_exists`](#0x1_stake_assert_stake_pool_exists)
--  [Function `configure_allowed_validators`](#0x1_stake_configure_allowed_validators)
--  [Function `is_allowed`](#0x1_stake_is_allowed)
--  [Function `assert_owner_cap_exists`](#0x1_stake_assert_owner_cap_exists)
+-  [Function `initialize_validator_fees`](#0x1_stake_old_initialize_validator_fees)
+-  [Function `add_transaction_fee`](#0x1_stake_old_add_transaction_fee)
+-  [Function `get_lockup_secs`](#0x1_stake_old_get_lockup_secs)
+-  [Function `get_remaining_lockup_secs`](#0x1_stake_old_get_remaining_lockup_secs)
+-  [Function `get_stake`](#0x1_stake_old_get_stake)
+-  [Function `get_validator_state`](#0x1_stake_old_get_validator_state)
+-  [Function `get_current_epoch_voting_power`](#0x1_stake_old_get_current_epoch_voting_power)
+-  [Function `get_delegated_voter`](#0x1_stake_old_get_delegated_voter)
+-  [Function `get_operator`](#0x1_stake_old_get_operator)
+-  [Function `get_owned_pool_address`](#0x1_stake_old_get_owned_pool_address)
+-  [Function `get_validator_index`](#0x1_stake_old_get_validator_index)
+-  [Function `get_current_epoch_proposal_counts`](#0x1_stake_old_get_current_epoch_proposal_counts)
+-  [Function `get_validator_config`](#0x1_stake_old_get_validator_config)
+-  [Function `stake_pool_exists`](#0x1_stake_old_stake_pool_exists)
+-  [Function `initialize`](#0x1_stake_old_initialize)
+-  [Function `store_aptos_coin_mint_cap`](#0x1_stake_old_store_aptos_coin_mint_cap)
+-  [Function `remove_validators`](#0x1_stake_old_remove_validators)
+-  [Function `initialize_stake_owner`](#0x1_stake_old_initialize_stake_owner)
+-  [Function `initialize_validator`](#0x1_stake_old_initialize_validator)
+-  [Function `initialize_owner`](#0x1_stake_old_initialize_owner)
+-  [Function `extract_owner_cap`](#0x1_stake_old_extract_owner_cap)
+-  [Function `deposit_owner_cap`](#0x1_stake_old_deposit_owner_cap)
+-  [Function `destroy_owner_cap`](#0x1_stake_old_destroy_owner_cap)
+-  [Function `set_operator`](#0x1_stake_old_set_operator)
+-  [Function `set_operator_with_cap`](#0x1_stake_old_set_operator_with_cap)
+-  [Function `set_delegated_voter`](#0x1_stake_old_set_delegated_voter)
+-  [Function `set_delegated_voter_with_cap`](#0x1_stake_old_set_delegated_voter_with_cap)
+-  [Function `add_stake`](#0x1_stake_old_add_stake)
+-  [Function `add_stake_with_cap`](#0x1_stake_old_add_stake_with_cap)
+-  [Function `reactivate_stake`](#0x1_stake_old_reactivate_stake)
+-  [Function `reactivate_stake_with_cap`](#0x1_stake_old_reactivate_stake_with_cap)
+-  [Function `rotate_consensus_key`](#0x1_stake_old_rotate_consensus_key)
+-  [Function `update_network_and_fullnode_addresses`](#0x1_stake_old_update_network_and_fullnode_addresses)
+-  [Function `join_validator_set`](#0x1_stake_old_join_validator_set)
+-  [Function `join_validator_set_internal`](#0x1_stake_old_join_validator_set_internal)
+-  [Function `unlock`](#0x1_stake_old_unlock)
+-  [Function `unlock_with_cap`](#0x1_stake_old_unlock_with_cap)
+-  [Function `withdraw`](#0x1_stake_old_withdraw)
+-  [Function `withdraw_with_cap`](#0x1_stake_old_withdraw_with_cap)
+-  [Function `is_current_epoch_validator`](#0x1_stake_old_is_current_epoch_validator)
+-  [Function `update_performance_statistics`](#0x1_stake_old_update_performance_statistics)
+-  [Function `on_new_epoch`](#0x1_stake_old_on_new_epoch)
+-  [Function `update_stake_pool`](#0x1_stake_old_update_stake_pool)
+-  [Function `calculate_rewards_amount`](#0x1_stake_old_calculate_rewards_amount)
+-  [Function `distribute_rewards`](#0x1_stake_old_distribute_rewards)
+-  [Function `append`](#0x1_stake_old_append)
+-  [Function `find_validator`](#0x1_stake_old_find_validator)
+-  [Function `generate_validator_info`](#0x1_stake_old_generate_validator_info)
+-  [Function `get_next_epoch_voting_power`](#0x1_stake_old_get_next_epoch_voting_power)
+-  [Function `update_voting_power_increase`](#0x1_stake_old_update_voting_power_increase)
+-  [Function `assert_stake_pool_exists`](#0x1_stake_old_assert_stake_pool_exists)
+-  [Function `configure_allowed_validators`](#0x1_stake_old_configure_allowed_validators)
+-  [Function `is_allowed`](#0x1_stake_old_is_allowed)
+-  [Function `assert_owner_cap_exists`](#0x1_stake_old_assert_owner_cap_exists)
 -  [Specification](#@Specification_1)
     -  [Function `add_transaction_fee`](#@Specification_1_add_transaction_fee)
     -  [Function `get_validator_state`](#@Specification_1_get_validator_state)
@@ -145,7 +145,7 @@
 
 
 
-<a name="0x1_stake_OwnerCapability"></a>
+<a name="0x1_stake_old_OwnerCapability"></a>
 
 ## Resource `OwnerCapability`
 
@@ -154,7 +154,7 @@ Having this be separate from the signer for the account that the validator resou
 modules to have control over a validator.
 
 
-<pre><code><b>struct</b> <a href="stake.md#0x1_stake_OwnerCapability">OwnerCapability</a> <b>has</b> store, key
+<pre><code><b>struct</b> <a href="stake.md#0x1_stake_old_OwnerCapability">OwnerCapability</a> <b>has</b> store, key
 </code></pre>
 
 
@@ -175,7 +175,7 @@ modules to have control over a validator.
 
 </details>
 
-<a name="0x1_stake_StakePool"></a>
+<a name="0x1_stake_old_StakePool"></a>
 
 ## Resource `StakePool`
 
@@ -192,7 +192,7 @@ Changes in stake for an inactive validator:
 3. When the next epoch starts, the validator can be activated if their active stake is more than the minimum.
 
 
-<pre><code><b>struct</b> <a href="stake.md#0x1_stake_StakePool">StakePool</a> <b>has</b> key
+<pre><code><b>struct</b> <a href="stake.md#0x1_stake_old_StakePool">StakePool</a> <b>has</b> key
 </code></pre>
 
 
@@ -245,73 +245,73 @@ Changes in stake for an inactive validator:
 
 </dd>
 <dt>
-<code>initialize_validator_events: <a href="event.md#0x1_event_EventHandle">event::EventHandle</a>&lt;<a href="stake.md#0x1_stake_RegisterValidatorCandidateEvent">stake::RegisterValidatorCandidateEvent</a>&gt;</code>
+<code>initialize_validator_events: <a href="event.md#0x1_event_EventHandle">event::EventHandle</a>&lt;<a href="stake.md#0x1_stake_old_RegisterValidatorCandidateEvent">stake_old::RegisterValidatorCandidateEvent</a>&gt;</code>
 </dt>
 <dd>
 
 </dd>
 <dt>
-<code>set_operator_events: <a href="event.md#0x1_event_EventHandle">event::EventHandle</a>&lt;<a href="stake.md#0x1_stake_SetOperatorEvent">stake::SetOperatorEvent</a>&gt;</code>
+<code>set_operator_events: <a href="event.md#0x1_event_EventHandle">event::EventHandle</a>&lt;<a href="stake.md#0x1_stake_old_SetOperatorEvent">stake_old::SetOperatorEvent</a>&gt;</code>
 </dt>
 <dd>
 
 </dd>
 <dt>
-<code>add_stake_events: <a href="event.md#0x1_event_EventHandle">event::EventHandle</a>&lt;<a href="stake.md#0x1_stake_AddStakeEvent">stake::AddStakeEvent</a>&gt;</code>
+<code>add_stake_events: <a href="event.md#0x1_event_EventHandle">event::EventHandle</a>&lt;<a href="stake.md#0x1_stake_old_AddStakeEvent">stake_old::AddStakeEvent</a>&gt;</code>
 </dt>
 <dd>
 
 </dd>
 <dt>
-<code>reactivate_stake_events: <a href="event.md#0x1_event_EventHandle">event::EventHandle</a>&lt;<a href="stake.md#0x1_stake_ReactivateStakeEvent">stake::ReactivateStakeEvent</a>&gt;</code>
+<code>reactivate_stake_events: <a href="event.md#0x1_event_EventHandle">event::EventHandle</a>&lt;<a href="stake.md#0x1_stake_old_ReactivateStakeEvent">stake_old::ReactivateStakeEvent</a>&gt;</code>
 </dt>
 <dd>
 
 </dd>
 <dt>
-<code>rotate_consensus_key_events: <a href="event.md#0x1_event_EventHandle">event::EventHandle</a>&lt;<a href="stake.md#0x1_stake_RotateConsensusKeyEvent">stake::RotateConsensusKeyEvent</a>&gt;</code>
+<code>rotate_consensus_key_events: <a href="event.md#0x1_event_EventHandle">event::EventHandle</a>&lt;<a href="stake.md#0x1_stake_old_RotateConsensusKeyEvent">stake_old::RotateConsensusKeyEvent</a>&gt;</code>
 </dt>
 <dd>
 
 </dd>
 <dt>
-<code>update_network_and_fullnode_addresses_events: <a href="event.md#0x1_event_EventHandle">event::EventHandle</a>&lt;<a href="stake.md#0x1_stake_UpdateNetworkAndFullnodeAddressesEvent">stake::UpdateNetworkAndFullnodeAddressesEvent</a>&gt;</code>
+<code>update_network_and_fullnode_addresses_events: <a href="event.md#0x1_event_EventHandle">event::EventHandle</a>&lt;<a href="stake.md#0x1_stake_old_UpdateNetworkAndFullnodeAddressesEvent">stake_old::UpdateNetworkAndFullnodeAddressesEvent</a>&gt;</code>
 </dt>
 <dd>
 
 </dd>
 <dt>
-<code>increase_lockup_events: <a href="event.md#0x1_event_EventHandle">event::EventHandle</a>&lt;<a href="stake.md#0x1_stake_IncreaseLockupEvent">stake::IncreaseLockupEvent</a>&gt;</code>
+<code>increase_lockup_events: <a href="event.md#0x1_event_EventHandle">event::EventHandle</a>&lt;<a href="stake.md#0x1_stake_old_IncreaseLockupEvent">stake_old::IncreaseLockupEvent</a>&gt;</code>
 </dt>
 <dd>
 
 </dd>
 <dt>
-<code>join_validator_set_events: <a href="event.md#0x1_event_EventHandle">event::EventHandle</a>&lt;<a href="stake.md#0x1_stake_JoinValidatorSetEvent">stake::JoinValidatorSetEvent</a>&gt;</code>
+<code>join_validator_set_events: <a href="event.md#0x1_event_EventHandle">event::EventHandle</a>&lt;<a href="stake.md#0x1_stake_old_JoinValidatorSetEvent">stake_old::JoinValidatorSetEvent</a>&gt;</code>
 </dt>
 <dd>
 
 </dd>
 <dt>
-<code>distribute_rewards_events: <a href="event.md#0x1_event_EventHandle">event::EventHandle</a>&lt;<a href="stake.md#0x1_stake_DistributeRewardsEvent">stake::DistributeRewardsEvent</a>&gt;</code>
+<code>distribute_rewards_events: <a href="event.md#0x1_event_EventHandle">event::EventHandle</a>&lt;<a href="stake.md#0x1_stake_old_DistributeRewardsEvent">stake_old::DistributeRewardsEvent</a>&gt;</code>
 </dt>
 <dd>
 
 </dd>
 <dt>
-<code>unlock_stake_events: <a href="event.md#0x1_event_EventHandle">event::EventHandle</a>&lt;<a href="stake.md#0x1_stake_UnlockStakeEvent">stake::UnlockStakeEvent</a>&gt;</code>
+<code>unlock_stake_events: <a href="event.md#0x1_event_EventHandle">event::EventHandle</a>&lt;<a href="stake.md#0x1_stake_old_UnlockStakeEvent">stake_old::UnlockStakeEvent</a>&gt;</code>
 </dt>
 <dd>
 
 </dd>
 <dt>
-<code>withdraw_stake_events: <a href="event.md#0x1_event_EventHandle">event::EventHandle</a>&lt;<a href="stake.md#0x1_stake_WithdrawStakeEvent">stake::WithdrawStakeEvent</a>&gt;</code>
+<code>withdraw_stake_events: <a href="event.md#0x1_event_EventHandle">event::EventHandle</a>&lt;<a href="stake.md#0x1_stake_old_WithdrawStakeEvent">stake_old::WithdrawStakeEvent</a>&gt;</code>
 </dt>
 <dd>
 
 </dd>
 <dt>
-<code>leave_validator_set_events: <a href="event.md#0x1_event_EventHandle">event::EventHandle</a>&lt;<a href="stake.md#0x1_stake_LeaveValidatorSetEvent">stake::LeaveValidatorSetEvent</a>&gt;</code>
+<code>leave_validator_set_events: <a href="event.md#0x1_event_EventHandle">event::EventHandle</a>&lt;<a href="stake.md#0x1_stake_old_LeaveValidatorSetEvent">stake_old::LeaveValidatorSetEvent</a>&gt;</code>
 </dt>
 <dd>
 
@@ -321,14 +321,14 @@ Changes in stake for an inactive validator:
 
 </details>
 
-<a name="0x1_stake_ValidatorConfig"></a>
+<a name="0x1_stake_old_ValidatorConfig"></a>
 
 ## Resource `ValidatorConfig`
 
 Validator info stored in validator address.
 
 
-<pre><code><b>struct</b> <a href="stake.md#0x1_stake_ValidatorConfig">ValidatorConfig</a> <b>has</b> <b>copy</b>, drop, store, key
+<pre><code><b>struct</b> <a href="stake.md#0x1_stake_old_ValidatorConfig">ValidatorConfig</a> <b>has</b> <b>copy</b>, drop, store, key
 </code></pre>
 
 
@@ -367,14 +367,14 @@ Validator info stored in validator address.
 
 </details>
 
-<a name="0x1_stake_ValidatorInfo"></a>
+<a name="0x1_stake_old_ValidatorInfo"></a>
 
 ## Struct `ValidatorInfo`
 
 Consensus information per validator, stored in ValidatorSet.
 
 
-<pre><code><b>struct</b> <a href="stake.md#0x1_stake_ValidatorInfo">ValidatorInfo</a> <b>has</b> <b>copy</b>, drop, store
+<pre><code><b>struct</b> <a href="stake.md#0x1_stake_old_ValidatorInfo">ValidatorInfo</a> <b>has</b> <b>copy</b>, drop, store
 </code></pre>
 
 
@@ -397,7 +397,7 @@ Consensus information per validator, stored in ValidatorSet.
 
 </dd>
 <dt>
-<code>config: <a href="stake.md#0x1_stake_ValidatorConfig">stake::ValidatorConfig</a></code>
+<code>config: <a href="stake.md#0x1_stake_old_ValidatorConfig">stake_old::ValidatorConfig</a></code>
 </dt>
 <dd>
 
@@ -407,7 +407,7 @@ Consensus information per validator, stored in ValidatorSet.
 
 </details>
 
-<a name="0x1_stake_ValidatorSet"></a>
+<a name="0x1_stake_old_ValidatorSet"></a>
 
 ## Resource `ValidatorSet`
 
@@ -417,7 +417,7 @@ Full ValidatorSet, stored in @aptos_framework.
 3. on_new_epoch processes two pending queues and refresh ValidatorInfo from the owner's address.
 
 
-<pre><code><b>struct</b> <a href="stake.md#0x1_stake_ValidatorSet">ValidatorSet</a> <b>has</b> key
+<pre><code><b>struct</b> <a href="stake.md#0x1_stake_old_ValidatorSet">ValidatorSet</a> <b>has</b> key
 </code></pre>
 
 
@@ -434,19 +434,19 @@ Full ValidatorSet, stored in @aptos_framework.
 
 </dd>
 <dt>
-<code>active_validators: <a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector">vector</a>&lt;<a href="stake.md#0x1_stake_ValidatorInfo">stake::ValidatorInfo</a>&gt;</code>
+<code>active_validators: <a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector">vector</a>&lt;<a href="stake.md#0x1_stake_old_ValidatorInfo">stake_old::ValidatorInfo</a>&gt;</code>
 </dt>
 <dd>
 
 </dd>
 <dt>
-<code>pending_inactive: <a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector">vector</a>&lt;<a href="stake.md#0x1_stake_ValidatorInfo">stake::ValidatorInfo</a>&gt;</code>
+<code>pending_inactive: <a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector">vector</a>&lt;<a href="stake.md#0x1_stake_old_ValidatorInfo">stake_old::ValidatorInfo</a>&gt;</code>
 </dt>
 <dd>
 
 </dd>
 <dt>
-<code>pending_active: <a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector">vector</a>&lt;<a href="stake.md#0x1_stake_ValidatorInfo">stake::ValidatorInfo</a>&gt;</code>
+<code>pending_active: <a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector">vector</a>&lt;<a href="stake.md#0x1_stake_old_ValidatorInfo">stake_old::ValidatorInfo</a>&gt;</code>
 </dt>
 <dd>
 
@@ -468,7 +468,7 @@ Full ValidatorSet, stored in @aptos_framework.
 
 </details>
 
-<a name="0x1_stake_AptosCoinCapabilities"></a>
+<a name="0x1_stake_old_AptosCoinCapabilities"></a>
 
 ## Resource `AptosCoinCapabilities`
 
@@ -476,7 +476,7 @@ AptosCoin capabilities, set during genesis and stored in @CoreResource account.
 This allows the Stake module to mint rewards to stakers.
 
 
-<pre><code><b>struct</b> <a href="stake.md#0x1_stake_AptosCoinCapabilities">AptosCoinCapabilities</a> <b>has</b> key
+<pre><code><b>struct</b> <a href="stake.md#0x1_stake_old_AptosCoinCapabilities">AptosCoinCapabilities</a> <b>has</b> key
 </code></pre>
 
 
@@ -497,13 +497,13 @@ This allows the Stake module to mint rewards to stakers.
 
 </details>
 
-<a name="0x1_stake_IndividualValidatorPerformance"></a>
+<a name="0x1_stake_old_IndividualValidatorPerformance"></a>
 
 ## Struct `IndividualValidatorPerformance`
 
 
 
-<pre><code><b>struct</b> <a href="stake.md#0x1_stake_IndividualValidatorPerformance">IndividualValidatorPerformance</a> <b>has</b> drop, store
+<pre><code><b>struct</b> <a href="stake.md#0x1_stake_old_IndividualValidatorPerformance">IndividualValidatorPerformance</a> <b>has</b> drop, store
 </code></pre>
 
 
@@ -530,13 +530,13 @@ This allows the Stake module to mint rewards to stakers.
 
 </details>
 
-<a name="0x1_stake_ValidatorPerformance"></a>
+<a name="0x1_stake_old_ValidatorPerformance"></a>
 
 ## Resource `ValidatorPerformance`
 
 
 
-<pre><code><b>struct</b> <a href="stake.md#0x1_stake_ValidatorPerformance">ValidatorPerformance</a> <b>has</b> key
+<pre><code><b>struct</b> <a href="stake.md#0x1_stake_old_ValidatorPerformance">ValidatorPerformance</a> <b>has</b> key
 </code></pre>
 
 
@@ -547,7 +547,7 @@ This allows the Stake module to mint rewards to stakers.
 
 <dl>
 <dt>
-<code>validators: <a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector">vector</a>&lt;<a href="stake.md#0x1_stake_IndividualValidatorPerformance">stake::IndividualValidatorPerformance</a>&gt;</code>
+<code>validators: <a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector">vector</a>&lt;<a href="stake.md#0x1_stake_old_IndividualValidatorPerformance">stake_old::IndividualValidatorPerformance</a>&gt;</code>
 </dt>
 <dd>
 
@@ -557,13 +557,13 @@ This allows the Stake module to mint rewards to stakers.
 
 </details>
 
-<a name="0x1_stake_RegisterValidatorCandidateEvent"></a>
+<a name="0x1_stake_old_RegisterValidatorCandidateEvent"></a>
 
 ## Struct `RegisterValidatorCandidateEvent`
 
 
 
-<pre><code><b>struct</b> <a href="stake.md#0x1_stake_RegisterValidatorCandidateEvent">RegisterValidatorCandidateEvent</a> <b>has</b> drop, store
+<pre><code><b>struct</b> <a href="stake.md#0x1_stake_old_RegisterValidatorCandidateEvent">RegisterValidatorCandidateEvent</a> <b>has</b> drop, store
 </code></pre>
 
 
@@ -584,13 +584,13 @@ This allows the Stake module to mint rewards to stakers.
 
 </details>
 
-<a name="0x1_stake_SetOperatorEvent"></a>
+<a name="0x1_stake_old_SetOperatorEvent"></a>
 
 ## Struct `SetOperatorEvent`
 
 
 
-<pre><code><b>struct</b> <a href="stake.md#0x1_stake_SetOperatorEvent">SetOperatorEvent</a> <b>has</b> drop, store
+<pre><code><b>struct</b> <a href="stake.md#0x1_stake_old_SetOperatorEvent">SetOperatorEvent</a> <b>has</b> drop, store
 </code></pre>
 
 
@@ -623,13 +623,13 @@ This allows the Stake module to mint rewards to stakers.
 
 </details>
 
-<a name="0x1_stake_AddStakeEvent"></a>
+<a name="0x1_stake_old_AddStakeEvent"></a>
 
 ## Struct `AddStakeEvent`
 
 
 
-<pre><code><b>struct</b> <a href="stake.md#0x1_stake_AddStakeEvent">AddStakeEvent</a> <b>has</b> drop, store
+<pre><code><b>struct</b> <a href="stake.md#0x1_stake_old_AddStakeEvent">AddStakeEvent</a> <b>has</b> drop, store
 </code></pre>
 
 
@@ -656,13 +656,13 @@ This allows the Stake module to mint rewards to stakers.
 
 </details>
 
-<a name="0x1_stake_ReactivateStakeEvent"></a>
+<a name="0x1_stake_old_ReactivateStakeEvent"></a>
 
 ## Struct `ReactivateStakeEvent`
 
 
 
-<pre><code><b>struct</b> <a href="stake.md#0x1_stake_ReactivateStakeEvent">ReactivateStakeEvent</a> <b>has</b> drop, store
+<pre><code><b>struct</b> <a href="stake.md#0x1_stake_old_ReactivateStakeEvent">ReactivateStakeEvent</a> <b>has</b> drop, store
 </code></pre>
 
 
@@ -689,13 +689,13 @@ This allows the Stake module to mint rewards to stakers.
 
 </details>
 
-<a name="0x1_stake_RotateConsensusKeyEvent"></a>
+<a name="0x1_stake_old_RotateConsensusKeyEvent"></a>
 
 ## Struct `RotateConsensusKeyEvent`
 
 
 
-<pre><code><b>struct</b> <a href="stake.md#0x1_stake_RotateConsensusKeyEvent">RotateConsensusKeyEvent</a> <b>has</b> drop, store
+<pre><code><b>struct</b> <a href="stake.md#0x1_stake_old_RotateConsensusKeyEvent">RotateConsensusKeyEvent</a> <b>has</b> drop, store
 </code></pre>
 
 
@@ -728,13 +728,13 @@ This allows the Stake module to mint rewards to stakers.
 
 </details>
 
-<a name="0x1_stake_UpdateNetworkAndFullnodeAddressesEvent"></a>
+<a name="0x1_stake_old_UpdateNetworkAndFullnodeAddressesEvent"></a>
 
 ## Struct `UpdateNetworkAndFullnodeAddressesEvent`
 
 
 
-<pre><code><b>struct</b> <a href="stake.md#0x1_stake_UpdateNetworkAndFullnodeAddressesEvent">UpdateNetworkAndFullnodeAddressesEvent</a> <b>has</b> drop, store
+<pre><code><b>struct</b> <a href="stake.md#0x1_stake_old_UpdateNetworkAndFullnodeAddressesEvent">UpdateNetworkAndFullnodeAddressesEvent</a> <b>has</b> drop, store
 </code></pre>
 
 
@@ -779,13 +779,13 @@ This allows the Stake module to mint rewards to stakers.
 
 </details>
 
-<a name="0x1_stake_IncreaseLockupEvent"></a>
+<a name="0x1_stake_old_IncreaseLockupEvent"></a>
 
 ## Struct `IncreaseLockupEvent`
 
 
 
-<pre><code><b>struct</b> <a href="stake.md#0x1_stake_IncreaseLockupEvent">IncreaseLockupEvent</a> <b>has</b> drop, store
+<pre><code><b>struct</b> <a href="stake.md#0x1_stake_old_IncreaseLockupEvent">IncreaseLockupEvent</a> <b>has</b> drop, store
 </code></pre>
 
 
@@ -818,13 +818,13 @@ This allows the Stake module to mint rewards to stakers.
 
 </details>
 
-<a name="0x1_stake_JoinValidatorSetEvent"></a>
+<a name="0x1_stake_old_JoinValidatorSetEvent"></a>
 
 ## Struct `JoinValidatorSetEvent`
 
 
 
-<pre><code><b>struct</b> <a href="stake.md#0x1_stake_JoinValidatorSetEvent">JoinValidatorSetEvent</a> <b>has</b> drop, store
+<pre><code><b>struct</b> <a href="stake.md#0x1_stake_old_JoinValidatorSetEvent">JoinValidatorSetEvent</a> <b>has</b> drop, store
 </code></pre>
 
 
@@ -845,13 +845,13 @@ This allows the Stake module to mint rewards to stakers.
 
 </details>
 
-<a name="0x1_stake_DistributeRewardsEvent"></a>
+<a name="0x1_stake_old_DistributeRewardsEvent"></a>
 
 ## Struct `DistributeRewardsEvent`
 
 
 
-<pre><code><b>struct</b> <a href="stake.md#0x1_stake_DistributeRewardsEvent">DistributeRewardsEvent</a> <b>has</b> drop, store
+<pre><code><b>struct</b> <a href="stake.md#0x1_stake_old_DistributeRewardsEvent">DistributeRewardsEvent</a> <b>has</b> drop, store
 </code></pre>
 
 
@@ -878,13 +878,13 @@ This allows the Stake module to mint rewards to stakers.
 
 </details>
 
-<a name="0x1_stake_UnlockStakeEvent"></a>
+<a name="0x1_stake_old_UnlockStakeEvent"></a>
 
 ## Struct `UnlockStakeEvent`
 
 
 
-<pre><code><b>struct</b> <a href="stake.md#0x1_stake_UnlockStakeEvent">UnlockStakeEvent</a> <b>has</b> drop, store
+<pre><code><b>struct</b> <a href="stake.md#0x1_stake_old_UnlockStakeEvent">UnlockStakeEvent</a> <b>has</b> drop, store
 </code></pre>
 
 
@@ -911,13 +911,13 @@ This allows the Stake module to mint rewards to stakers.
 
 </details>
 
-<a name="0x1_stake_WithdrawStakeEvent"></a>
+<a name="0x1_stake_old_WithdrawStakeEvent"></a>
 
 ## Struct `WithdrawStakeEvent`
 
 
 
-<pre><code><b>struct</b> <a href="stake.md#0x1_stake_WithdrawStakeEvent">WithdrawStakeEvent</a> <b>has</b> drop, store
+<pre><code><b>struct</b> <a href="stake.md#0x1_stake_old_WithdrawStakeEvent">WithdrawStakeEvent</a> <b>has</b> drop, store
 </code></pre>
 
 
@@ -944,13 +944,13 @@ This allows the Stake module to mint rewards to stakers.
 
 </details>
 
-<a name="0x1_stake_LeaveValidatorSetEvent"></a>
+<a name="0x1_stake_old_LeaveValidatorSetEvent"></a>
 
 ## Struct `LeaveValidatorSetEvent`
 
 
 
-<pre><code><b>struct</b> <a href="stake.md#0x1_stake_LeaveValidatorSetEvent">LeaveValidatorSetEvent</a> <b>has</b> drop, store
+<pre><code><b>struct</b> <a href="stake.md#0x1_stake_old_LeaveValidatorSetEvent">LeaveValidatorSetEvent</a> <b>has</b> drop, store
 </code></pre>
 
 
@@ -971,7 +971,7 @@ This allows the Stake module to mint rewards to stakers.
 
 </details>
 
-<a name="0x1_stake_ValidatorFees"></a>
+<a name="0x1_stake_old_ValidatorFees"></a>
 
 ## Resource `ValidatorFees`
 
@@ -979,7 +979,7 @@ Stores transaction fees assigned to validators. All fees are distributed to vali
 at the end of the epoch.
 
 
-<pre><code><b>struct</b> <a href="stake.md#0x1_stake_ValidatorFees">ValidatorFees</a> <b>has</b> key
+<pre><code><b>struct</b> <a href="stake.md#0x1_stake_old_ValidatorFees">ValidatorFees</a> <b>has</b> key
 </code></pre>
 
 
@@ -1000,7 +1000,7 @@ at the end of the epoch.
 
 </details>
 
-<a name="0x1_stake_AllowedValidators"></a>
+<a name="0x1_stake_old_AllowedValidators"></a>
 
 ## Resource `AllowedValidators`
 
@@ -1009,7 +1009,7 @@ This allows a testnet to bring additional entities into the validator set withou
 security of the testnet. This will NOT be enabled in Mainnet.
 
 
-<pre><code><b>struct</b> <a href="stake.md#0x1_stake_AllowedValidators">AllowedValidators</a> <b>has</b> key
+<pre><code><b>struct</b> <a href="stake.md#0x1_stake_old_AllowedValidators">AllowedValidators</a> <b>has</b> key
 </code></pre>
 
 
@@ -1035,264 +1035,264 @@ security of the testnet. This will NOT be enabled in Mainnet.
 ## Constants
 
 
-<a name="0x1_stake_MAX_U64"></a>
+<a name="0x1_stake_old_MAX_U64"></a>
 
 
 
-<pre><code><b>const</b> <a href="stake.md#0x1_stake_MAX_U64">MAX_U64</a>: u128 = 18446744073709551615;
+<pre><code><b>const</b> <a href="stake.md#0x1_stake_old_MAX_U64">MAX_U64</a>: u128 = 18446744073709551615;
 </code></pre>
 
 
 
-<a name="0x1_stake_EALREADY_ACTIVE_VALIDATOR"></a>
+<a name="0x1_stake_old_EALREADY_ACTIVE_VALIDATOR"></a>
 
 Account is already a validator or pending validator.
 
 
-<pre><code><b>const</b> <a href="stake.md#0x1_stake_EALREADY_ACTIVE_VALIDATOR">EALREADY_ACTIVE_VALIDATOR</a>: u64 = 4;
+<pre><code><b>const</b> <a href="stake.md#0x1_stake_old_EALREADY_ACTIVE_VALIDATOR">EALREADY_ACTIVE_VALIDATOR</a>: u64 = 4;
 </code></pre>
 
 
 
-<a name="0x1_stake_EALREADY_REGISTERED"></a>
+<a name="0x1_stake_old_EALREADY_REGISTERED"></a>
 
 Account is already registered as a validator candidate.
 
 
-<pre><code><b>const</b> <a href="stake.md#0x1_stake_EALREADY_REGISTERED">EALREADY_REGISTERED</a>: u64 = 8;
+<pre><code><b>const</b> <a href="stake.md#0x1_stake_old_EALREADY_REGISTERED">EALREADY_REGISTERED</a>: u64 = 8;
 </code></pre>
 
 
 
-<a name="0x1_stake_EFEES_TABLE_ALREADY_EXISTS"></a>
+<a name="0x1_stake_old_EFEES_TABLE_ALREADY_EXISTS"></a>
 
 Table to store collected transaction fees for each validator already exists.
 
 
-<pre><code><b>const</b> <a href="stake.md#0x1_stake_EFEES_TABLE_ALREADY_EXISTS">EFEES_TABLE_ALREADY_EXISTS</a>: u64 = 19;
+<pre><code><b>const</b> <a href="stake.md#0x1_stake_old_EFEES_TABLE_ALREADY_EXISTS">EFEES_TABLE_ALREADY_EXISTS</a>: u64 = 19;
 </code></pre>
 
 
 
-<a name="0x1_stake_EINELIGIBLE_VALIDATOR"></a>
+<a name="0x1_stake_old_EINELIGIBLE_VALIDATOR"></a>
 
 Validator is not defined in the ACL of entities allowed to be validators
 
 
-<pre><code><b>const</b> <a href="stake.md#0x1_stake_EINELIGIBLE_VALIDATOR">EINELIGIBLE_VALIDATOR</a>: u64 = 17;
+<pre><code><b>const</b> <a href="stake.md#0x1_stake_old_EINELIGIBLE_VALIDATOR">EINELIGIBLE_VALIDATOR</a>: u64 = 17;
 </code></pre>
 
 
 
-<a name="0x1_stake_EINVALID_LOCKUP"></a>
+<a name="0x1_stake_old_EINVALID_LOCKUP"></a>
 
 Cannot update stake pool's lockup to earlier than current lockup.
 
 
-<pre><code><b>const</b> <a href="stake.md#0x1_stake_EINVALID_LOCKUP">EINVALID_LOCKUP</a>: u64 = 18;
+<pre><code><b>const</b> <a href="stake.md#0x1_stake_old_EINVALID_LOCKUP">EINVALID_LOCKUP</a>: u64 = 18;
 </code></pre>
 
 
 
-<a name="0x1_stake_EINVALID_PUBLIC_KEY"></a>
+<a name="0x1_stake_old_EINVALID_PUBLIC_KEY"></a>
 
 Invalid consensus public key
 
 
-<pre><code><b>const</b> <a href="stake.md#0x1_stake_EINVALID_PUBLIC_KEY">EINVALID_PUBLIC_KEY</a>: u64 = 11;
+<pre><code><b>const</b> <a href="stake.md#0x1_stake_old_EINVALID_PUBLIC_KEY">EINVALID_PUBLIC_KEY</a>: u64 = 11;
 </code></pre>
 
 
 
-<a name="0x1_stake_ELAST_VALIDATOR"></a>
+<a name="0x1_stake_old_ELAST_VALIDATOR"></a>
 
 Can't remove last validator.
 
 
-<pre><code><b>const</b> <a href="stake.md#0x1_stake_ELAST_VALIDATOR">ELAST_VALIDATOR</a>: u64 = 6;
+<pre><code><b>const</b> <a href="stake.md#0x1_stake_old_ELAST_VALIDATOR">ELAST_VALIDATOR</a>: u64 = 6;
 </code></pre>
 
 
 
-<a name="0x1_stake_ENOT_OPERATOR"></a>
+<a name="0x1_stake_old_ENOT_OPERATOR"></a>
 
 Account does not have the right operator capability.
 
 
-<pre><code><b>const</b> <a href="stake.md#0x1_stake_ENOT_OPERATOR">ENOT_OPERATOR</a>: u64 = 9;
+<pre><code><b>const</b> <a href="stake.md#0x1_stake_old_ENOT_OPERATOR">ENOT_OPERATOR</a>: u64 = 9;
 </code></pre>
 
 
 
-<a name="0x1_stake_ENOT_VALIDATOR"></a>
+<a name="0x1_stake_old_ENOT_VALIDATOR"></a>
 
 Account is not a validator.
 
 
-<pre><code><b>const</b> <a href="stake.md#0x1_stake_ENOT_VALIDATOR">ENOT_VALIDATOR</a>: u64 = 5;
+<pre><code><b>const</b> <a href="stake.md#0x1_stake_old_ENOT_VALIDATOR">ENOT_VALIDATOR</a>: u64 = 5;
 </code></pre>
 
 
 
-<a name="0x1_stake_ENO_POST_GENESIS_VALIDATOR_SET_CHANGE_ALLOWED"></a>
+<a name="0x1_stake_old_ENO_POST_GENESIS_VALIDATOR_SET_CHANGE_ALLOWED"></a>
 
 Validators cannot join or leave post genesis on this test network.
 
 
-<pre><code><b>const</b> <a href="stake.md#0x1_stake_ENO_POST_GENESIS_VALIDATOR_SET_CHANGE_ALLOWED">ENO_POST_GENESIS_VALIDATOR_SET_CHANGE_ALLOWED</a>: u64 = 10;
+<pre><code><b>const</b> <a href="stake.md#0x1_stake_old_ENO_POST_GENESIS_VALIDATOR_SET_CHANGE_ALLOWED">ENO_POST_GENESIS_VALIDATOR_SET_CHANGE_ALLOWED</a>: u64 = 10;
 </code></pre>
 
 
 
-<a name="0x1_stake_EOWNER_CAP_ALREADY_EXISTS"></a>
+<a name="0x1_stake_old_EOWNER_CAP_ALREADY_EXISTS"></a>
 
 An account cannot own more than one owner capability.
 
 
-<pre><code><b>const</b> <a href="stake.md#0x1_stake_EOWNER_CAP_ALREADY_EXISTS">EOWNER_CAP_ALREADY_EXISTS</a>: u64 = 16;
+<pre><code><b>const</b> <a href="stake.md#0x1_stake_old_EOWNER_CAP_ALREADY_EXISTS">EOWNER_CAP_ALREADY_EXISTS</a>: u64 = 16;
 </code></pre>
 
 
 
-<a name="0x1_stake_EOWNER_CAP_NOT_FOUND"></a>
+<a name="0x1_stake_old_EOWNER_CAP_NOT_FOUND"></a>
 
 Owner capability does not exist at the provided account.
 
 
-<pre><code><b>const</b> <a href="stake.md#0x1_stake_EOWNER_CAP_NOT_FOUND">EOWNER_CAP_NOT_FOUND</a>: u64 = 15;
+<pre><code><b>const</b> <a href="stake.md#0x1_stake_old_EOWNER_CAP_NOT_FOUND">EOWNER_CAP_NOT_FOUND</a>: u64 = 15;
 </code></pre>
 
 
 
-<a name="0x1_stake_ESTAKE_EXCEEDS_MAX"></a>
+<a name="0x1_stake_old_ESTAKE_EXCEEDS_MAX"></a>
 
 Total stake exceeds maximum allowed.
 
 
-<pre><code><b>const</b> <a href="stake.md#0x1_stake_ESTAKE_EXCEEDS_MAX">ESTAKE_EXCEEDS_MAX</a>: u64 = 7;
+<pre><code><b>const</b> <a href="stake.md#0x1_stake_old_ESTAKE_EXCEEDS_MAX">ESTAKE_EXCEEDS_MAX</a>: u64 = 7;
 </code></pre>
 
 
 
-<a name="0x1_stake_ESTAKE_POOL_DOES_NOT_EXIST"></a>
+<a name="0x1_stake_old_ESTAKE_POOL_DOES_NOT_EXIST"></a>
 
 Stake pool does not exist at the provided pool address.
 
 
-<pre><code><b>const</b> <a href="stake.md#0x1_stake_ESTAKE_POOL_DOES_NOT_EXIST">ESTAKE_POOL_DOES_NOT_EXIST</a>: u64 = 14;
+<pre><code><b>const</b> <a href="stake.md#0x1_stake_old_ESTAKE_POOL_DOES_NOT_EXIST">ESTAKE_POOL_DOES_NOT_EXIST</a>: u64 = 14;
 </code></pre>
 
 
 
-<a name="0x1_stake_ESTAKE_TOO_HIGH"></a>
+<a name="0x1_stake_old_ESTAKE_TOO_HIGH"></a>
 
 Too much stake to join validator set.
 
 
-<pre><code><b>const</b> <a href="stake.md#0x1_stake_ESTAKE_TOO_HIGH">ESTAKE_TOO_HIGH</a>: u64 = 3;
+<pre><code><b>const</b> <a href="stake.md#0x1_stake_old_ESTAKE_TOO_HIGH">ESTAKE_TOO_HIGH</a>: u64 = 3;
 </code></pre>
 
 
 
-<a name="0x1_stake_ESTAKE_TOO_LOW"></a>
+<a name="0x1_stake_old_ESTAKE_TOO_LOW"></a>
 
 Not enough stake to join validator set.
 
 
-<pre><code><b>const</b> <a href="stake.md#0x1_stake_ESTAKE_TOO_LOW">ESTAKE_TOO_LOW</a>: u64 = 2;
+<pre><code><b>const</b> <a href="stake.md#0x1_stake_old_ESTAKE_TOO_LOW">ESTAKE_TOO_LOW</a>: u64 = 2;
 </code></pre>
 
 
 
-<a name="0x1_stake_EVALIDATOR_CONFIG"></a>
+<a name="0x1_stake_old_EVALIDATOR_CONFIG"></a>
 
 Validator Config not published.
 
 
-<pre><code><b>const</b> <a href="stake.md#0x1_stake_EVALIDATOR_CONFIG">EVALIDATOR_CONFIG</a>: u64 = 1;
+<pre><code><b>const</b> <a href="stake.md#0x1_stake_old_EVALIDATOR_CONFIG">EVALIDATOR_CONFIG</a>: u64 = 1;
 </code></pre>
 
 
 
-<a name="0x1_stake_EVALIDATOR_SET_TOO_LARGE"></a>
+<a name="0x1_stake_old_EVALIDATOR_SET_TOO_LARGE"></a>
 
 Validator set exceeds the limit
 
 
-<pre><code><b>const</b> <a href="stake.md#0x1_stake_EVALIDATOR_SET_TOO_LARGE">EVALIDATOR_SET_TOO_LARGE</a>: u64 = 12;
+<pre><code><b>const</b> <a href="stake.md#0x1_stake_old_EVALIDATOR_SET_TOO_LARGE">EVALIDATOR_SET_TOO_LARGE</a>: u64 = 12;
 </code></pre>
 
 
 
-<a name="0x1_stake_EVOTING_POWER_INCREASE_EXCEEDS_LIMIT"></a>
+<a name="0x1_stake_old_EVOTING_POWER_INCREASE_EXCEEDS_LIMIT"></a>
 
 Voting power increase has exceeded the limit for this current epoch.
 
 
-<pre><code><b>const</b> <a href="stake.md#0x1_stake_EVOTING_POWER_INCREASE_EXCEEDS_LIMIT">EVOTING_POWER_INCREASE_EXCEEDS_LIMIT</a>: u64 = 13;
+<pre><code><b>const</b> <a href="stake.md#0x1_stake_old_EVOTING_POWER_INCREASE_EXCEEDS_LIMIT">EVOTING_POWER_INCREASE_EXCEEDS_LIMIT</a>: u64 = 13;
 </code></pre>
 
 
 
-<a name="0x1_stake_MAX_REWARDS_RATE"></a>
+<a name="0x1_stake_old_MAX_REWARDS_RATE"></a>
 
 Limit the maximum value of <code>rewards_rate</code> in order to avoid any arithmetic overflow.
 
 
-<pre><code><b>const</b> <a href="stake.md#0x1_stake_MAX_REWARDS_RATE">MAX_REWARDS_RATE</a>: u64 = 1000000;
+<pre><code><b>const</b> <a href="stake.md#0x1_stake_old_MAX_REWARDS_RATE">MAX_REWARDS_RATE</a>: u64 = 1000000;
 </code></pre>
 
 
 
-<a name="0x1_stake_MAX_VALIDATOR_SET_SIZE"></a>
+<a name="0x1_stake_old_MAX_VALIDATOR_SET_SIZE"></a>
 
 Limit the maximum size to u16::max, it's the current limit of the bitvec
 https://github.com/aptos-labs/aptos-core/blob/main/crates/aptos-bitvec/src/lib.rs#L20
 
 
-<pre><code><b>const</b> <a href="stake.md#0x1_stake_MAX_VALIDATOR_SET_SIZE">MAX_VALIDATOR_SET_SIZE</a>: u64 = 65536;
+<pre><code><b>const</b> <a href="stake.md#0x1_stake_old_MAX_VALIDATOR_SET_SIZE">MAX_VALIDATOR_SET_SIZE</a>: u64 = 65536;
 </code></pre>
 
 
 
-<a name="0x1_stake_VALIDATOR_STATUS_ACTIVE"></a>
+<a name="0x1_stake_old_VALIDATOR_STATUS_ACTIVE"></a>
 
 
 
-<pre><code><b>const</b> <a href="stake.md#0x1_stake_VALIDATOR_STATUS_ACTIVE">VALIDATOR_STATUS_ACTIVE</a>: u64 = 2;
+<pre><code><b>const</b> <a href="stake.md#0x1_stake_old_VALIDATOR_STATUS_ACTIVE">VALIDATOR_STATUS_ACTIVE</a>: u64 = 2;
 </code></pre>
 
 
 
-<a name="0x1_stake_VALIDATOR_STATUS_INACTIVE"></a>
+<a name="0x1_stake_old_VALIDATOR_STATUS_INACTIVE"></a>
 
 
 
-<pre><code><b>const</b> <a href="stake.md#0x1_stake_VALIDATOR_STATUS_INACTIVE">VALIDATOR_STATUS_INACTIVE</a>: u64 = 4;
+<pre><code><b>const</b> <a href="stake.md#0x1_stake_old_VALIDATOR_STATUS_INACTIVE">VALIDATOR_STATUS_INACTIVE</a>: u64 = 4;
 </code></pre>
 
 
 
-<a name="0x1_stake_VALIDATOR_STATUS_PENDING_ACTIVE"></a>
+<a name="0x1_stake_old_VALIDATOR_STATUS_PENDING_ACTIVE"></a>
 
 Validator status enum. We can switch to proper enum later once Move supports it.
 
 
-<pre><code><b>const</b> <a href="stake.md#0x1_stake_VALIDATOR_STATUS_PENDING_ACTIVE">VALIDATOR_STATUS_PENDING_ACTIVE</a>: u64 = 1;
+<pre><code><b>const</b> <a href="stake.md#0x1_stake_old_VALIDATOR_STATUS_PENDING_ACTIVE">VALIDATOR_STATUS_PENDING_ACTIVE</a>: u64 = 1;
 </code></pre>
 
 
 
-<a name="0x1_stake_VALIDATOR_STATUS_PENDING_INACTIVE"></a>
+<a name="0x1_stake_old_VALIDATOR_STATUS_PENDING_INACTIVE"></a>
 
 
 
-<pre><code><b>const</b> <a href="stake.md#0x1_stake_VALIDATOR_STATUS_PENDING_INACTIVE">VALIDATOR_STATUS_PENDING_INACTIVE</a>: u64 = 3;
+<pre><code><b>const</b> <a href="stake.md#0x1_stake_old_VALIDATOR_STATUS_PENDING_INACTIVE">VALIDATOR_STATUS_PENDING_INACTIVE</a>: u64 = 3;
 </code></pre>
 
 
 
-<a name="0x1_stake_initialize_validator_fees"></a>
+<a name="0x1_stake_old_initialize_validator_fees"></a>
 
 ## Function `initialize_validator_fees`
 
@@ -1300,7 +1300,7 @@ Initializes the resource storing information about collected transaction fees pe
 Used by <code><a href="transaction_fee.md#0x1_transaction_fee">transaction_fee</a>.<b>move</b></code> to initialize fee collection and distribution.
 
 
-<pre><code><b>public</b>(<b>friend</b>) <b>fun</b> <a href="stake.md#0x1_stake_initialize_validator_fees">initialize_validator_fees</a>(aptos_framework: &<a href="../../aptos-stdlib/../move-stdlib/doc/signer.md#0x1_signer">signer</a>)
+<pre><code><b>public</b>(<b>friend</b>) <b>fun</b> <a href="stake.md#0x1_stake_old_initialize_validator_fees">initialize_validator_fees</a>(aptos_framework: &<a href="../../aptos-stdlib/../move-stdlib/doc/signer.md#0x1_signer">signer</a>)
 </code></pre>
 
 
@@ -1309,13 +1309,13 @@ Used by <code><a href="transaction_fee.md#0x1_transaction_fee">transaction_fee</
 <summary>Implementation</summary>
 
 
-<pre><code><b>public</b>(<b>friend</b>) <b>fun</b> <a href="stake.md#0x1_stake_initialize_validator_fees">initialize_validator_fees</a>(aptos_framework: &<a href="../../aptos-stdlib/../move-stdlib/doc/signer.md#0x1_signer">signer</a>) {
+<pre><code><b>public</b>(<b>friend</b>) <b>fun</b> <a href="stake.md#0x1_stake_old_initialize_validator_fees">initialize_validator_fees</a>(aptos_framework: &<a href="../../aptos-stdlib/../move-stdlib/doc/signer.md#0x1_signer">signer</a>) {
     <a href="system_addresses.md#0x1_system_addresses_assert_aptos_framework">system_addresses::assert_aptos_framework</a>(aptos_framework);
     <b>assert</b>!(
-        !<b>exists</b>&lt;<a href="stake.md#0x1_stake_ValidatorFees">ValidatorFees</a>&gt;(@aptos_framework),
-        <a href="../../aptos-stdlib/../move-stdlib/doc/error.md#0x1_error_already_exists">error::already_exists</a>(<a href="stake.md#0x1_stake_EFEES_TABLE_ALREADY_EXISTS">EFEES_TABLE_ALREADY_EXISTS</a>)
+        !<b>exists</b>&lt;<a href="stake.md#0x1_stake_old_ValidatorFees">ValidatorFees</a>&gt;(@aptos_framework),
+        <a href="../../aptos-stdlib/../move-stdlib/doc/error.md#0x1_error_already_exists">error::already_exists</a>(<a href="stake.md#0x1_stake_old_EFEES_TABLE_ALREADY_EXISTS">EFEES_TABLE_ALREADY_EXISTS</a>)
     );
-    <b>move_to</b>(aptos_framework, <a href="stake.md#0x1_stake_ValidatorFees">ValidatorFees</a> { fees_table: <a href="../../aptos-stdlib/doc/table.md#0x1_table_new">table::new</a>() });
+    <b>move_to</b>(aptos_framework, <a href="stake.md#0x1_stake_old_ValidatorFees">ValidatorFees</a> { fees_table: <a href="../../aptos-stdlib/doc/table.md#0x1_table_new">table::new</a>() });
 }
 </code></pre>
 
@@ -1323,14 +1323,14 @@ Used by <code><a href="transaction_fee.md#0x1_transaction_fee">transaction_fee</
 
 </details>
 
-<a name="0x1_stake_add_transaction_fee"></a>
+<a name="0x1_stake_old_add_transaction_fee"></a>
 
 ## Function `add_transaction_fee`
 
 Stores the transaction fee collected to the specified validator address.
 
 
-<pre><code><b>public</b>(<b>friend</b>) <b>fun</b> <a href="stake.md#0x1_stake_add_transaction_fee">add_transaction_fee</a>(validator_addr: <b>address</b>, fee: <a href="coin.md#0x1_coin_Coin">coin::Coin</a>&lt;<a href="aptos_coin.md#0x1_aptos_coin_AptosCoin">aptos_coin::AptosCoin</a>&gt;)
+<pre><code><b>public</b>(<b>friend</b>) <b>fun</b> <a href="stake.md#0x1_stake_old_add_transaction_fee">add_transaction_fee</a>(validator_addr: <b>address</b>, fee: <a href="coin.md#0x1_coin_Coin">coin::Coin</a>&lt;<a href="aptos_coin.md#0x1_aptos_coin_AptosCoin">aptos_coin::AptosCoin</a>&gt;)
 </code></pre>
 
 
@@ -1339,8 +1339,8 @@ Stores the transaction fee collected to the specified validator address.
 <summary>Implementation</summary>
 
 
-<pre><code><b>public</b>(<b>friend</b>) <b>fun</b> <a href="stake.md#0x1_stake_add_transaction_fee">add_transaction_fee</a>(validator_addr: <b>address</b>, fee: Coin&lt;AptosCoin&gt;) <b>acquires</b> <a href="stake.md#0x1_stake_ValidatorFees">ValidatorFees</a> {
-    <b>let</b> fees_table = &<b>mut</b> <b>borrow_global_mut</b>&lt;<a href="stake.md#0x1_stake_ValidatorFees">ValidatorFees</a>&gt;(@aptos_framework).fees_table;
+<pre><code><b>public</b>(<b>friend</b>) <b>fun</b> <a href="stake.md#0x1_stake_old_add_transaction_fee">add_transaction_fee</a>(validator_addr: <b>address</b>, fee: Coin&lt;AptosCoin&gt;) <b>acquires</b> <a href="stake.md#0x1_stake_old_ValidatorFees">ValidatorFees</a> {
+    <b>let</b> fees_table = &<b>mut</b> <b>borrow_global_mut</b>&lt;<a href="stake.md#0x1_stake_old_ValidatorFees">ValidatorFees</a>&gt;(@aptos_framework).fees_table;
     <b>if</b> (<a href="../../aptos-stdlib/doc/table.md#0x1_table_contains">table::contains</a>(fees_table, validator_addr)) {
         <b>let</b> collected_fee = <a href="../../aptos-stdlib/doc/table.md#0x1_table_borrow_mut">table::borrow_mut</a>(fees_table, validator_addr);
         <a href="coin.md#0x1_coin_merge">coin::merge</a>(collected_fee, fee);
@@ -1354,7 +1354,7 @@ Stores the transaction fee collected to the specified validator address.
 
 </details>
 
-<a name="0x1_stake_get_lockup_secs"></a>
+<a name="0x1_stake_old_get_lockup_secs"></a>
 
 ## Function `get_lockup_secs`
 
@@ -1362,7 +1362,7 @@ Return the lockup expiration of the stake pool at <code>pool_address</code>.
 This will throw an error if there's no stake pool at <code>pool_address</code>.
 
 
-<pre><code><b>public</b> <b>fun</b> <a href="stake.md#0x1_stake_get_lockup_secs">get_lockup_secs</a>(pool_address: <b>address</b>): u64
+<pre><code><b>public</b> <b>fun</b> <a href="stake.md#0x1_stake_old_get_lockup_secs">get_lockup_secs</a>(pool_address: <b>address</b>): u64
 </code></pre>
 
 
@@ -1371,9 +1371,9 @@ This will throw an error if there's no stake pool at <code>pool_address</code>.
 <summary>Implementation</summary>
 
 
-<pre><code><b>public</b> <b>fun</b> <a href="stake.md#0x1_stake_get_lockup_secs">get_lockup_secs</a>(pool_address: <b>address</b>): u64 <b>acquires</b> <a href="stake.md#0x1_stake_StakePool">StakePool</a> {
-    <a href="stake.md#0x1_stake_assert_stake_pool_exists">assert_stake_pool_exists</a>(pool_address);
-    <b>borrow_global</b>&lt;<a href="stake.md#0x1_stake_StakePool">StakePool</a>&gt;(pool_address).locked_until_secs
+<pre><code><b>public</b> <b>fun</b> <a href="stake.md#0x1_stake_old_get_lockup_secs">get_lockup_secs</a>(pool_address: <b>address</b>): u64 <b>acquires</b> <a href="stake.md#0x1_stake_old_StakePool">StakePool</a> {
+    <a href="stake.md#0x1_stake_old_assert_stake_pool_exists">assert_stake_pool_exists</a>(pool_address);
+    <b>borrow_global</b>&lt;<a href="stake.md#0x1_stake_old_StakePool">StakePool</a>&gt;(pool_address).locked_until_secs
 }
 </code></pre>
 
@@ -1381,7 +1381,7 @@ This will throw an error if there's no stake pool at <code>pool_address</code>.
 
 </details>
 
-<a name="0x1_stake_get_remaining_lockup_secs"></a>
+<a name="0x1_stake_old_get_remaining_lockup_secs"></a>
 
 ## Function `get_remaining_lockup_secs`
 
@@ -1389,7 +1389,7 @@ Return the remaining lockup of the stake pool at <code>pool_address</code>.
 This will throw an error if there's no stake pool at <code>pool_address</code>.
 
 
-<pre><code><b>public</b> <b>fun</b> <a href="stake.md#0x1_stake_get_remaining_lockup_secs">get_remaining_lockup_secs</a>(pool_address: <b>address</b>): u64
+<pre><code><b>public</b> <b>fun</b> <a href="stake.md#0x1_stake_old_get_remaining_lockup_secs">get_remaining_lockup_secs</a>(pool_address: <b>address</b>): u64
 </code></pre>
 
 
@@ -1398,9 +1398,9 @@ This will throw an error if there's no stake pool at <code>pool_address</code>.
 <summary>Implementation</summary>
 
 
-<pre><code><b>public</b> <b>fun</b> <a href="stake.md#0x1_stake_get_remaining_lockup_secs">get_remaining_lockup_secs</a>(pool_address: <b>address</b>): u64 <b>acquires</b> <a href="stake.md#0x1_stake_StakePool">StakePool</a> {
-    <a href="stake.md#0x1_stake_assert_stake_pool_exists">assert_stake_pool_exists</a>(pool_address);
-    <b>let</b> lockup_time = <b>borrow_global</b>&lt;<a href="stake.md#0x1_stake_StakePool">StakePool</a>&gt;(pool_address).locked_until_secs;
+<pre><code><b>public</b> <b>fun</b> <a href="stake.md#0x1_stake_old_get_remaining_lockup_secs">get_remaining_lockup_secs</a>(pool_address: <b>address</b>): u64 <b>acquires</b> <a href="stake.md#0x1_stake_old_StakePool">StakePool</a> {
+    <a href="stake.md#0x1_stake_old_assert_stake_pool_exists">assert_stake_pool_exists</a>(pool_address);
+    <b>let</b> lockup_time = <b>borrow_global</b>&lt;<a href="stake.md#0x1_stake_old_StakePool">StakePool</a>&gt;(pool_address).locked_until_secs;
     <b>if</b> (lockup_time &lt;= <a href="timestamp.md#0x1_timestamp_now_seconds">timestamp::now_seconds</a>()) {
         0
     } <b>else</b> {
@@ -1413,7 +1413,7 @@ This will throw an error if there's no stake pool at <code>pool_address</code>.
 
 </details>
 
-<a name="0x1_stake_get_stake"></a>
+<a name="0x1_stake_old_get_stake"></a>
 
 ## Function `get_stake`
 
@@ -1421,7 +1421,7 @@ Return the different stake amounts for <code>pool_address</code> (whether the va
 The returned amounts are for (active, inactive, pending_active, pending_inactive) stake respectively.
 
 
-<pre><code><b>public</b> <b>fun</b> <a href="stake.md#0x1_stake_get_stake">get_stake</a>(pool_address: <b>address</b>): (u64, u64, u64, u64)
+<pre><code><b>public</b> <b>fun</b> <a href="stake.md#0x1_stake_old_get_stake">get_stake</a>(pool_address: <b>address</b>): (u64, u64, u64, u64)
 </code></pre>
 
 
@@ -1430,9 +1430,9 @@ The returned amounts are for (active, inactive, pending_active, pending_inactive
 <summary>Implementation</summary>
 
 
-<pre><code><b>public</b> <b>fun</b> <a href="stake.md#0x1_stake_get_stake">get_stake</a>(pool_address: <b>address</b>): (u64, u64, u64, u64) <b>acquires</b> <a href="stake.md#0x1_stake_StakePool">StakePool</a> {
-    <a href="stake.md#0x1_stake_assert_stake_pool_exists">assert_stake_pool_exists</a>(pool_address);
-    <b>let</b> stake_pool = <b>borrow_global</b>&lt;<a href="stake.md#0x1_stake_StakePool">StakePool</a>&gt;(pool_address);
+<pre><code><b>public</b> <b>fun</b> <a href="stake.md#0x1_stake_old_get_stake">get_stake</a>(pool_address: <b>address</b>): (u64, u64, u64, u64) <b>acquires</b> <a href="stake.md#0x1_stake_old_StakePool">StakePool</a> {
+    <a href="stake.md#0x1_stake_old_assert_stake_pool_exists">assert_stake_pool_exists</a>(pool_address);
+    <b>let</b> stake_pool = <b>borrow_global</b>&lt;<a href="stake.md#0x1_stake_old_StakePool">StakePool</a>&gt;(pool_address);
     (
         <a href="coin.md#0x1_coin_value">coin::value</a>(&stake_pool.active),
         <a href="coin.md#0x1_coin_value">coin::value</a>(&stake_pool.inactive),
@@ -1446,14 +1446,14 @@ The returned amounts are for (active, inactive, pending_active, pending_inactive
 
 </details>
 
-<a name="0x1_stake_get_validator_state"></a>
+<a name="0x1_stake_old_get_validator_state"></a>
 
 ## Function `get_validator_state`
 
 Returns the validator's state.
 
 
-<pre><code><b>public</b> <b>fun</b> <a href="stake.md#0x1_stake_get_validator_state">get_validator_state</a>(pool_address: <b>address</b>): u64
+<pre><code><b>public</b> <b>fun</b> <a href="stake.md#0x1_stake_old_get_validator_state">get_validator_state</a>(pool_address: <b>address</b>): u64
 </code></pre>
 
 
@@ -1462,16 +1462,16 @@ Returns the validator's state.
 <summary>Implementation</summary>
 
 
-<pre><code><b>public</b> <b>fun</b> <a href="stake.md#0x1_stake_get_validator_state">get_validator_state</a>(pool_address: <b>address</b>): u64 <b>acquires</b> <a href="stake.md#0x1_stake_ValidatorSet">ValidatorSet</a> {
-    <b>let</b> validator_set = <b>borrow_global</b>&lt;<a href="stake.md#0x1_stake_ValidatorSet">ValidatorSet</a>&gt;(@aptos_framework);
-    <b>if</b> (<a href="../../aptos-stdlib/../move-stdlib/doc/option.md#0x1_option_is_some">option::is_some</a>(&<a href="stake.md#0x1_stake_find_validator">find_validator</a>(&validator_set.pending_active, pool_address))) {
-        <a href="stake.md#0x1_stake_VALIDATOR_STATUS_PENDING_ACTIVE">VALIDATOR_STATUS_PENDING_ACTIVE</a>
-    } <b>else</b> <b>if</b> (<a href="../../aptos-stdlib/../move-stdlib/doc/option.md#0x1_option_is_some">option::is_some</a>(&<a href="stake.md#0x1_stake_find_validator">find_validator</a>(&validator_set.active_validators, pool_address))) {
-        <a href="stake.md#0x1_stake_VALIDATOR_STATUS_ACTIVE">VALIDATOR_STATUS_ACTIVE</a>
-    } <b>else</b> <b>if</b> (<a href="../../aptos-stdlib/../move-stdlib/doc/option.md#0x1_option_is_some">option::is_some</a>(&<a href="stake.md#0x1_stake_find_validator">find_validator</a>(&validator_set.pending_inactive, pool_address))) {
-        <a href="stake.md#0x1_stake_VALIDATOR_STATUS_PENDING_INACTIVE">VALIDATOR_STATUS_PENDING_INACTIVE</a>
+<pre><code><b>public</b> <b>fun</b> <a href="stake.md#0x1_stake_old_get_validator_state">get_validator_state</a>(pool_address: <b>address</b>): u64 <b>acquires</b> <a href="stake.md#0x1_stake_old_ValidatorSet">ValidatorSet</a> {
+    <b>let</b> validator_set = <b>borrow_global</b>&lt;<a href="stake.md#0x1_stake_old_ValidatorSet">ValidatorSet</a>&gt;(@aptos_framework);
+    <b>if</b> (<a href="../../aptos-stdlib/../move-stdlib/doc/option.md#0x1_option_is_some">option::is_some</a>(&<a href="stake.md#0x1_stake_old_find_validator">find_validator</a>(&validator_set.pending_active, pool_address))) {
+        <a href="stake.md#0x1_stake_old_VALIDATOR_STATUS_PENDING_ACTIVE">VALIDATOR_STATUS_PENDING_ACTIVE</a>
+    } <b>else</b> <b>if</b> (<a href="../../aptos-stdlib/../move-stdlib/doc/option.md#0x1_option_is_some">option::is_some</a>(&<a href="stake.md#0x1_stake_old_find_validator">find_validator</a>(&validator_set.active_validators, pool_address))) {
+        <a href="stake.md#0x1_stake_old_VALIDATOR_STATUS_ACTIVE">VALIDATOR_STATUS_ACTIVE</a>
+    } <b>else</b> <b>if</b> (<a href="../../aptos-stdlib/../move-stdlib/doc/option.md#0x1_option_is_some">option::is_some</a>(&<a href="stake.md#0x1_stake_old_find_validator">find_validator</a>(&validator_set.pending_inactive, pool_address))) {
+        <a href="stake.md#0x1_stake_old_VALIDATOR_STATUS_PENDING_INACTIVE">VALIDATOR_STATUS_PENDING_INACTIVE</a>
     } <b>else</b> {
-        <a href="stake.md#0x1_stake_VALIDATOR_STATUS_INACTIVE">VALIDATOR_STATUS_INACTIVE</a>
+        <a href="stake.md#0x1_stake_old_VALIDATOR_STATUS_INACTIVE">VALIDATOR_STATUS_INACTIVE</a>
     }
 }
 </code></pre>
@@ -1480,7 +1480,7 @@ Returns the validator's state.
 
 </details>
 
-<a name="0x1_stake_get_current_epoch_voting_power"></a>
+<a name="0x1_stake_old_get_current_epoch_voting_power"></a>
 
 ## Function `get_current_epoch_voting_power`
 
@@ -1488,7 +1488,7 @@ Return the voting power of the validator in the current epoch.
 This is the same as the validator's total active and pending_inactive stake.
 
 
-<pre><code><b>public</b> <b>fun</b> <a href="stake.md#0x1_stake_get_current_epoch_voting_power">get_current_epoch_voting_power</a>(pool_address: <b>address</b>): u64
+<pre><code><b>public</b> <b>fun</b> <a href="stake.md#0x1_stake_old_get_current_epoch_voting_power">get_current_epoch_voting_power</a>(pool_address: <b>address</b>): u64
 </code></pre>
 
 
@@ -1497,13 +1497,13 @@ This is the same as the validator's total active and pending_inactive stake.
 <summary>Implementation</summary>
 
 
-<pre><code><b>public</b> <b>fun</b> <a href="stake.md#0x1_stake_get_current_epoch_voting_power">get_current_epoch_voting_power</a>(pool_address: <b>address</b>): u64 <b>acquires</b> <a href="stake.md#0x1_stake_StakePool">StakePool</a>, <a href="stake.md#0x1_stake_ValidatorSet">ValidatorSet</a> {
-    <a href="stake.md#0x1_stake_assert_stake_pool_exists">assert_stake_pool_exists</a>(pool_address);
-    <b>let</b> validator_state = <a href="stake.md#0x1_stake_get_validator_state">get_validator_state</a>(pool_address);
+<pre><code><b>public</b> <b>fun</b> <a href="stake.md#0x1_stake_old_get_current_epoch_voting_power">get_current_epoch_voting_power</a>(pool_address: <b>address</b>): u64 <b>acquires</b> <a href="stake.md#0x1_stake_old_StakePool">StakePool</a>, <a href="stake.md#0x1_stake_old_ValidatorSet">ValidatorSet</a> {
+    <a href="stake.md#0x1_stake_old_assert_stake_pool_exists">assert_stake_pool_exists</a>(pool_address);
+    <b>let</b> validator_state = <a href="stake.md#0x1_stake_old_get_validator_state">get_validator_state</a>(pool_address);
     // Both active and pending inactive validators can still vote in the current epoch.
-    <b>if</b> (validator_state == <a href="stake.md#0x1_stake_VALIDATOR_STATUS_ACTIVE">VALIDATOR_STATUS_ACTIVE</a> || validator_state == <a href="stake.md#0x1_stake_VALIDATOR_STATUS_PENDING_INACTIVE">VALIDATOR_STATUS_PENDING_INACTIVE</a>) {
-        <b>let</b> active_stake = <a href="coin.md#0x1_coin_value">coin::value</a>(&<b>borrow_global</b>&lt;<a href="stake.md#0x1_stake_StakePool">StakePool</a>&gt;(pool_address).active);
-        <b>let</b> pending_inactive_stake = <a href="coin.md#0x1_coin_value">coin::value</a>(&<b>borrow_global</b>&lt;<a href="stake.md#0x1_stake_StakePool">StakePool</a>&gt;(pool_address).pending_inactive);
+    <b>if</b> (validator_state == <a href="stake.md#0x1_stake_old_VALIDATOR_STATUS_ACTIVE">VALIDATOR_STATUS_ACTIVE</a> || validator_state == <a href="stake.md#0x1_stake_old_VALIDATOR_STATUS_PENDING_INACTIVE">VALIDATOR_STATUS_PENDING_INACTIVE</a>) {
+        <b>let</b> active_stake = <a href="coin.md#0x1_coin_value">coin::value</a>(&<b>borrow_global</b>&lt;<a href="stake.md#0x1_stake_old_StakePool">StakePool</a>&gt;(pool_address).active);
+        <b>let</b> pending_inactive_stake = <a href="coin.md#0x1_coin_value">coin::value</a>(&<b>borrow_global</b>&lt;<a href="stake.md#0x1_stake_old_StakePool">StakePool</a>&gt;(pool_address).pending_inactive);
         active_stake + pending_inactive_stake
     } <b>else</b> {
         0
@@ -1515,14 +1515,14 @@ This is the same as the validator's total active and pending_inactive stake.
 
 </details>
 
-<a name="0x1_stake_get_delegated_voter"></a>
+<a name="0x1_stake_old_get_delegated_voter"></a>
 
 ## Function `get_delegated_voter`
 
 Return the delegated voter of the validator at <code>pool_address</code>.
 
 
-<pre><code><b>public</b> <b>fun</b> <a href="stake.md#0x1_stake_get_delegated_voter">get_delegated_voter</a>(pool_address: <b>address</b>): <b>address</b>
+<pre><code><b>public</b> <b>fun</b> <a href="stake.md#0x1_stake_old_get_delegated_voter">get_delegated_voter</a>(pool_address: <b>address</b>): <b>address</b>
 </code></pre>
 
 
@@ -1531,9 +1531,9 @@ Return the delegated voter of the validator at <code>pool_address</code>.
 <summary>Implementation</summary>
 
 
-<pre><code><b>public</b> <b>fun</b> <a href="stake.md#0x1_stake_get_delegated_voter">get_delegated_voter</a>(pool_address: <b>address</b>): <b>address</b> <b>acquires</b> <a href="stake.md#0x1_stake_StakePool">StakePool</a> {
-    <a href="stake.md#0x1_stake_assert_stake_pool_exists">assert_stake_pool_exists</a>(pool_address);
-    <b>borrow_global</b>&lt;<a href="stake.md#0x1_stake_StakePool">StakePool</a>&gt;(pool_address).delegated_voter
+<pre><code><b>public</b> <b>fun</b> <a href="stake.md#0x1_stake_old_get_delegated_voter">get_delegated_voter</a>(pool_address: <b>address</b>): <b>address</b> <b>acquires</b> <a href="stake.md#0x1_stake_old_StakePool">StakePool</a> {
+    <a href="stake.md#0x1_stake_old_assert_stake_pool_exists">assert_stake_pool_exists</a>(pool_address);
+    <b>borrow_global</b>&lt;<a href="stake.md#0x1_stake_old_StakePool">StakePool</a>&gt;(pool_address).delegated_voter
 }
 </code></pre>
 
@@ -1541,14 +1541,14 @@ Return the delegated voter of the validator at <code>pool_address</code>.
 
 </details>
 
-<a name="0x1_stake_get_operator"></a>
+<a name="0x1_stake_old_get_operator"></a>
 
 ## Function `get_operator`
 
 Return the operator of the validator at <code>pool_address</code>.
 
 
-<pre><code><b>public</b> <b>fun</b> <a href="stake.md#0x1_stake_get_operator">get_operator</a>(pool_address: <b>address</b>): <b>address</b>
+<pre><code><b>public</b> <b>fun</b> <a href="stake.md#0x1_stake_old_get_operator">get_operator</a>(pool_address: <b>address</b>): <b>address</b>
 </code></pre>
 
 
@@ -1557,9 +1557,9 @@ Return the operator of the validator at <code>pool_address</code>.
 <summary>Implementation</summary>
 
 
-<pre><code><b>public</b> <b>fun</b> <a href="stake.md#0x1_stake_get_operator">get_operator</a>(pool_address: <b>address</b>): <b>address</b> <b>acquires</b> <a href="stake.md#0x1_stake_StakePool">StakePool</a> {
-    <a href="stake.md#0x1_stake_assert_stake_pool_exists">assert_stake_pool_exists</a>(pool_address);
-    <b>borrow_global</b>&lt;<a href="stake.md#0x1_stake_StakePool">StakePool</a>&gt;(pool_address).operator_address
+<pre><code><b>public</b> <b>fun</b> <a href="stake.md#0x1_stake_old_get_operator">get_operator</a>(pool_address: <b>address</b>): <b>address</b> <b>acquires</b> <a href="stake.md#0x1_stake_old_StakePool">StakePool</a> {
+    <a href="stake.md#0x1_stake_old_assert_stake_pool_exists">assert_stake_pool_exists</a>(pool_address);
+    <b>borrow_global</b>&lt;<a href="stake.md#0x1_stake_old_StakePool">StakePool</a>&gt;(pool_address).operator_address
 }
 </code></pre>
 
@@ -1567,14 +1567,14 @@ Return the operator of the validator at <code>pool_address</code>.
 
 </details>
 
-<a name="0x1_stake_get_owned_pool_address"></a>
+<a name="0x1_stake_old_get_owned_pool_address"></a>
 
 ## Function `get_owned_pool_address`
 
 Return the pool address in <code>owner_cap</code>.
 
 
-<pre><code><b>public</b> <b>fun</b> <a href="stake.md#0x1_stake_get_owned_pool_address">get_owned_pool_address</a>(owner_cap: &<a href="stake.md#0x1_stake_OwnerCapability">stake::OwnerCapability</a>): <b>address</b>
+<pre><code><b>public</b> <b>fun</b> <a href="stake.md#0x1_stake_old_get_owned_pool_address">get_owned_pool_address</a>(owner_cap: &<a href="stake.md#0x1_stake_old_OwnerCapability">stake_old::OwnerCapability</a>): <b>address</b>
 </code></pre>
 
 
@@ -1583,7 +1583,7 @@ Return the pool address in <code>owner_cap</code>.
 <summary>Implementation</summary>
 
 
-<pre><code><b>public</b> <b>fun</b> <a href="stake.md#0x1_stake_get_owned_pool_address">get_owned_pool_address</a>(owner_cap: &<a href="stake.md#0x1_stake_OwnerCapability">OwnerCapability</a>): <b>address</b> {
+<pre><code><b>public</b> <b>fun</b> <a href="stake.md#0x1_stake_old_get_owned_pool_address">get_owned_pool_address</a>(owner_cap: &<a href="stake.md#0x1_stake_old_OwnerCapability">OwnerCapability</a>): <b>address</b> {
     owner_cap.pool_address
 }
 </code></pre>
@@ -1592,14 +1592,14 @@ Return the pool address in <code>owner_cap</code>.
 
 </details>
 
-<a name="0x1_stake_get_validator_index"></a>
+<a name="0x1_stake_old_get_validator_index"></a>
 
 ## Function `get_validator_index`
 
 Return the validator index for <code>pool_address</code>.
 
 
-<pre><code><b>public</b> <b>fun</b> <a href="stake.md#0x1_stake_get_validator_index">get_validator_index</a>(pool_address: <b>address</b>): u64
+<pre><code><b>public</b> <b>fun</b> <a href="stake.md#0x1_stake_old_get_validator_index">get_validator_index</a>(pool_address: <b>address</b>): u64
 </code></pre>
 
 
@@ -1608,9 +1608,9 @@ Return the validator index for <code>pool_address</code>.
 <summary>Implementation</summary>
 
 
-<pre><code><b>public</b> <b>fun</b> <a href="stake.md#0x1_stake_get_validator_index">get_validator_index</a>(pool_address: <b>address</b>): u64 <b>acquires</b> <a href="stake.md#0x1_stake_ValidatorConfig">ValidatorConfig</a> {
-    <a href="stake.md#0x1_stake_assert_stake_pool_exists">assert_stake_pool_exists</a>(pool_address);
-    <b>borrow_global</b>&lt;<a href="stake.md#0x1_stake_ValidatorConfig">ValidatorConfig</a>&gt;(pool_address).validator_index
+<pre><code><b>public</b> <b>fun</b> <a href="stake.md#0x1_stake_old_get_validator_index">get_validator_index</a>(pool_address: <b>address</b>): u64 <b>acquires</b> <a href="stake.md#0x1_stake_old_ValidatorConfig">ValidatorConfig</a> {
+    <a href="stake.md#0x1_stake_old_assert_stake_pool_exists">assert_stake_pool_exists</a>(pool_address);
+    <b>borrow_global</b>&lt;<a href="stake.md#0x1_stake_old_ValidatorConfig">ValidatorConfig</a>&gt;(pool_address).validator_index
 }
 </code></pre>
 
@@ -1618,14 +1618,14 @@ Return the validator index for <code>pool_address</code>.
 
 </details>
 
-<a name="0x1_stake_get_current_epoch_proposal_counts"></a>
+<a name="0x1_stake_old_get_current_epoch_proposal_counts"></a>
 
 ## Function `get_current_epoch_proposal_counts`
 
 Return the number of successful and failed proposals for the proposal at the given validator index.
 
 
-<pre><code><b>public</b> <b>fun</b> <a href="stake.md#0x1_stake_get_current_epoch_proposal_counts">get_current_epoch_proposal_counts</a>(validator_index: u64): (u64, u64)
+<pre><code><b>public</b> <b>fun</b> <a href="stake.md#0x1_stake_old_get_current_epoch_proposal_counts">get_current_epoch_proposal_counts</a>(validator_index: u64): (u64, u64)
 </code></pre>
 
 
@@ -1634,8 +1634,8 @@ Return the number of successful and failed proposals for the proposal at the giv
 <summary>Implementation</summary>
 
 
-<pre><code><b>public</b> <b>fun</b> <a href="stake.md#0x1_stake_get_current_epoch_proposal_counts">get_current_epoch_proposal_counts</a>(validator_index: u64): (u64, u64) <b>acquires</b> <a href="stake.md#0x1_stake_ValidatorPerformance">ValidatorPerformance</a> {
-    <b>let</b> validator_performances = &<b>borrow_global</b>&lt;<a href="stake.md#0x1_stake_ValidatorPerformance">ValidatorPerformance</a>&gt;(@aptos_framework).validators;
+<pre><code><b>public</b> <b>fun</b> <a href="stake.md#0x1_stake_old_get_current_epoch_proposal_counts">get_current_epoch_proposal_counts</a>(validator_index: u64): (u64, u64) <b>acquires</b> <a href="stake.md#0x1_stake_old_ValidatorPerformance">ValidatorPerformance</a> {
+    <b>let</b> validator_performances = &<b>borrow_global</b>&lt;<a href="stake.md#0x1_stake_old_ValidatorPerformance">ValidatorPerformance</a>&gt;(@aptos_framework).validators;
     <b>let</b> validator_performance = <a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector_borrow">vector::borrow</a>(validator_performances, validator_index);
     (validator_performance.successful_proposals, validator_performance.failed_proposals)
 }
@@ -1645,14 +1645,14 @@ Return the number of successful and failed proposals for the proposal at the giv
 
 </details>
 
-<a name="0x1_stake_get_validator_config"></a>
+<a name="0x1_stake_old_get_validator_config"></a>
 
 ## Function `get_validator_config`
 
 Return the validator's config.
 
 
-<pre><code><b>public</b> <b>fun</b> <a href="stake.md#0x1_stake_get_validator_config">get_validator_config</a>(pool_address: <b>address</b>): (<a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector">vector</a>&lt;u8&gt;, <a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector">vector</a>&lt;u8&gt;, <a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector">vector</a>&lt;u8&gt;)
+<pre><code><b>public</b> <b>fun</b> <a href="stake.md#0x1_stake_old_get_validator_config">get_validator_config</a>(pool_address: <b>address</b>): (<a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector">vector</a>&lt;u8&gt;, <a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector">vector</a>&lt;u8&gt;, <a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector">vector</a>&lt;u8&gt;)
 </code></pre>
 
 
@@ -1661,9 +1661,9 @@ Return the validator's config.
 <summary>Implementation</summary>
 
 
-<pre><code><b>public</b> <b>fun</b> <a href="stake.md#0x1_stake_get_validator_config">get_validator_config</a>(pool_address: <b>address</b>): (<a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector">vector</a>&lt;u8&gt;, <a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector">vector</a>&lt;u8&gt;, <a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector">vector</a>&lt;u8&gt;) <b>acquires</b> <a href="stake.md#0x1_stake_ValidatorConfig">ValidatorConfig</a> {
-    <a href="stake.md#0x1_stake_assert_stake_pool_exists">assert_stake_pool_exists</a>(pool_address);
-    <b>let</b> validator_config = <b>borrow_global</b>&lt;<a href="stake.md#0x1_stake_ValidatorConfig">ValidatorConfig</a>&gt;(pool_address);
+<pre><code><b>public</b> <b>fun</b> <a href="stake.md#0x1_stake_old_get_validator_config">get_validator_config</a>(pool_address: <b>address</b>): (<a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector">vector</a>&lt;u8&gt;, <a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector">vector</a>&lt;u8&gt;, <a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector">vector</a>&lt;u8&gt;) <b>acquires</b> <a href="stake.md#0x1_stake_old_ValidatorConfig">ValidatorConfig</a> {
+    <a href="stake.md#0x1_stake_old_assert_stake_pool_exists">assert_stake_pool_exists</a>(pool_address);
+    <b>let</b> validator_config = <b>borrow_global</b>&lt;<a href="stake.md#0x1_stake_old_ValidatorConfig">ValidatorConfig</a>&gt;(pool_address);
     (validator_config.consensus_pubkey, validator_config.network_addresses, validator_config.fullnode_addresses)
 }
 </code></pre>
@@ -1672,13 +1672,13 @@ Return the validator's config.
 
 </details>
 
-<a name="0x1_stake_stake_pool_exists"></a>
+<a name="0x1_stake_old_stake_pool_exists"></a>
 
 ## Function `stake_pool_exists`
 
 
 
-<pre><code><b>public</b> <b>fun</b> <a href="stake.md#0x1_stake_stake_pool_exists">stake_pool_exists</a>(addr: <b>address</b>): bool
+<pre><code><b>public</b> <b>fun</b> <a href="stake.md#0x1_stake_old_stake_pool_exists">stake_pool_exists</a>(addr: <b>address</b>): bool
 </code></pre>
 
 
@@ -1687,8 +1687,8 @@ Return the validator's config.
 <summary>Implementation</summary>
 
 
-<pre><code><b>public</b> <b>fun</b> <a href="stake.md#0x1_stake_stake_pool_exists">stake_pool_exists</a>(addr: <b>address</b>): bool {
-    <b>exists</b>&lt;<a href="stake.md#0x1_stake_StakePool">StakePool</a>&gt;(addr)
+<pre><code><b>public</b> <b>fun</b> <a href="stake.md#0x1_stake_old_stake_pool_exists">stake_pool_exists</a>(addr: <b>address</b>): bool {
+    <b>exists</b>&lt;<a href="stake.md#0x1_stake_old_StakePool">StakePool</a>&gt;(addr)
 }
 </code></pre>
 
@@ -1696,14 +1696,14 @@ Return the validator's config.
 
 </details>
 
-<a name="0x1_stake_initialize"></a>
+<a name="0x1_stake_old_initialize"></a>
 
 ## Function `initialize`
 
 Initialize validator set to the core resource account.
 
 
-<pre><code><b>public</b>(<b>friend</b>) <b>fun</b> <a href="stake.md#0x1_stake_initialize">initialize</a>(aptos_framework: &<a href="../../aptos-stdlib/../move-stdlib/doc/signer.md#0x1_signer">signer</a>)
+<pre><code><b>public</b>(<b>friend</b>) <b>fun</b> <a href="stake.md#0x1_stake_old_initialize">initialize</a>(aptos_framework: &<a href="../../aptos-stdlib/../move-stdlib/doc/signer.md#0x1_signer">signer</a>)
 </code></pre>
 
 
@@ -1712,10 +1712,10 @@ Initialize validator set to the core resource account.
 <summary>Implementation</summary>
 
 
-<pre><code><b>public</b>(<b>friend</b>) <b>fun</b> <a href="stake.md#0x1_stake_initialize">initialize</a>(aptos_framework: &<a href="../../aptos-stdlib/../move-stdlib/doc/signer.md#0x1_signer">signer</a>) {
+<pre><code><b>public</b>(<b>friend</b>) <b>fun</b> <a href="stake.md#0x1_stake_old_initialize">initialize</a>(aptos_framework: &<a href="../../aptos-stdlib/../move-stdlib/doc/signer.md#0x1_signer">signer</a>) {
     <a href="system_addresses.md#0x1_system_addresses_assert_aptos_framework">system_addresses::assert_aptos_framework</a>(aptos_framework);
 
-    <b>move_to</b>(aptos_framework, <a href="stake.md#0x1_stake_ValidatorSet">ValidatorSet</a> {
+    <b>move_to</b>(aptos_framework, <a href="stake.md#0x1_stake_old_ValidatorSet">ValidatorSet</a> {
         consensus_scheme: 0,
         active_validators: <a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector_empty">vector::empty</a>(),
         pending_active: <a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector_empty">vector::empty</a>(),
@@ -1724,7 +1724,7 @@ Initialize validator set to the core resource account.
         total_joining_power: 0,
     });
 
-    <b>move_to</b>(aptos_framework, <a href="stake.md#0x1_stake_ValidatorPerformance">ValidatorPerformance</a> {
+    <b>move_to</b>(aptos_framework, <a href="stake.md#0x1_stake_old_ValidatorPerformance">ValidatorPerformance</a> {
         validators: <a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector_empty">vector::empty</a>(),
     });
 }
@@ -1734,7 +1734,7 @@ Initialize validator set to the core resource account.
 
 </details>
 
-<a name="0x1_stake_store_aptos_coin_mint_cap"></a>
+<a name="0x1_stake_old_store_aptos_coin_mint_cap"></a>
 
 ## Function `store_aptos_coin_mint_cap`
 
@@ -1742,7 +1742,7 @@ This is only called during Genesis, which is where MintCapability<AptosCoin> can
 Beyond genesis, no one can create AptosCoin mint/burn capabilities.
 
 
-<pre><code><b>public</b>(<b>friend</b>) <b>fun</b> <a href="stake.md#0x1_stake_store_aptos_coin_mint_cap">store_aptos_coin_mint_cap</a>(aptos_framework: &<a href="../../aptos-stdlib/../move-stdlib/doc/signer.md#0x1_signer">signer</a>, mint_cap: <a href="coin.md#0x1_coin_MintCapability">coin::MintCapability</a>&lt;<a href="aptos_coin.md#0x1_aptos_coin_AptosCoin">aptos_coin::AptosCoin</a>&gt;)
+<pre><code><b>public</b>(<b>friend</b>) <b>fun</b> <a href="stake.md#0x1_stake_old_store_aptos_coin_mint_cap">store_aptos_coin_mint_cap</a>(aptos_framework: &<a href="../../aptos-stdlib/../move-stdlib/doc/signer.md#0x1_signer">signer</a>, mint_cap: <a href="coin.md#0x1_coin_MintCapability">coin::MintCapability</a>&lt;<a href="aptos_coin.md#0x1_aptos_coin_AptosCoin">aptos_coin::AptosCoin</a>&gt;)
 </code></pre>
 
 
@@ -1751,9 +1751,9 @@ Beyond genesis, no one can create AptosCoin mint/burn capabilities.
 <summary>Implementation</summary>
 
 
-<pre><code><b>public</b>(<b>friend</b>) <b>fun</b> <a href="stake.md#0x1_stake_store_aptos_coin_mint_cap">store_aptos_coin_mint_cap</a>(aptos_framework: &<a href="../../aptos-stdlib/../move-stdlib/doc/signer.md#0x1_signer">signer</a>, mint_cap: MintCapability&lt;AptosCoin&gt;) {
+<pre><code><b>public</b>(<b>friend</b>) <b>fun</b> <a href="stake.md#0x1_stake_old_store_aptos_coin_mint_cap">store_aptos_coin_mint_cap</a>(aptos_framework: &<a href="../../aptos-stdlib/../move-stdlib/doc/signer.md#0x1_signer">signer</a>, mint_cap: MintCapability&lt;AptosCoin&gt;) {
     <a href="system_addresses.md#0x1_system_addresses_assert_aptos_framework">system_addresses::assert_aptos_framework</a>(aptos_framework);
-    <b>move_to</b>(aptos_framework, <a href="stake.md#0x1_stake_AptosCoinCapabilities">AptosCoinCapabilities</a> { mint_cap })
+    <b>move_to</b>(aptos_framework, <a href="stake.md#0x1_stake_old_AptosCoinCapabilities">AptosCoinCapabilities</a> { mint_cap })
 }
 </code></pre>
 
@@ -1761,14 +1761,14 @@ Beyond genesis, no one can create AptosCoin mint/burn capabilities.
 
 </details>
 
-<a name="0x1_stake_remove_validators"></a>
+<a name="0x1_stake_old_remove_validators"></a>
 
 ## Function `remove_validators`
 
 Allow on chain governance to remove validators from the validator set.
 
 
-<pre><code><b>public</b> <b>fun</b> <a href="stake.md#0x1_stake_remove_validators">remove_validators</a>(aptos_framework: &<a href="../../aptos-stdlib/../move-stdlib/doc/signer.md#0x1_signer">signer</a>, validators: &<a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector">vector</a>&lt;<b>address</b>&gt;)
+<pre><code><b>public</b> <b>fun</b> <a href="stake.md#0x1_stake_old_remove_validators">remove_validators</a>(aptos_framework: &<a href="../../aptos-stdlib/../move-stdlib/doc/signer.md#0x1_signer">signer</a>, validators: &<a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector">vector</a>&lt;<b>address</b>&gt;)
 </code></pre>
 
 
@@ -1777,13 +1777,13 @@ Allow on chain governance to remove validators from the validator set.
 <summary>Implementation</summary>
 
 
-<pre><code><b>public</b> <b>fun</b> <a href="stake.md#0x1_stake_remove_validators">remove_validators</a>(
+<pre><code><b>public</b> <b>fun</b> <a href="stake.md#0x1_stake_old_remove_validators">remove_validators</a>(
     aptos_framework: &<a href="../../aptos-stdlib/../move-stdlib/doc/signer.md#0x1_signer">signer</a>,
     validators: &<a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector">vector</a>&lt;<b>address</b>&gt;,
-) <b>acquires</b> <a href="stake.md#0x1_stake_ValidatorSet">ValidatorSet</a> {
+) <b>acquires</b> <a href="stake.md#0x1_stake_old_ValidatorSet">ValidatorSet</a> {
     <a href="system_addresses.md#0x1_system_addresses_assert_aptos_framework">system_addresses::assert_aptos_framework</a>(aptos_framework);
 
-    <b>let</b> validator_set = <b>borrow_global_mut</b>&lt;<a href="stake.md#0x1_stake_ValidatorSet">ValidatorSet</a>&gt;(@aptos_framework);
+    <b>let</b> validator_set = <b>borrow_global_mut</b>&lt;<a href="stake.md#0x1_stake_old_ValidatorSet">ValidatorSet</a>&gt;(@aptos_framework);
     <b>let</b> active_validators = &<b>mut</b> validator_set.active_validators;
     <b>let</b> pending_inactive = &<b>mut</b> validator_set.pending_inactive;
     <b>let</b> len = <a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector_length">vector::length</a>(validators);
@@ -1791,15 +1791,15 @@ Allow on chain governance to remove validators from the validator set.
     // Remove each validator from the validator set.
     <b>while</b> ({
         <b>spec</b> {
-            <b>invariant</b> <a href="stake.md#0x1_stake_spec_validators_are_initialized">spec_validators_are_initialized</a>(active_validators);
-            <b>invariant</b> <a href="stake.md#0x1_stake_spec_validator_indices_are_valid">spec_validator_indices_are_valid</a>(active_validators);
-            <b>invariant</b> <a href="stake.md#0x1_stake_spec_validators_are_initialized">spec_validators_are_initialized</a>(pending_inactive);
-            <b>invariant</b> <a href="stake.md#0x1_stake_spec_validator_indices_are_valid">spec_validator_indices_are_valid</a>(pending_inactive);
+            <b>invariant</b> <a href="stake.md#0x1_stake_old_spec_validators_are_initialized">spec_validators_are_initialized</a>(active_validators);
+            <b>invariant</b> <a href="stake.md#0x1_stake_old_spec_validator_indices_are_valid">spec_validator_indices_are_valid</a>(active_validators);
+            <b>invariant</b> <a href="stake.md#0x1_stake_old_spec_validators_are_initialized">spec_validators_are_initialized</a>(pending_inactive);
+            <b>invariant</b> <a href="stake.md#0x1_stake_old_spec_validator_indices_are_valid">spec_validator_indices_are_valid</a>(pending_inactive);
         };
         i &lt; len
     }) {
         <b>let</b> validator = *<a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector_borrow">vector::borrow</a>(validators, i);
-        <b>let</b> validator_index = <a href="stake.md#0x1_stake_find_validator">find_validator</a>(active_validators, validator);
+        <b>let</b> validator_index = <a href="stake.md#0x1_stake_old_find_validator">find_validator</a>(active_validators, validator);
         <b>if</b> (<a href="../../aptos-stdlib/../move-stdlib/doc/option.md#0x1_option_is_some">option::is_some</a>(&validator_index)) {
             <b>let</b> validator_info = <a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector_swap_remove">vector::swap_remove</a>(active_validators, *<a href="../../aptos-stdlib/../move-stdlib/doc/option.md#0x1_option_borrow">option::borrow</a>(&validator_index));
             <a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector_push_back">vector::push_back</a>(pending_inactive, validator_info);
@@ -1813,7 +1813,7 @@ Allow on chain governance to remove validators from the validator set.
 
 </details>
 
-<a name="0x1_stake_initialize_stake_owner"></a>
+<a name="0x1_stake_old_initialize_stake_owner"></a>
 
 ## Function `initialize_stake_owner`
 
@@ -1823,7 +1823,7 @@ Note: this triggers setting the operator and owner, set it to the account's addr
 to set later.
 
 
-<pre><code><b>public</b> entry <b>fun</b> <a href="stake.md#0x1_stake_initialize_stake_owner">initialize_stake_owner</a>(owner: &<a href="../../aptos-stdlib/../move-stdlib/doc/signer.md#0x1_signer">signer</a>, initial_stake_amount: u64, operator: <b>address</b>, voter: <b>address</b>)
+<pre><code><b>public</b> entry <b>fun</b> <a href="stake.md#0x1_stake_old_initialize_stake_owner">initialize_stake_owner</a>(owner: &<a href="../../aptos-stdlib/../move-stdlib/doc/signer.md#0x1_signer">signer</a>, initial_stake_amount: u64, operator: <b>address</b>, voter: <b>address</b>)
 </code></pre>
 
 
@@ -1832,14 +1832,14 @@ to set later.
 <summary>Implementation</summary>
 
 
-<pre><code><b>public</b> entry <b>fun</b> <a href="stake.md#0x1_stake_initialize_stake_owner">initialize_stake_owner</a>(
+<pre><code><b>public</b> entry <b>fun</b> <a href="stake.md#0x1_stake_old_initialize_stake_owner">initialize_stake_owner</a>(
     owner: &<a href="../../aptos-stdlib/../move-stdlib/doc/signer.md#0x1_signer">signer</a>,
     initial_stake_amount: u64,
     operator: <b>address</b>,
     voter: <b>address</b>,
-) <b>acquires</b> <a href="stake.md#0x1_stake_AllowedValidators">AllowedValidators</a>, <a href="stake.md#0x1_stake_OwnerCapability">OwnerCapability</a>, <a href="stake.md#0x1_stake_StakePool">StakePool</a>, <a href="stake.md#0x1_stake_ValidatorSet">ValidatorSet</a> {
-    <a href="stake.md#0x1_stake_initialize_owner">initialize_owner</a>(owner);
-    <b>move_to</b>(owner, <a href="stake.md#0x1_stake_ValidatorConfig">ValidatorConfig</a> {
+) <b>acquires</b> <a href="stake.md#0x1_stake_old_AllowedValidators">AllowedValidators</a>, <a href="stake.md#0x1_stake_old_OwnerCapability">OwnerCapability</a>, <a href="stake.md#0x1_stake_old_StakePool">StakePool</a>, <a href="stake.md#0x1_stake_old_ValidatorSet">ValidatorSet</a> {
+    <a href="stake.md#0x1_stake_old_initialize_owner">initialize_owner</a>(owner);
+    <b>move_to</b>(owner, <a href="stake.md#0x1_stake_old_ValidatorConfig">ValidatorConfig</a> {
         consensus_pubkey: <a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector_empty">vector::empty</a>(),
         network_addresses: <a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector_empty">vector::empty</a>(),
         fullnode_addresses: <a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector_empty">vector::empty</a>(),
@@ -1847,15 +1847,15 @@ to set later.
     });
 
     <b>if</b> (initial_stake_amount &gt; 0) {
-        <a href="stake.md#0x1_stake_add_stake">add_stake</a>(owner, initial_stake_amount);
+        <a href="stake.md#0x1_stake_old_add_stake">add_stake</a>(owner, initial_stake_amount);
     };
 
     <b>let</b> account_address = <a href="../../aptos-stdlib/../move-stdlib/doc/signer.md#0x1_signer_address_of">signer::address_of</a>(owner);
     <b>if</b> (account_address != operator) {
-        <a href="stake.md#0x1_stake_set_operator">set_operator</a>(owner, operator)
+        <a href="stake.md#0x1_stake_old_set_operator">set_operator</a>(owner, operator)
     };
     <b>if</b> (account_address != voter) {
-        <a href="stake.md#0x1_stake_set_delegated_voter">set_delegated_voter</a>(owner, voter)
+        <a href="stake.md#0x1_stake_old_set_delegated_voter">set_delegated_voter</a>(owner, voter)
     };
 }
 </code></pre>
@@ -1864,14 +1864,14 @@ to set later.
 
 </details>
 
-<a name="0x1_stake_initialize_validator"></a>
+<a name="0x1_stake_old_initialize_validator"></a>
 
 ## Function `initialize_validator`
 
 Initialize the validator account and give ownership to the signing account.
 
 
-<pre><code><b>public</b> entry <b>fun</b> <a href="stake.md#0x1_stake_initialize_validator">initialize_validator</a>(<a href="account.md#0x1_account">account</a>: &<a href="../../aptos-stdlib/../move-stdlib/doc/signer.md#0x1_signer">signer</a>, consensus_pubkey: <a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector">vector</a>&lt;u8&gt;, proof_of_possession: <a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector">vector</a>&lt;u8&gt;, network_addresses: <a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector">vector</a>&lt;u8&gt;, fullnode_addresses: <a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector">vector</a>&lt;u8&gt;)
+<pre><code><b>public</b> entry <b>fun</b> <a href="stake.md#0x1_stake_old_initialize_validator">initialize_validator</a>(<a href="account.md#0x1_account">account</a>: &<a href="../../aptos-stdlib/../move-stdlib/doc/signer.md#0x1_signer">signer</a>, consensus_pubkey: <a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector">vector</a>&lt;u8&gt;, proof_of_possession: <a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector">vector</a>&lt;u8&gt;, network_addresses: <a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector">vector</a>&lt;u8&gt;, fullnode_addresses: <a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector">vector</a>&lt;u8&gt;)
 </code></pre>
 
 
@@ -1880,22 +1880,22 @@ Initialize the validator account and give ownership to the signing account.
 <summary>Implementation</summary>
 
 
-<pre><code><b>public</b> entry <b>fun</b> <a href="stake.md#0x1_stake_initialize_validator">initialize_validator</a>(
+<pre><code><b>public</b> entry <b>fun</b> <a href="stake.md#0x1_stake_old_initialize_validator">initialize_validator</a>(
     <a href="account.md#0x1_account">account</a>: &<a href="../../aptos-stdlib/../move-stdlib/doc/signer.md#0x1_signer">signer</a>,
     consensus_pubkey: <a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector">vector</a>&lt;u8&gt;,
     proof_of_possession: <a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector">vector</a>&lt;u8&gt;,
     network_addresses: <a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector">vector</a>&lt;u8&gt;,
     fullnode_addresses: <a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector">vector</a>&lt;u8&gt;,
-) <b>acquires</b> <a href="stake.md#0x1_stake_AllowedValidators">AllowedValidators</a> {
+) <b>acquires</b> <a href="stake.md#0x1_stake_old_AllowedValidators">AllowedValidators</a> {
     // Checks the <b>public</b> key <b>has</b> a valid proof-of-possession <b>to</b> prevent rogue-key attacks.
     <b>let</b> pubkey_from_pop = &<b>mut</b> <a href="../../aptos-stdlib/doc/bls12381.md#0x1_bls12381_public_key_from_bytes_with_pop">bls12381::public_key_from_bytes_with_pop</a>(
         consensus_pubkey,
         &proof_of_possession_from_bytes(proof_of_possession)
     );
-    <b>assert</b>!(<a href="../../aptos-stdlib/../move-stdlib/doc/option.md#0x1_option_is_some">option::is_some</a>(pubkey_from_pop), <a href="../../aptos-stdlib/../move-stdlib/doc/error.md#0x1_error_invalid_argument">error::invalid_argument</a>(<a href="stake.md#0x1_stake_EINVALID_PUBLIC_KEY">EINVALID_PUBLIC_KEY</a>));
+    <b>assert</b>!(<a href="../../aptos-stdlib/../move-stdlib/doc/option.md#0x1_option_is_some">option::is_some</a>(pubkey_from_pop), <a href="../../aptos-stdlib/../move-stdlib/doc/error.md#0x1_error_invalid_argument">error::invalid_argument</a>(<a href="stake.md#0x1_stake_old_EINVALID_PUBLIC_KEY">EINVALID_PUBLIC_KEY</a>));
 
-    <a href="stake.md#0x1_stake_initialize_owner">initialize_owner</a>(<a href="account.md#0x1_account">account</a>);
-    <b>move_to</b>(<a href="account.md#0x1_account">account</a>, <a href="stake.md#0x1_stake_ValidatorConfig">ValidatorConfig</a> {
+    <a href="stake.md#0x1_stake_old_initialize_owner">initialize_owner</a>(<a href="account.md#0x1_account">account</a>);
+    <b>move_to</b>(<a href="account.md#0x1_account">account</a>, <a href="stake.md#0x1_stake_old_ValidatorConfig">ValidatorConfig</a> {
         consensus_pubkey,
         network_addresses,
         fullnode_addresses,
@@ -1908,13 +1908,13 @@ Initialize the validator account and give ownership to the signing account.
 
 </details>
 
-<a name="0x1_stake_initialize_owner"></a>
+<a name="0x1_stake_old_initialize_owner"></a>
 
 ## Function `initialize_owner`
 
 
 
-<pre><code><b>fun</b> <a href="stake.md#0x1_stake_initialize_owner">initialize_owner</a>(owner: &<a href="../../aptos-stdlib/../move-stdlib/doc/signer.md#0x1_signer">signer</a>)
+<pre><code><b>fun</b> <a href="stake.md#0x1_stake_old_initialize_owner">initialize_owner</a>(owner: &<a href="../../aptos-stdlib/../move-stdlib/doc/signer.md#0x1_signer">signer</a>)
 </code></pre>
 
 
@@ -1923,12 +1923,12 @@ Initialize the validator account and give ownership to the signing account.
 <summary>Implementation</summary>
 
 
-<pre><code><b>fun</b> <a href="stake.md#0x1_stake_initialize_owner">initialize_owner</a>(owner: &<a href="../../aptos-stdlib/../move-stdlib/doc/signer.md#0x1_signer">signer</a>) <b>acquires</b> <a href="stake.md#0x1_stake_AllowedValidators">AllowedValidators</a> {
+<pre><code><b>fun</b> <a href="stake.md#0x1_stake_old_initialize_owner">initialize_owner</a>(owner: &<a href="../../aptos-stdlib/../move-stdlib/doc/signer.md#0x1_signer">signer</a>) <b>acquires</b> <a href="stake.md#0x1_stake_old_AllowedValidators">AllowedValidators</a> {
     <b>let</b> owner_address = <a href="../../aptos-stdlib/../move-stdlib/doc/signer.md#0x1_signer_address_of">signer::address_of</a>(owner);
-    <b>assert</b>!(<a href="stake.md#0x1_stake_is_allowed">is_allowed</a>(owner_address), <a href="../../aptos-stdlib/../move-stdlib/doc/error.md#0x1_error_not_found">error::not_found</a>(<a href="stake.md#0x1_stake_EINELIGIBLE_VALIDATOR">EINELIGIBLE_VALIDATOR</a>));
-    <b>assert</b>!(!<a href="stake.md#0x1_stake_stake_pool_exists">stake_pool_exists</a>(owner_address), <a href="../../aptos-stdlib/../move-stdlib/doc/error.md#0x1_error_already_exists">error::already_exists</a>(<a href="stake.md#0x1_stake_EALREADY_REGISTERED">EALREADY_REGISTERED</a>));
+    <b>assert</b>!(<a href="stake.md#0x1_stake_old_is_allowed">is_allowed</a>(owner_address), <a href="../../aptos-stdlib/../move-stdlib/doc/error.md#0x1_error_not_found">error::not_found</a>(<a href="stake.md#0x1_stake_old_EINELIGIBLE_VALIDATOR">EINELIGIBLE_VALIDATOR</a>));
+    <b>assert</b>!(!<a href="stake.md#0x1_stake_old_stake_pool_exists">stake_pool_exists</a>(owner_address), <a href="../../aptos-stdlib/../move-stdlib/doc/error.md#0x1_error_already_exists">error::already_exists</a>(<a href="stake.md#0x1_stake_old_EALREADY_REGISTERED">EALREADY_REGISTERED</a>));
 
-    <b>move_to</b>(owner, <a href="stake.md#0x1_stake_StakePool">StakePool</a> {
+    <b>move_to</b>(owner, <a href="stake.md#0x1_stake_old_StakePool">StakePool</a> {
         active: <a href="coin.md#0x1_coin_zero">coin::zero</a>&lt;AptosCoin&gt;(),
         pending_active: <a href="coin.md#0x1_coin_zero">coin::zero</a>&lt;AptosCoin&gt;(),
         pending_inactive: <a href="coin.md#0x1_coin_zero">coin::zero</a>&lt;AptosCoin&gt;(),
@@ -1937,21 +1937,21 @@ Initialize the validator account and give ownership to the signing account.
         operator_address: owner_address,
         delegated_voter: owner_address,
         // Events.
-        initialize_validator_events: <a href="account.md#0x1_account_new_event_handle">account::new_event_handle</a>&lt;<a href="stake.md#0x1_stake_RegisterValidatorCandidateEvent">RegisterValidatorCandidateEvent</a>&gt;(owner),
-        set_operator_events: <a href="account.md#0x1_account_new_event_handle">account::new_event_handle</a>&lt;<a href="stake.md#0x1_stake_SetOperatorEvent">SetOperatorEvent</a>&gt;(owner),
-        add_stake_events: <a href="account.md#0x1_account_new_event_handle">account::new_event_handle</a>&lt;<a href="stake.md#0x1_stake_AddStakeEvent">AddStakeEvent</a>&gt;(owner),
-        reactivate_stake_events: <a href="account.md#0x1_account_new_event_handle">account::new_event_handle</a>&lt;<a href="stake.md#0x1_stake_ReactivateStakeEvent">ReactivateStakeEvent</a>&gt;(owner),
-        rotate_consensus_key_events: <a href="account.md#0x1_account_new_event_handle">account::new_event_handle</a>&lt;<a href="stake.md#0x1_stake_RotateConsensusKeyEvent">RotateConsensusKeyEvent</a>&gt;(owner),
-        update_network_and_fullnode_addresses_events: <a href="account.md#0x1_account_new_event_handle">account::new_event_handle</a>&lt;<a href="stake.md#0x1_stake_UpdateNetworkAndFullnodeAddressesEvent">UpdateNetworkAndFullnodeAddressesEvent</a>&gt;(owner),
-        increase_lockup_events: <a href="account.md#0x1_account_new_event_handle">account::new_event_handle</a>&lt;<a href="stake.md#0x1_stake_IncreaseLockupEvent">IncreaseLockupEvent</a>&gt;(owner),
-        join_validator_set_events: <a href="account.md#0x1_account_new_event_handle">account::new_event_handle</a>&lt;<a href="stake.md#0x1_stake_JoinValidatorSetEvent">JoinValidatorSetEvent</a>&gt;(owner),
-        distribute_rewards_events: <a href="account.md#0x1_account_new_event_handle">account::new_event_handle</a>&lt;<a href="stake.md#0x1_stake_DistributeRewardsEvent">DistributeRewardsEvent</a>&gt;(owner),
-        unlock_stake_events: <a href="account.md#0x1_account_new_event_handle">account::new_event_handle</a>&lt;<a href="stake.md#0x1_stake_UnlockStakeEvent">UnlockStakeEvent</a>&gt;(owner),
-        withdraw_stake_events: <a href="account.md#0x1_account_new_event_handle">account::new_event_handle</a>&lt;<a href="stake.md#0x1_stake_WithdrawStakeEvent">WithdrawStakeEvent</a>&gt;(owner),
-        leave_validator_set_events: <a href="account.md#0x1_account_new_event_handle">account::new_event_handle</a>&lt;<a href="stake.md#0x1_stake_LeaveValidatorSetEvent">LeaveValidatorSetEvent</a>&gt;(owner),
+        initialize_validator_events: <a href="account.md#0x1_account_new_event_handle">account::new_event_handle</a>&lt;<a href="stake.md#0x1_stake_old_RegisterValidatorCandidateEvent">RegisterValidatorCandidateEvent</a>&gt;(owner),
+        set_operator_events: <a href="account.md#0x1_account_new_event_handle">account::new_event_handle</a>&lt;<a href="stake.md#0x1_stake_old_SetOperatorEvent">SetOperatorEvent</a>&gt;(owner),
+        add_stake_events: <a href="account.md#0x1_account_new_event_handle">account::new_event_handle</a>&lt;<a href="stake.md#0x1_stake_old_AddStakeEvent">AddStakeEvent</a>&gt;(owner),
+        reactivate_stake_events: <a href="account.md#0x1_account_new_event_handle">account::new_event_handle</a>&lt;<a href="stake.md#0x1_stake_old_ReactivateStakeEvent">ReactivateStakeEvent</a>&gt;(owner),
+        rotate_consensus_key_events: <a href="account.md#0x1_account_new_event_handle">account::new_event_handle</a>&lt;<a href="stake.md#0x1_stake_old_RotateConsensusKeyEvent">RotateConsensusKeyEvent</a>&gt;(owner),
+        update_network_and_fullnode_addresses_events: <a href="account.md#0x1_account_new_event_handle">account::new_event_handle</a>&lt;<a href="stake.md#0x1_stake_old_UpdateNetworkAndFullnodeAddressesEvent">UpdateNetworkAndFullnodeAddressesEvent</a>&gt;(owner),
+        increase_lockup_events: <a href="account.md#0x1_account_new_event_handle">account::new_event_handle</a>&lt;<a href="stake.md#0x1_stake_old_IncreaseLockupEvent">IncreaseLockupEvent</a>&gt;(owner),
+        join_validator_set_events: <a href="account.md#0x1_account_new_event_handle">account::new_event_handle</a>&lt;<a href="stake.md#0x1_stake_old_JoinValidatorSetEvent">JoinValidatorSetEvent</a>&gt;(owner),
+        distribute_rewards_events: <a href="account.md#0x1_account_new_event_handle">account::new_event_handle</a>&lt;<a href="stake.md#0x1_stake_old_DistributeRewardsEvent">DistributeRewardsEvent</a>&gt;(owner),
+        unlock_stake_events: <a href="account.md#0x1_account_new_event_handle">account::new_event_handle</a>&lt;<a href="stake.md#0x1_stake_old_UnlockStakeEvent">UnlockStakeEvent</a>&gt;(owner),
+        withdraw_stake_events: <a href="account.md#0x1_account_new_event_handle">account::new_event_handle</a>&lt;<a href="stake.md#0x1_stake_old_WithdrawStakeEvent">WithdrawStakeEvent</a>&gt;(owner),
+        leave_validator_set_events: <a href="account.md#0x1_account_new_event_handle">account::new_event_handle</a>&lt;<a href="stake.md#0x1_stake_old_LeaveValidatorSetEvent">LeaveValidatorSetEvent</a>&gt;(owner),
     });
 
-    <b>move_to</b>(owner, <a href="stake.md#0x1_stake_OwnerCapability">OwnerCapability</a> { pool_address: owner_address });
+    <b>move_to</b>(owner, <a href="stake.md#0x1_stake_old_OwnerCapability">OwnerCapability</a> { pool_address: owner_address });
 }
 </code></pre>
 
@@ -1959,14 +1959,14 @@ Initialize the validator account and give ownership to the signing account.
 
 </details>
 
-<a name="0x1_stake_extract_owner_cap"></a>
+<a name="0x1_stake_old_extract_owner_cap"></a>
 
 ## Function `extract_owner_cap`
 
 Extract and return owner capability from the signing account.
 
 
-<pre><code><b>public</b> <b>fun</b> <a href="stake.md#0x1_stake_extract_owner_cap">extract_owner_cap</a>(owner: &<a href="../../aptos-stdlib/../move-stdlib/doc/signer.md#0x1_signer">signer</a>): <a href="stake.md#0x1_stake_OwnerCapability">stake::OwnerCapability</a>
+<pre><code><b>public</b> <b>fun</b> <a href="stake.md#0x1_stake_old_extract_owner_cap">extract_owner_cap</a>(owner: &<a href="../../aptos-stdlib/../move-stdlib/doc/signer.md#0x1_signer">signer</a>): <a href="stake.md#0x1_stake_old_OwnerCapability">stake_old::OwnerCapability</a>
 </code></pre>
 
 
@@ -1975,10 +1975,10 @@ Extract and return owner capability from the signing account.
 <summary>Implementation</summary>
 
 
-<pre><code><b>public</b> <b>fun</b> <a href="stake.md#0x1_stake_extract_owner_cap">extract_owner_cap</a>(owner: &<a href="../../aptos-stdlib/../move-stdlib/doc/signer.md#0x1_signer">signer</a>): <a href="stake.md#0x1_stake_OwnerCapability">OwnerCapability</a> <b>acquires</b> <a href="stake.md#0x1_stake_OwnerCapability">OwnerCapability</a> {
+<pre><code><b>public</b> <b>fun</b> <a href="stake.md#0x1_stake_old_extract_owner_cap">extract_owner_cap</a>(owner: &<a href="../../aptos-stdlib/../move-stdlib/doc/signer.md#0x1_signer">signer</a>): <a href="stake.md#0x1_stake_old_OwnerCapability">OwnerCapability</a> <b>acquires</b> <a href="stake.md#0x1_stake_old_OwnerCapability">OwnerCapability</a> {
     <b>let</b> owner_address = <a href="../../aptos-stdlib/../move-stdlib/doc/signer.md#0x1_signer_address_of">signer::address_of</a>(owner);
-    <a href="stake.md#0x1_stake_assert_owner_cap_exists">assert_owner_cap_exists</a>(owner_address);
-    <b>move_from</b>&lt;<a href="stake.md#0x1_stake_OwnerCapability">OwnerCapability</a>&gt;(owner_address)
+    <a href="stake.md#0x1_stake_old_assert_owner_cap_exists">assert_owner_cap_exists</a>(owner_address);
+    <b>move_from</b>&lt;<a href="stake.md#0x1_stake_old_OwnerCapability">OwnerCapability</a>&gt;(owner_address)
 }
 </code></pre>
 
@@ -1986,7 +1986,7 @@ Extract and return owner capability from the signing account.
 
 </details>
 
-<a name="0x1_stake_deposit_owner_cap"></a>
+<a name="0x1_stake_old_deposit_owner_cap"></a>
 
 ## Function `deposit_owner_cap`
 
@@ -1994,7 +1994,7 @@ Deposit <code>owner_cap</code> into <code><a href="account.md#0x1_account">accou
 staking pool.
 
 
-<pre><code><b>public</b> <b>fun</b> <a href="stake.md#0x1_stake_deposit_owner_cap">deposit_owner_cap</a>(owner: &<a href="../../aptos-stdlib/../move-stdlib/doc/signer.md#0x1_signer">signer</a>, owner_cap: <a href="stake.md#0x1_stake_OwnerCapability">stake::OwnerCapability</a>)
+<pre><code><b>public</b> <b>fun</b> <a href="stake.md#0x1_stake_old_deposit_owner_cap">deposit_owner_cap</a>(owner: &<a href="../../aptos-stdlib/../move-stdlib/doc/signer.md#0x1_signer">signer</a>, owner_cap: <a href="stake.md#0x1_stake_old_OwnerCapability">stake_old::OwnerCapability</a>)
 </code></pre>
 
 
@@ -2003,8 +2003,8 @@ staking pool.
 <summary>Implementation</summary>
 
 
-<pre><code><b>public</b> <b>fun</b> <a href="stake.md#0x1_stake_deposit_owner_cap">deposit_owner_cap</a>(owner: &<a href="../../aptos-stdlib/../move-stdlib/doc/signer.md#0x1_signer">signer</a>, owner_cap: <a href="stake.md#0x1_stake_OwnerCapability">OwnerCapability</a>) {
-    <b>assert</b>!(!<b>exists</b>&lt;<a href="stake.md#0x1_stake_OwnerCapability">OwnerCapability</a>&gt;(<a href="../../aptos-stdlib/../move-stdlib/doc/signer.md#0x1_signer_address_of">signer::address_of</a>(owner)), <a href="../../aptos-stdlib/../move-stdlib/doc/error.md#0x1_error_not_found">error::not_found</a>(<a href="stake.md#0x1_stake_EOWNER_CAP_ALREADY_EXISTS">EOWNER_CAP_ALREADY_EXISTS</a>));
+<pre><code><b>public</b> <b>fun</b> <a href="stake.md#0x1_stake_old_deposit_owner_cap">deposit_owner_cap</a>(owner: &<a href="../../aptos-stdlib/../move-stdlib/doc/signer.md#0x1_signer">signer</a>, owner_cap: <a href="stake.md#0x1_stake_old_OwnerCapability">OwnerCapability</a>) {
+    <b>assert</b>!(!<b>exists</b>&lt;<a href="stake.md#0x1_stake_old_OwnerCapability">OwnerCapability</a>&gt;(<a href="../../aptos-stdlib/../move-stdlib/doc/signer.md#0x1_signer_address_of">signer::address_of</a>(owner)), <a href="../../aptos-stdlib/../move-stdlib/doc/error.md#0x1_error_not_found">error::not_found</a>(<a href="stake.md#0x1_stake_old_EOWNER_CAP_ALREADY_EXISTS">EOWNER_CAP_ALREADY_EXISTS</a>));
     <b>move_to</b>(owner, owner_cap);
 }
 </code></pre>
@@ -2013,14 +2013,14 @@ staking pool.
 
 </details>
 
-<a name="0x1_stake_destroy_owner_cap"></a>
+<a name="0x1_stake_old_destroy_owner_cap"></a>
 
 ## Function `destroy_owner_cap`
 
 Destroy <code>owner_cap</code>.
 
 
-<pre><code><b>public</b> <b>fun</b> <a href="stake.md#0x1_stake_destroy_owner_cap">destroy_owner_cap</a>(owner_cap: <a href="stake.md#0x1_stake_OwnerCapability">stake::OwnerCapability</a>)
+<pre><code><b>public</b> <b>fun</b> <a href="stake.md#0x1_stake_old_destroy_owner_cap">destroy_owner_cap</a>(owner_cap: <a href="stake.md#0x1_stake_old_OwnerCapability">stake_old::OwnerCapability</a>)
 </code></pre>
 
 
@@ -2029,8 +2029,8 @@ Destroy <code>owner_cap</code>.
 <summary>Implementation</summary>
 
 
-<pre><code><b>public</b> <b>fun</b> <a href="stake.md#0x1_stake_destroy_owner_cap">destroy_owner_cap</a>(owner_cap: <a href="stake.md#0x1_stake_OwnerCapability">OwnerCapability</a>) {
-    <b>let</b> <a href="stake.md#0x1_stake_OwnerCapability">OwnerCapability</a> { pool_address: _ } = owner_cap;
+<pre><code><b>public</b> <b>fun</b> <a href="stake.md#0x1_stake_old_destroy_owner_cap">destroy_owner_cap</a>(owner_cap: <a href="stake.md#0x1_stake_old_OwnerCapability">OwnerCapability</a>) {
+    <b>let</b> <a href="stake.md#0x1_stake_old_OwnerCapability">OwnerCapability</a> { pool_address: _ } = owner_cap;
 }
 </code></pre>
 
@@ -2038,14 +2038,14 @@ Destroy <code>owner_cap</code>.
 
 </details>
 
-<a name="0x1_stake_set_operator"></a>
+<a name="0x1_stake_old_set_operator"></a>
 
 ## Function `set_operator`
 
 Allows an owner to change the operator of the stake pool.
 
 
-<pre><code><b>public</b> entry <b>fun</b> <a href="stake.md#0x1_stake_set_operator">set_operator</a>(owner: &<a href="../../aptos-stdlib/../move-stdlib/doc/signer.md#0x1_signer">signer</a>, new_operator: <b>address</b>)
+<pre><code><b>public</b> entry <b>fun</b> <a href="stake.md#0x1_stake_old_set_operator">set_operator</a>(owner: &<a href="../../aptos-stdlib/../move-stdlib/doc/signer.md#0x1_signer">signer</a>, new_operator: <b>address</b>)
 </code></pre>
 
 
@@ -2054,11 +2054,11 @@ Allows an owner to change the operator of the stake pool.
 <summary>Implementation</summary>
 
 
-<pre><code><b>public</b> entry <b>fun</b> <a href="stake.md#0x1_stake_set_operator">set_operator</a>(owner: &<a href="../../aptos-stdlib/../move-stdlib/doc/signer.md#0x1_signer">signer</a>, new_operator: <b>address</b>) <b>acquires</b> <a href="stake.md#0x1_stake_OwnerCapability">OwnerCapability</a>, <a href="stake.md#0x1_stake_StakePool">StakePool</a> {
+<pre><code><b>public</b> entry <b>fun</b> <a href="stake.md#0x1_stake_old_set_operator">set_operator</a>(owner: &<a href="../../aptos-stdlib/../move-stdlib/doc/signer.md#0x1_signer">signer</a>, new_operator: <b>address</b>) <b>acquires</b> <a href="stake.md#0x1_stake_old_OwnerCapability">OwnerCapability</a>, <a href="stake.md#0x1_stake_old_StakePool">StakePool</a> {
     <b>let</b> owner_address = <a href="../../aptos-stdlib/../move-stdlib/doc/signer.md#0x1_signer_address_of">signer::address_of</a>(owner);
-    <a href="stake.md#0x1_stake_assert_owner_cap_exists">assert_owner_cap_exists</a>(owner_address);
-    <b>let</b> ownership_cap = <b>borrow_global</b>&lt;<a href="stake.md#0x1_stake_OwnerCapability">OwnerCapability</a>&gt;(owner_address);
-    <a href="stake.md#0x1_stake_set_operator_with_cap">set_operator_with_cap</a>(ownership_cap, new_operator);
+    <a href="stake.md#0x1_stake_old_assert_owner_cap_exists">assert_owner_cap_exists</a>(owner_address);
+    <b>let</b> ownership_cap = <b>borrow_global</b>&lt;<a href="stake.md#0x1_stake_old_OwnerCapability">OwnerCapability</a>&gt;(owner_address);
+    <a href="stake.md#0x1_stake_old_set_operator_with_cap">set_operator_with_cap</a>(ownership_cap, new_operator);
 }
 </code></pre>
 
@@ -2066,14 +2066,14 @@ Allows an owner to change the operator of the stake pool.
 
 </details>
 
-<a name="0x1_stake_set_operator_with_cap"></a>
+<a name="0x1_stake_old_set_operator_with_cap"></a>
 
 ## Function `set_operator_with_cap`
 
 Allows an account with ownership capability to change the operator of the stake pool.
 
 
-<pre><code><b>public</b> <b>fun</b> <a href="stake.md#0x1_stake_set_operator_with_cap">set_operator_with_cap</a>(owner_cap: &<a href="stake.md#0x1_stake_OwnerCapability">stake::OwnerCapability</a>, new_operator: <b>address</b>)
+<pre><code><b>public</b> <b>fun</b> <a href="stake.md#0x1_stake_old_set_operator_with_cap">set_operator_with_cap</a>(owner_cap: &<a href="stake.md#0x1_stake_old_OwnerCapability">stake_old::OwnerCapability</a>, new_operator: <b>address</b>)
 </code></pre>
 
 
@@ -2082,16 +2082,16 @@ Allows an account with ownership capability to change the operator of the stake 
 <summary>Implementation</summary>
 
 
-<pre><code><b>public</b> <b>fun</b> <a href="stake.md#0x1_stake_set_operator_with_cap">set_operator_with_cap</a>(owner_cap: &<a href="stake.md#0x1_stake_OwnerCapability">OwnerCapability</a>, new_operator: <b>address</b>) <b>acquires</b> <a href="stake.md#0x1_stake_StakePool">StakePool</a> {
+<pre><code><b>public</b> <b>fun</b> <a href="stake.md#0x1_stake_old_set_operator_with_cap">set_operator_with_cap</a>(owner_cap: &<a href="stake.md#0x1_stake_old_OwnerCapability">OwnerCapability</a>, new_operator: <b>address</b>) <b>acquires</b> <a href="stake.md#0x1_stake_old_StakePool">StakePool</a> {
     <b>let</b> pool_address = owner_cap.pool_address;
-    <a href="stake.md#0x1_stake_assert_stake_pool_exists">assert_stake_pool_exists</a>(pool_address);
-    <b>let</b> stake_pool = <b>borrow_global_mut</b>&lt;<a href="stake.md#0x1_stake_StakePool">StakePool</a>&gt;(pool_address);
+    <a href="stake.md#0x1_stake_old_assert_stake_pool_exists">assert_stake_pool_exists</a>(pool_address);
+    <b>let</b> stake_pool = <b>borrow_global_mut</b>&lt;<a href="stake.md#0x1_stake_old_StakePool">StakePool</a>&gt;(pool_address);
     <b>let</b> old_operator = stake_pool.operator_address;
     stake_pool.operator_address = new_operator;
 
     <a href="event.md#0x1_event_emit_event">event::emit_event</a>(
         &<b>mut</b> stake_pool.set_operator_events,
-        <a href="stake.md#0x1_stake_SetOperatorEvent">SetOperatorEvent</a> {
+        <a href="stake.md#0x1_stake_old_SetOperatorEvent">SetOperatorEvent</a> {
             pool_address,
             old_operator,
             new_operator,
@@ -2104,14 +2104,14 @@ Allows an account with ownership capability to change the operator of the stake 
 
 </details>
 
-<a name="0x1_stake_set_delegated_voter"></a>
+<a name="0x1_stake_old_set_delegated_voter"></a>
 
 ## Function `set_delegated_voter`
 
 Allows an owner to change the delegated voter of the stake pool.
 
 
-<pre><code><b>public</b> entry <b>fun</b> <a href="stake.md#0x1_stake_set_delegated_voter">set_delegated_voter</a>(owner: &<a href="../../aptos-stdlib/../move-stdlib/doc/signer.md#0x1_signer">signer</a>, new_voter: <b>address</b>)
+<pre><code><b>public</b> entry <b>fun</b> <a href="stake.md#0x1_stake_old_set_delegated_voter">set_delegated_voter</a>(owner: &<a href="../../aptos-stdlib/../move-stdlib/doc/signer.md#0x1_signer">signer</a>, new_voter: <b>address</b>)
 </code></pre>
 
 
@@ -2120,11 +2120,11 @@ Allows an owner to change the delegated voter of the stake pool.
 <summary>Implementation</summary>
 
 
-<pre><code><b>public</b> entry <b>fun</b> <a href="stake.md#0x1_stake_set_delegated_voter">set_delegated_voter</a>(owner: &<a href="../../aptos-stdlib/../move-stdlib/doc/signer.md#0x1_signer">signer</a>, new_voter: <b>address</b>) <b>acquires</b> <a href="stake.md#0x1_stake_OwnerCapability">OwnerCapability</a>, <a href="stake.md#0x1_stake_StakePool">StakePool</a> {
+<pre><code><b>public</b> entry <b>fun</b> <a href="stake.md#0x1_stake_old_set_delegated_voter">set_delegated_voter</a>(owner: &<a href="../../aptos-stdlib/../move-stdlib/doc/signer.md#0x1_signer">signer</a>, new_voter: <b>address</b>) <b>acquires</b> <a href="stake.md#0x1_stake_old_OwnerCapability">OwnerCapability</a>, <a href="stake.md#0x1_stake_old_StakePool">StakePool</a> {
     <b>let</b> owner_address = <a href="../../aptos-stdlib/../move-stdlib/doc/signer.md#0x1_signer_address_of">signer::address_of</a>(owner);
-    <a href="stake.md#0x1_stake_assert_owner_cap_exists">assert_owner_cap_exists</a>(owner_address);
-    <b>let</b> ownership_cap = <b>borrow_global</b>&lt;<a href="stake.md#0x1_stake_OwnerCapability">OwnerCapability</a>&gt;(owner_address);
-    <a href="stake.md#0x1_stake_set_delegated_voter_with_cap">set_delegated_voter_with_cap</a>(ownership_cap, new_voter);
+    <a href="stake.md#0x1_stake_old_assert_owner_cap_exists">assert_owner_cap_exists</a>(owner_address);
+    <b>let</b> ownership_cap = <b>borrow_global</b>&lt;<a href="stake.md#0x1_stake_old_OwnerCapability">OwnerCapability</a>&gt;(owner_address);
+    <a href="stake.md#0x1_stake_old_set_delegated_voter_with_cap">set_delegated_voter_with_cap</a>(ownership_cap, new_voter);
 }
 </code></pre>
 
@@ -2132,14 +2132,14 @@ Allows an owner to change the delegated voter of the stake pool.
 
 </details>
 
-<a name="0x1_stake_set_delegated_voter_with_cap"></a>
+<a name="0x1_stake_old_set_delegated_voter_with_cap"></a>
 
 ## Function `set_delegated_voter_with_cap`
 
 Allows an owner to change the delegated voter of the stake pool.
 
 
-<pre><code><b>public</b> <b>fun</b> <a href="stake.md#0x1_stake_set_delegated_voter_with_cap">set_delegated_voter_with_cap</a>(owner_cap: &<a href="stake.md#0x1_stake_OwnerCapability">stake::OwnerCapability</a>, new_voter: <b>address</b>)
+<pre><code><b>public</b> <b>fun</b> <a href="stake.md#0x1_stake_old_set_delegated_voter_with_cap">set_delegated_voter_with_cap</a>(owner_cap: &<a href="stake.md#0x1_stake_old_OwnerCapability">stake_old::OwnerCapability</a>, new_voter: <b>address</b>)
 </code></pre>
 
 
@@ -2148,10 +2148,10 @@ Allows an owner to change the delegated voter of the stake pool.
 <summary>Implementation</summary>
 
 
-<pre><code><b>public</b> <b>fun</b> <a href="stake.md#0x1_stake_set_delegated_voter_with_cap">set_delegated_voter_with_cap</a>(owner_cap: &<a href="stake.md#0x1_stake_OwnerCapability">OwnerCapability</a>, new_voter: <b>address</b>) <b>acquires</b> <a href="stake.md#0x1_stake_StakePool">StakePool</a> {
+<pre><code><b>public</b> <b>fun</b> <a href="stake.md#0x1_stake_old_set_delegated_voter_with_cap">set_delegated_voter_with_cap</a>(owner_cap: &<a href="stake.md#0x1_stake_old_OwnerCapability">OwnerCapability</a>, new_voter: <b>address</b>) <b>acquires</b> <a href="stake.md#0x1_stake_old_StakePool">StakePool</a> {
     <b>let</b> pool_address = owner_cap.pool_address;
-    <a href="stake.md#0x1_stake_assert_stake_pool_exists">assert_stake_pool_exists</a>(pool_address);
-    <b>let</b> stake_pool = <b>borrow_global_mut</b>&lt;<a href="stake.md#0x1_stake_StakePool">StakePool</a>&gt;(pool_address);
+    <a href="stake.md#0x1_stake_old_assert_stake_pool_exists">assert_stake_pool_exists</a>(pool_address);
+    <b>let</b> stake_pool = <b>borrow_global_mut</b>&lt;<a href="stake.md#0x1_stake_old_StakePool">StakePool</a>&gt;(pool_address);
     stake_pool.delegated_voter = new_voter;
 }
 </code></pre>
@@ -2160,14 +2160,14 @@ Allows an owner to change the delegated voter of the stake pool.
 
 </details>
 
-<a name="0x1_stake_add_stake"></a>
+<a name="0x1_stake_old_add_stake"></a>
 
 ## Function `add_stake`
 
 Add <code>amount</code> of coins from the <code><a href="account.md#0x1_account">account</a></code> owning the StakePool.
 
 
-<pre><code><b>public</b> entry <b>fun</b> <a href="stake.md#0x1_stake_add_stake">add_stake</a>(owner: &<a href="../../aptos-stdlib/../move-stdlib/doc/signer.md#0x1_signer">signer</a>, amount: u64)
+<pre><code><b>public</b> entry <b>fun</b> <a href="stake.md#0x1_stake_old_add_stake">add_stake</a>(owner: &<a href="../../aptos-stdlib/../move-stdlib/doc/signer.md#0x1_signer">signer</a>, amount: u64)
 </code></pre>
 
 
@@ -2176,11 +2176,11 @@ Add <code>amount</code> of coins from the <code><a href="account.md#0x1_account"
 <summary>Implementation</summary>
 
 
-<pre><code><b>public</b> entry <b>fun</b> <a href="stake.md#0x1_stake_add_stake">add_stake</a>(owner: &<a href="../../aptos-stdlib/../move-stdlib/doc/signer.md#0x1_signer">signer</a>, amount: u64) <b>acquires</b> <a href="stake.md#0x1_stake_OwnerCapability">OwnerCapability</a>, <a href="stake.md#0x1_stake_StakePool">StakePool</a>, <a href="stake.md#0x1_stake_ValidatorSet">ValidatorSet</a> {
+<pre><code><b>public</b> entry <b>fun</b> <a href="stake.md#0x1_stake_old_add_stake">add_stake</a>(owner: &<a href="../../aptos-stdlib/../move-stdlib/doc/signer.md#0x1_signer">signer</a>, amount: u64) <b>acquires</b> <a href="stake.md#0x1_stake_old_OwnerCapability">OwnerCapability</a>, <a href="stake.md#0x1_stake_old_StakePool">StakePool</a>, <a href="stake.md#0x1_stake_old_ValidatorSet">ValidatorSet</a> {
     <b>let</b> owner_address = <a href="../../aptos-stdlib/../move-stdlib/doc/signer.md#0x1_signer_address_of">signer::address_of</a>(owner);
-    <a href="stake.md#0x1_stake_assert_owner_cap_exists">assert_owner_cap_exists</a>(owner_address);
-    <b>let</b> ownership_cap = <b>borrow_global</b>&lt;<a href="stake.md#0x1_stake_OwnerCapability">OwnerCapability</a>&gt;(owner_address);
-    <a href="stake.md#0x1_stake_add_stake_with_cap">add_stake_with_cap</a>(ownership_cap, <a href="coin.md#0x1_coin_withdraw">coin::withdraw</a>&lt;AptosCoin&gt;(owner, amount));
+    <a href="stake.md#0x1_stake_old_assert_owner_cap_exists">assert_owner_cap_exists</a>(owner_address);
+    <b>let</b> ownership_cap = <b>borrow_global</b>&lt;<a href="stake.md#0x1_stake_old_OwnerCapability">OwnerCapability</a>&gt;(owner_address);
+    <a href="stake.md#0x1_stake_old_add_stake_with_cap">add_stake_with_cap</a>(ownership_cap, <a href="coin.md#0x1_coin_withdraw">coin::withdraw</a>&lt;AptosCoin&gt;(owner, amount));
 }
 </code></pre>
 
@@ -2188,14 +2188,14 @@ Add <code>amount</code> of coins from the <code><a href="account.md#0x1_account"
 
 </details>
 
-<a name="0x1_stake_add_stake_with_cap"></a>
+<a name="0x1_stake_old_add_stake_with_cap"></a>
 
 ## Function `add_stake_with_cap`
 
 Add <code>coins</code> into <code>pool_address</code>. this requires the corresponding <code>owner_cap</code> to be passed in.
 
 
-<pre><code><b>public</b> <b>fun</b> <a href="stake.md#0x1_stake_add_stake_with_cap">add_stake_with_cap</a>(owner_cap: &<a href="stake.md#0x1_stake_OwnerCapability">stake::OwnerCapability</a>, coins: <a href="coin.md#0x1_coin_Coin">coin::Coin</a>&lt;<a href="aptos_coin.md#0x1_aptos_coin_AptosCoin">aptos_coin::AptosCoin</a>&gt;)
+<pre><code><b>public</b> <b>fun</b> <a href="stake.md#0x1_stake_old_add_stake_with_cap">add_stake_with_cap</a>(owner_cap: &<a href="stake.md#0x1_stake_old_OwnerCapability">stake_old::OwnerCapability</a>, coins: <a href="coin.md#0x1_coin_Coin">coin::Coin</a>&lt;<a href="aptos_coin.md#0x1_aptos_coin_AptosCoin">aptos_coin::AptosCoin</a>&gt;)
 </code></pre>
 
 
@@ -2204,9 +2204,9 @@ Add <code>coins</code> into <code>pool_address</code>. this requires the corresp
 <summary>Implementation</summary>
 
 
-<pre><code><b>public</b> <b>fun</b> <a href="stake.md#0x1_stake_add_stake_with_cap">add_stake_with_cap</a>(owner_cap: &<a href="stake.md#0x1_stake_OwnerCapability">OwnerCapability</a>, coins: Coin&lt;AptosCoin&gt;) <b>acquires</b> <a href="stake.md#0x1_stake_StakePool">StakePool</a>, <a href="stake.md#0x1_stake_ValidatorSet">ValidatorSet</a> {
+<pre><code><b>public</b> <b>fun</b> <a href="stake.md#0x1_stake_old_add_stake_with_cap">add_stake_with_cap</a>(owner_cap: &<a href="stake.md#0x1_stake_old_OwnerCapability">OwnerCapability</a>, coins: Coin&lt;AptosCoin&gt;) <b>acquires</b> <a href="stake.md#0x1_stake_old_StakePool">StakePool</a>, <a href="stake.md#0x1_stake_old_ValidatorSet">ValidatorSet</a> {
     <b>let</b> pool_address = owner_cap.pool_address;
-    <a href="stake.md#0x1_stake_assert_stake_pool_exists">assert_stake_pool_exists</a>(pool_address);
+    <a href="stake.md#0x1_stake_old_assert_stake_pool_exists">assert_stake_pool_exists</a>(pool_address);
 
     <b>let</b> amount = <a href="coin.md#0x1_coin_value">coin::value</a>(&coins);
     <b>if</b> (amount == 0) {
@@ -2216,18 +2216,18 @@ Add <code>coins</code> into <code>pool_address</code>. this requires the corresp
 
     // Only track and validate <a href="voting.md#0x1_voting">voting</a> power increase for active and pending_active validator.
     // Pending_inactive validator will be removed from the validator set in the next epoch.
-    // Inactive validator's total <a href="stake.md#0x1_stake">stake</a> will be tracked when they join the validator set.
-    <b>let</b> validator_set = <b>borrow_global_mut</b>&lt;<a href="stake.md#0x1_stake_ValidatorSet">ValidatorSet</a>&gt;(@aptos_framework);
+    // Inactive validator's total stake will be tracked when they join the validator set.
+    <b>let</b> validator_set = <b>borrow_global_mut</b>&lt;<a href="stake.md#0x1_stake_old_ValidatorSet">ValidatorSet</a>&gt;(@aptos_framework);
     // Search directly rather using get_validator_state <b>to</b> save on unnecessary loops.
-    <b>if</b> (<a href="../../aptos-stdlib/../move-stdlib/doc/option.md#0x1_option_is_some">option::is_some</a>(&<a href="stake.md#0x1_stake_find_validator">find_validator</a>(&validator_set.active_validators, pool_address)) ||
-        <a href="../../aptos-stdlib/../move-stdlib/doc/option.md#0x1_option_is_some">option::is_some</a>(&<a href="stake.md#0x1_stake_find_validator">find_validator</a>(&validator_set.pending_active, pool_address))) {
-        <a href="stake.md#0x1_stake_update_voting_power_increase">update_voting_power_increase</a>(amount);
+    <b>if</b> (<a href="../../aptos-stdlib/../move-stdlib/doc/option.md#0x1_option_is_some">option::is_some</a>(&<a href="stake.md#0x1_stake_old_find_validator">find_validator</a>(&validator_set.active_validators, pool_address)) ||
+        <a href="../../aptos-stdlib/../move-stdlib/doc/option.md#0x1_option_is_some">option::is_some</a>(&<a href="stake.md#0x1_stake_old_find_validator">find_validator</a>(&validator_set.pending_active, pool_address))) {
+        <a href="stake.md#0x1_stake_old_update_voting_power_increase">update_voting_power_increase</a>(amount);
     };
 
-    // Add <b>to</b> pending_active <b>if</b> it's a current validator because the <a href="stake.md#0x1_stake">stake</a> is not counted until the next epoch.
+    // Add <b>to</b> pending_active <b>if</b> it's a current validator because the stake is not counted until the next epoch.
     // Otherwise, the delegation can be added <b>to</b> active directly <b>as</b> the validator is also activated in the epoch.
-    <b>let</b> stake_pool = <b>borrow_global_mut</b>&lt;<a href="stake.md#0x1_stake_StakePool">StakePool</a>&gt;(pool_address);
-    <b>if</b> (<a href="stake.md#0x1_stake_is_current_epoch_validator">is_current_epoch_validator</a>(pool_address)) {
+    <b>let</b> stake_pool = <b>borrow_global_mut</b>&lt;<a href="stake.md#0x1_stake_old_StakePool">StakePool</a>&gt;(pool_address);
+    <b>if</b> (<a href="stake.md#0x1_stake_old_is_current_epoch_validator">is_current_epoch_validator</a>(pool_address)) {
         <a href="coin.md#0x1_coin_merge">coin::merge</a>&lt;AptosCoin&gt;(&<b>mut</b> stake_pool.pending_active, coins);
     } <b>else</b> {
         <a href="coin.md#0x1_coin_merge">coin::merge</a>&lt;AptosCoin&gt;(&<b>mut</b> stake_pool.active, coins);
@@ -2236,12 +2236,12 @@ Add <code>coins</code> into <code>pool_address</code>. this requires the corresp
     // V7 TODO:
 
     // <b>let</b> (_, maximum_stake) = staking_config::get_required_stake(&staking_config::get());
-    // <b>let</b> voting_power = <a href="stake.md#0x1_stake_get_next_epoch_voting_power">get_next_epoch_voting_power</a>(stake_pool);
-    // <b>assert</b>!(voting_power &lt;= maximum_stake, <a href="../../aptos-stdlib/../move-stdlib/doc/error.md#0x1_error_invalid_argument">error::invalid_argument</a>(<a href="stake.md#0x1_stake_ESTAKE_EXCEEDS_MAX">ESTAKE_EXCEEDS_MAX</a>));
+    // <b>let</b> voting_power = <a href="stake.md#0x1_stake_old_get_next_epoch_voting_power">get_next_epoch_voting_power</a>(stake_pool);
+    // <b>assert</b>!(voting_power &lt;= maximum_stake, <a href="../../aptos-stdlib/../move-stdlib/doc/error.md#0x1_error_invalid_argument">error::invalid_argument</a>(<a href="stake.md#0x1_stake_old_ESTAKE_EXCEEDS_MAX">ESTAKE_EXCEEDS_MAX</a>));
 
     <a href="event.md#0x1_event_emit_event">event::emit_event</a>(
         &<b>mut</b> stake_pool.add_stake_events,
-        <a href="stake.md#0x1_stake_AddStakeEvent">AddStakeEvent</a> {
+        <a href="stake.md#0x1_stake_old_AddStakeEvent">AddStakeEvent</a> {
             pool_address,
             amount_added: amount,
         },
@@ -2253,14 +2253,14 @@ Add <code>coins</code> into <code>pool_address</code>. this requires the corresp
 
 </details>
 
-<a name="0x1_stake_reactivate_stake"></a>
+<a name="0x1_stake_old_reactivate_stake"></a>
 
 ## Function `reactivate_stake`
 
 Move <code>amount</code> of coins from pending_inactive to active.
 
 
-<pre><code><b>public</b> entry <b>fun</b> <a href="stake.md#0x1_stake_reactivate_stake">reactivate_stake</a>(owner: &<a href="../../aptos-stdlib/../move-stdlib/doc/signer.md#0x1_signer">signer</a>, amount: u64)
+<pre><code><b>public</b> entry <b>fun</b> <a href="stake.md#0x1_stake_old_reactivate_stake">reactivate_stake</a>(owner: &<a href="../../aptos-stdlib/../move-stdlib/doc/signer.md#0x1_signer">signer</a>, amount: u64)
 </code></pre>
 
 
@@ -2269,11 +2269,11 @@ Move <code>amount</code> of coins from pending_inactive to active.
 <summary>Implementation</summary>
 
 
-<pre><code><b>public</b> entry <b>fun</b> <a href="stake.md#0x1_stake_reactivate_stake">reactivate_stake</a>(owner: &<a href="../../aptos-stdlib/../move-stdlib/doc/signer.md#0x1_signer">signer</a>, amount: u64) <b>acquires</b> <a href="stake.md#0x1_stake_OwnerCapability">OwnerCapability</a>, <a href="stake.md#0x1_stake_StakePool">StakePool</a> {
+<pre><code><b>public</b> entry <b>fun</b> <a href="stake.md#0x1_stake_old_reactivate_stake">reactivate_stake</a>(owner: &<a href="../../aptos-stdlib/../move-stdlib/doc/signer.md#0x1_signer">signer</a>, amount: u64) <b>acquires</b> <a href="stake.md#0x1_stake_old_OwnerCapability">OwnerCapability</a>, <a href="stake.md#0x1_stake_old_StakePool">StakePool</a> {
     <b>let</b> owner_address = <a href="../../aptos-stdlib/../move-stdlib/doc/signer.md#0x1_signer_address_of">signer::address_of</a>(owner);
-    <a href="stake.md#0x1_stake_assert_owner_cap_exists">assert_owner_cap_exists</a>(owner_address);
-    <b>let</b> ownership_cap = <b>borrow_global</b>&lt;<a href="stake.md#0x1_stake_OwnerCapability">OwnerCapability</a>&gt;(owner_address);
-    <a href="stake.md#0x1_stake_reactivate_stake_with_cap">reactivate_stake_with_cap</a>(ownership_cap, amount);
+    <a href="stake.md#0x1_stake_old_assert_owner_cap_exists">assert_owner_cap_exists</a>(owner_address);
+    <b>let</b> ownership_cap = <b>borrow_global</b>&lt;<a href="stake.md#0x1_stake_old_OwnerCapability">OwnerCapability</a>&gt;(owner_address);
+    <a href="stake.md#0x1_stake_old_reactivate_stake_with_cap">reactivate_stake_with_cap</a>(ownership_cap, amount);
 }
 </code></pre>
 
@@ -2281,13 +2281,13 @@ Move <code>amount</code> of coins from pending_inactive to active.
 
 </details>
 
-<a name="0x1_stake_reactivate_stake_with_cap"></a>
+<a name="0x1_stake_old_reactivate_stake_with_cap"></a>
 
 ## Function `reactivate_stake_with_cap`
 
 
 
-<pre><code><b>public</b> <b>fun</b> <a href="stake.md#0x1_stake_reactivate_stake_with_cap">reactivate_stake_with_cap</a>(owner_cap: &<a href="stake.md#0x1_stake_OwnerCapability">stake::OwnerCapability</a>, amount: u64)
+<pre><code><b>public</b> <b>fun</b> <a href="stake.md#0x1_stake_old_reactivate_stake_with_cap">reactivate_stake_with_cap</a>(owner_cap: &<a href="stake.md#0x1_stake_old_OwnerCapability">stake_old::OwnerCapability</a>, amount: u64)
 </code></pre>
 
 
@@ -2296,24 +2296,24 @@ Move <code>amount</code> of coins from pending_inactive to active.
 <summary>Implementation</summary>
 
 
-<pre><code><b>public</b> <b>fun</b> <a href="stake.md#0x1_stake_reactivate_stake_with_cap">reactivate_stake_with_cap</a>(owner_cap: &<a href="stake.md#0x1_stake_OwnerCapability">OwnerCapability</a>, amount: u64) <b>acquires</b> <a href="stake.md#0x1_stake_StakePool">StakePool</a> {
+<pre><code><b>public</b> <b>fun</b> <a href="stake.md#0x1_stake_old_reactivate_stake_with_cap">reactivate_stake_with_cap</a>(owner_cap: &<a href="stake.md#0x1_stake_old_OwnerCapability">OwnerCapability</a>, amount: u64) <b>acquires</b> <a href="stake.md#0x1_stake_old_StakePool">StakePool</a> {
     <b>let</b> pool_address = owner_cap.pool_address;
-    <a href="stake.md#0x1_stake_assert_stake_pool_exists">assert_stake_pool_exists</a>(pool_address);
+    <a href="stake.md#0x1_stake_old_assert_stake_pool_exists">assert_stake_pool_exists</a>(pool_address);
 
     // Cap the amount <b>to</b> reactivate by the amount in pending_inactive.
-    <b>let</b> stake_pool = <b>borrow_global_mut</b>&lt;<a href="stake.md#0x1_stake_StakePool">StakePool</a>&gt;(pool_address);
+    <b>let</b> stake_pool = <b>borrow_global_mut</b>&lt;<a href="stake.md#0x1_stake_old_StakePool">StakePool</a>&gt;(pool_address);
     <b>let</b> total_pending_inactive = <a href="coin.md#0x1_coin_value">coin::value</a>(&stake_pool.pending_inactive);
     amount = <b>min</b>(amount, total_pending_inactive);
 
     // Since this does not count <b>as</b> a <a href="voting.md#0x1_voting">voting</a> power change (pending inactive still counts <b>as</b> <a href="voting.md#0x1_voting">voting</a> power in the
-    // current epoch), <a href="stake.md#0x1_stake">stake</a> can be immediately moved from pending inactive <b>to</b> active.
+    // current epoch), stake can be immediately moved from pending inactive <b>to</b> active.
     // We also don't need <b>to</b> check <a href="voting.md#0x1_voting">voting</a> power increase <b>as</b> there's none.
     <b>let</b> reactivated_coins = <a href="coin.md#0x1_coin_extract">coin::extract</a>(&<b>mut</b> stake_pool.pending_inactive, amount);
     <a href="coin.md#0x1_coin_merge">coin::merge</a>(&<b>mut</b> stake_pool.active, reactivated_coins);
 
     <a href="event.md#0x1_event_emit_event">event::emit_event</a>(
         &<b>mut</b> stake_pool.reactivate_stake_events,
-        <a href="stake.md#0x1_stake_ReactivateStakeEvent">ReactivateStakeEvent</a> {
+        <a href="stake.md#0x1_stake_old_ReactivateStakeEvent">ReactivateStakeEvent</a> {
             pool_address,
             amount,
         },
@@ -2325,14 +2325,14 @@ Move <code>amount</code> of coins from pending_inactive to active.
 
 </details>
 
-<a name="0x1_stake_rotate_consensus_key"></a>
+<a name="0x1_stake_old_rotate_consensus_key"></a>
 
 ## Function `rotate_consensus_key`
 
 Rotate the consensus key of the validator, it'll take effect in next epoch.
 
 
-<pre><code><b>public</b> entry <b>fun</b> <a href="stake.md#0x1_stake_rotate_consensus_key">rotate_consensus_key</a>(operator: &<a href="../../aptos-stdlib/../move-stdlib/doc/signer.md#0x1_signer">signer</a>, pool_address: <b>address</b>, new_consensus_pubkey: <a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector">vector</a>&lt;u8&gt;, proof_of_possession: <a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector">vector</a>&lt;u8&gt;)
+<pre><code><b>public</b> entry <b>fun</b> <a href="stake.md#0x1_stake_old_rotate_consensus_key">rotate_consensus_key</a>(operator: &<a href="../../aptos-stdlib/../move-stdlib/doc/signer.md#0x1_signer">signer</a>, pool_address: <b>address</b>, new_consensus_pubkey: <a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector">vector</a>&lt;u8&gt;, proof_of_possession: <a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector">vector</a>&lt;u8&gt;)
 </code></pre>
 
 
@@ -2341,30 +2341,30 @@ Rotate the consensus key of the validator, it'll take effect in next epoch.
 <summary>Implementation</summary>
 
 
-<pre><code><b>public</b> entry <b>fun</b> <a href="stake.md#0x1_stake_rotate_consensus_key">rotate_consensus_key</a>(
+<pre><code><b>public</b> entry <b>fun</b> <a href="stake.md#0x1_stake_old_rotate_consensus_key">rotate_consensus_key</a>(
     operator: &<a href="../../aptos-stdlib/../move-stdlib/doc/signer.md#0x1_signer">signer</a>,
     pool_address: <b>address</b>,
     new_consensus_pubkey: <a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector">vector</a>&lt;u8&gt;,
     proof_of_possession: <a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector">vector</a>&lt;u8&gt;,
-) <b>acquires</b> <a href="stake.md#0x1_stake_StakePool">StakePool</a>, <a href="stake.md#0x1_stake_ValidatorConfig">ValidatorConfig</a> {
-    <a href="stake.md#0x1_stake_assert_stake_pool_exists">assert_stake_pool_exists</a>(pool_address);
-    <b>let</b> stake_pool = <b>borrow_global_mut</b>&lt;<a href="stake.md#0x1_stake_StakePool">StakePool</a>&gt;(pool_address);
-    <b>assert</b>!(<a href="../../aptos-stdlib/../move-stdlib/doc/signer.md#0x1_signer_address_of">signer::address_of</a>(operator) == stake_pool.operator_address, <a href="../../aptos-stdlib/../move-stdlib/doc/error.md#0x1_error_unauthenticated">error::unauthenticated</a>(<a href="stake.md#0x1_stake_ENOT_OPERATOR">ENOT_OPERATOR</a>));
+) <b>acquires</b> <a href="stake.md#0x1_stake_old_StakePool">StakePool</a>, <a href="stake.md#0x1_stake_old_ValidatorConfig">ValidatorConfig</a> {
+    <a href="stake.md#0x1_stake_old_assert_stake_pool_exists">assert_stake_pool_exists</a>(pool_address);
+    <b>let</b> stake_pool = <b>borrow_global_mut</b>&lt;<a href="stake.md#0x1_stake_old_StakePool">StakePool</a>&gt;(pool_address);
+    <b>assert</b>!(<a href="../../aptos-stdlib/../move-stdlib/doc/signer.md#0x1_signer_address_of">signer::address_of</a>(operator) == stake_pool.operator_address, <a href="../../aptos-stdlib/../move-stdlib/doc/error.md#0x1_error_unauthenticated">error::unauthenticated</a>(<a href="stake.md#0x1_stake_old_ENOT_OPERATOR">ENOT_OPERATOR</a>));
 
-    <b>assert</b>!(<b>exists</b>&lt;<a href="stake.md#0x1_stake_ValidatorConfig">ValidatorConfig</a>&gt;(pool_address), <a href="../../aptos-stdlib/../move-stdlib/doc/error.md#0x1_error_not_found">error::not_found</a>(<a href="stake.md#0x1_stake_EVALIDATOR_CONFIG">EVALIDATOR_CONFIG</a>));
-    <b>let</b> validator_info = <b>borrow_global_mut</b>&lt;<a href="stake.md#0x1_stake_ValidatorConfig">ValidatorConfig</a>&gt;(pool_address);
+    <b>assert</b>!(<b>exists</b>&lt;<a href="stake.md#0x1_stake_old_ValidatorConfig">ValidatorConfig</a>&gt;(pool_address), <a href="../../aptos-stdlib/../move-stdlib/doc/error.md#0x1_error_not_found">error::not_found</a>(<a href="stake.md#0x1_stake_old_EVALIDATOR_CONFIG">EVALIDATOR_CONFIG</a>));
+    <b>let</b> validator_info = <b>borrow_global_mut</b>&lt;<a href="stake.md#0x1_stake_old_ValidatorConfig">ValidatorConfig</a>&gt;(pool_address);
     <b>let</b> old_consensus_pubkey = validator_info.consensus_pubkey;
     // Checks the <b>public</b> key <b>has</b> a valid proof-of-possession <b>to</b> prevent rogue-key attacks.
     <b>let</b> pubkey_from_pop = &<b>mut</b> <a href="../../aptos-stdlib/doc/bls12381.md#0x1_bls12381_public_key_from_bytes_with_pop">bls12381::public_key_from_bytes_with_pop</a>(
         new_consensus_pubkey,
         &proof_of_possession_from_bytes(proof_of_possession)
     );
-    <b>assert</b>!(<a href="../../aptos-stdlib/../move-stdlib/doc/option.md#0x1_option_is_some">option::is_some</a>(pubkey_from_pop), <a href="../../aptos-stdlib/../move-stdlib/doc/error.md#0x1_error_invalid_argument">error::invalid_argument</a>(<a href="stake.md#0x1_stake_EINVALID_PUBLIC_KEY">EINVALID_PUBLIC_KEY</a>));
+    <b>assert</b>!(<a href="../../aptos-stdlib/../move-stdlib/doc/option.md#0x1_option_is_some">option::is_some</a>(pubkey_from_pop), <a href="../../aptos-stdlib/../move-stdlib/doc/error.md#0x1_error_invalid_argument">error::invalid_argument</a>(<a href="stake.md#0x1_stake_old_EINVALID_PUBLIC_KEY">EINVALID_PUBLIC_KEY</a>));
     validator_info.consensus_pubkey = new_consensus_pubkey;
 
     <a href="event.md#0x1_event_emit_event">event::emit_event</a>(
         &<b>mut</b> stake_pool.rotate_consensus_key_events,
-        <a href="stake.md#0x1_stake_RotateConsensusKeyEvent">RotateConsensusKeyEvent</a> {
+        <a href="stake.md#0x1_stake_old_RotateConsensusKeyEvent">RotateConsensusKeyEvent</a> {
             pool_address,
             old_consensus_pubkey,
             new_consensus_pubkey,
@@ -2377,14 +2377,14 @@ Rotate the consensus key of the validator, it'll take effect in next epoch.
 
 </details>
 
-<a name="0x1_stake_update_network_and_fullnode_addresses"></a>
+<a name="0x1_stake_old_update_network_and_fullnode_addresses"></a>
 
 ## Function `update_network_and_fullnode_addresses`
 
 Update the network and full node addresses of the validator. This only takes effect in the next epoch.
 
 
-<pre><code><b>public</b> entry <b>fun</b> <a href="stake.md#0x1_stake_update_network_and_fullnode_addresses">update_network_and_fullnode_addresses</a>(operator: &<a href="../../aptos-stdlib/../move-stdlib/doc/signer.md#0x1_signer">signer</a>, pool_address: <b>address</b>, new_network_addresses: <a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector">vector</a>&lt;u8&gt;, new_fullnode_addresses: <a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector">vector</a>&lt;u8&gt;)
+<pre><code><b>public</b> entry <b>fun</b> <a href="stake.md#0x1_stake_old_update_network_and_fullnode_addresses">update_network_and_fullnode_addresses</a>(operator: &<a href="../../aptos-stdlib/../move-stdlib/doc/signer.md#0x1_signer">signer</a>, pool_address: <b>address</b>, new_network_addresses: <a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector">vector</a>&lt;u8&gt;, new_fullnode_addresses: <a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector">vector</a>&lt;u8&gt;)
 </code></pre>
 
 
@@ -2393,18 +2393,18 @@ Update the network and full node addresses of the validator. This only takes eff
 <summary>Implementation</summary>
 
 
-<pre><code><b>public</b> entry <b>fun</b> <a href="stake.md#0x1_stake_update_network_and_fullnode_addresses">update_network_and_fullnode_addresses</a>(
+<pre><code><b>public</b> entry <b>fun</b> <a href="stake.md#0x1_stake_old_update_network_and_fullnode_addresses">update_network_and_fullnode_addresses</a>(
     operator: &<a href="../../aptos-stdlib/../move-stdlib/doc/signer.md#0x1_signer">signer</a>,
     pool_address: <b>address</b>,
     new_network_addresses: <a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector">vector</a>&lt;u8&gt;,
     new_fullnode_addresses: <a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector">vector</a>&lt;u8&gt;,
-) <b>acquires</b> <a href="stake.md#0x1_stake_StakePool">StakePool</a>, <a href="stake.md#0x1_stake_ValidatorConfig">ValidatorConfig</a> {
-    <a href="stake.md#0x1_stake_assert_stake_pool_exists">assert_stake_pool_exists</a>(pool_address);
-    <b>let</b> stake_pool = <b>borrow_global_mut</b>&lt;<a href="stake.md#0x1_stake_StakePool">StakePool</a>&gt;(pool_address);
-    <b>assert</b>!(<a href="../../aptos-stdlib/../move-stdlib/doc/signer.md#0x1_signer_address_of">signer::address_of</a>(operator) == stake_pool.operator_address, <a href="../../aptos-stdlib/../move-stdlib/doc/error.md#0x1_error_unauthenticated">error::unauthenticated</a>(<a href="stake.md#0x1_stake_ENOT_OPERATOR">ENOT_OPERATOR</a>));
+) <b>acquires</b> <a href="stake.md#0x1_stake_old_StakePool">StakePool</a>, <a href="stake.md#0x1_stake_old_ValidatorConfig">ValidatorConfig</a> {
+    <a href="stake.md#0x1_stake_old_assert_stake_pool_exists">assert_stake_pool_exists</a>(pool_address);
+    <b>let</b> stake_pool = <b>borrow_global_mut</b>&lt;<a href="stake.md#0x1_stake_old_StakePool">StakePool</a>&gt;(pool_address);
+    <b>assert</b>!(<a href="../../aptos-stdlib/../move-stdlib/doc/signer.md#0x1_signer_address_of">signer::address_of</a>(operator) == stake_pool.operator_address, <a href="../../aptos-stdlib/../move-stdlib/doc/error.md#0x1_error_unauthenticated">error::unauthenticated</a>(<a href="stake.md#0x1_stake_old_ENOT_OPERATOR">ENOT_OPERATOR</a>));
 
-    <b>assert</b>!(<b>exists</b>&lt;<a href="stake.md#0x1_stake_ValidatorConfig">ValidatorConfig</a>&gt;(pool_address), <a href="../../aptos-stdlib/../move-stdlib/doc/error.md#0x1_error_not_found">error::not_found</a>(<a href="stake.md#0x1_stake_EVALIDATOR_CONFIG">EVALIDATOR_CONFIG</a>));
-    <b>let</b> validator_info = <b>borrow_global_mut</b>&lt;<a href="stake.md#0x1_stake_ValidatorConfig">ValidatorConfig</a>&gt;(pool_address);
+    <b>assert</b>!(<b>exists</b>&lt;<a href="stake.md#0x1_stake_old_ValidatorConfig">ValidatorConfig</a>&gt;(pool_address), <a href="../../aptos-stdlib/../move-stdlib/doc/error.md#0x1_error_not_found">error::not_found</a>(<a href="stake.md#0x1_stake_old_EVALIDATOR_CONFIG">EVALIDATOR_CONFIG</a>));
+    <b>let</b> validator_info = <b>borrow_global_mut</b>&lt;<a href="stake.md#0x1_stake_old_ValidatorConfig">ValidatorConfig</a>&gt;(pool_address);
     <b>let</b> old_network_addresses = validator_info.network_addresses;
     validator_info.network_addresses = new_network_addresses;
     <b>let</b> old_fullnode_addresses = validator_info.fullnode_addresses;
@@ -2412,7 +2412,7 @@ Update the network and full node addresses of the validator. This only takes eff
 
     <a href="event.md#0x1_event_emit_event">event::emit_event</a>(
         &<b>mut</b> stake_pool.update_network_and_fullnode_addresses_events,
-        <a href="stake.md#0x1_stake_UpdateNetworkAndFullnodeAddressesEvent">UpdateNetworkAndFullnodeAddressesEvent</a> {
+        <a href="stake.md#0x1_stake_old_UpdateNetworkAndFullnodeAddressesEvent">UpdateNetworkAndFullnodeAddressesEvent</a> {
             pool_address,
             old_network_addresses,
             new_network_addresses,
@@ -2427,7 +2427,7 @@ Update the network and full node addresses of the validator. This only takes eff
 
 </details>
 
-<a name="0x1_stake_join_validator_set"></a>
+<a name="0x1_stake_old_join_validator_set"></a>
 
 ## Function `join_validator_set`
 
@@ -2436,7 +2436,7 @@ directly inactive if it's not from an active validator.
 This can only called by the operator of the validator/staking pool.
 
 
-<pre><code><b>public</b> entry <b>fun</b> <a href="stake.md#0x1_stake_join_validator_set">join_validator_set</a>(operator: &<a href="../../aptos-stdlib/../move-stdlib/doc/signer.md#0x1_signer">signer</a>, pool_address: <b>address</b>)
+<pre><code><b>public</b> entry <b>fun</b> <a href="stake.md#0x1_stake_old_join_validator_set">join_validator_set</a>(operator: &<a href="../../aptos-stdlib/../move-stdlib/doc/signer.md#0x1_signer">signer</a>, pool_address: <b>address</b>)
 </code></pre>
 
 
@@ -2445,16 +2445,16 @@ This can only called by the operator of the validator/staking pool.
 <summary>Implementation</summary>
 
 
-<pre><code><b>public</b> entry <b>fun</b> <a href="stake.md#0x1_stake_join_validator_set">join_validator_set</a>(
+<pre><code><b>public</b> entry <b>fun</b> <a href="stake.md#0x1_stake_old_join_validator_set">join_validator_set</a>(
     operator: &<a href="../../aptos-stdlib/../move-stdlib/doc/signer.md#0x1_signer">signer</a>,
     pool_address: <b>address</b>
-) <b>acquires</b> <a href="stake.md#0x1_stake_ValidatorConfig">ValidatorConfig</a>, <a href="stake.md#0x1_stake_ValidatorSet">ValidatorSet</a> {
+) <b>acquires</b> <a href="stake.md#0x1_stake_old_ValidatorConfig">ValidatorConfig</a>, <a href="stake.md#0x1_stake_old_ValidatorSet">ValidatorSet</a> {
     // <b>assert</b>!(
     //     staking_config::get_allow_validator_set_change(&staking_config::get()),
-    //     <a href="../../aptos-stdlib/../move-stdlib/doc/error.md#0x1_error_invalid_argument">error::invalid_argument</a>(<a href="stake.md#0x1_stake_ENO_POST_GENESIS_VALIDATOR_SET_CHANGE_ALLOWED">ENO_POST_GENESIS_VALIDATOR_SET_CHANGE_ALLOWED</a>),
+    //     <a href="../../aptos-stdlib/../move-stdlib/doc/error.md#0x1_error_invalid_argument">error::invalid_argument</a>(<a href="stake.md#0x1_stake_old_ENO_POST_GENESIS_VALIDATOR_SET_CHANGE_ALLOWED">ENO_POST_GENESIS_VALIDATOR_SET_CHANGE_ALLOWED</a>),
     // );
 
-    <a href="stake.md#0x1_stake_join_validator_set_internal">join_validator_set_internal</a>(operator, pool_address);
+    <a href="stake.md#0x1_stake_old_join_validator_set_internal">join_validator_set_internal</a>(operator, pool_address);
 }
 </code></pre>
 
@@ -2462,7 +2462,7 @@ This can only called by the operator of the validator/staking pool.
 
 </details>
 
-<a name="0x1_stake_join_validator_set_internal"></a>
+<a name="0x1_stake_old_join_validator_set_internal"></a>
 
 ## Function `join_validator_set_internal`
 
@@ -2474,7 +2474,7 @@ epoch starts (eligibility will be rechecked).
 This internal version can only be called by the Genesis module during Genesis.
 
 
-<pre><code><b>public</b>(<b>friend</b>) <b>fun</b> <a href="stake.md#0x1_stake_join_validator_set_internal">join_validator_set_internal</a>(_operator: &<a href="../../aptos-stdlib/../move-stdlib/doc/signer.md#0x1_signer">signer</a>, pool_address: <b>address</b>)
+<pre><code><b>public</b>(<b>friend</b>) <b>fun</b> <a href="stake.md#0x1_stake_old_join_validator_set_internal">join_validator_set_internal</a>(_operator: &<a href="../../aptos-stdlib/../move-stdlib/doc/signer.md#0x1_signer">signer</a>, pool_address: <b>address</b>)
 </code></pre>
 
 
@@ -2483,45 +2483,45 @@ This internal version can only be called by the Genesis module during Genesis.
 <summary>Implementation</summary>
 
 
-<pre><code><b>public</b>(<b>friend</b>) <b>fun</b> <a href="stake.md#0x1_stake_join_validator_set_internal">join_validator_set_internal</a>(
+<pre><code><b>public</b>(<b>friend</b>) <b>fun</b> <a href="stake.md#0x1_stake_old_join_validator_set_internal">join_validator_set_internal</a>(
     _operator: &<a href="../../aptos-stdlib/../move-stdlib/doc/signer.md#0x1_signer">signer</a>,
     pool_address: <b>address</b>
-) <b>acquires</b> <a href="stake.md#0x1_stake_ValidatorConfig">ValidatorConfig</a>, <a href="stake.md#0x1_stake_ValidatorSet">ValidatorSet</a> {
-    // <a href="stake.md#0x1_stake_assert_stake_pool_exists">assert_stake_pool_exists</a>(pool_address);
-    // <b>let</b> stake_pool = <b>borrow_global_mut</b>&lt;<a href="stake.md#0x1_stake_StakePool">StakePool</a>&gt;(pool_address);
-    // <b>assert</b>!(<a href="../../aptos-stdlib/../move-stdlib/doc/signer.md#0x1_signer_address_of">signer::address_of</a>(operator) == stake_pool.operator_address, <a href="../../aptos-stdlib/../move-stdlib/doc/error.md#0x1_error_unauthenticated">error::unauthenticated</a>(<a href="stake.md#0x1_stake_ENOT_OPERATOR">ENOT_OPERATOR</a>));
+) <b>acquires</b> <a href="stake.md#0x1_stake_old_ValidatorConfig">ValidatorConfig</a>, <a href="stake.md#0x1_stake_old_ValidatorSet">ValidatorSet</a> {
+    // <a href="stake.md#0x1_stake_old_assert_stake_pool_exists">assert_stake_pool_exists</a>(pool_address);
+    // <b>let</b> stake_pool = <b>borrow_global_mut</b>&lt;<a href="stake.md#0x1_stake_old_StakePool">StakePool</a>&gt;(pool_address);
+    // <b>assert</b>!(<a href="../../aptos-stdlib/../move-stdlib/doc/signer.md#0x1_signer_address_of">signer::address_of</a>(operator) == stake_pool.operator_address, <a href="../../aptos-stdlib/../move-stdlib/doc/error.md#0x1_error_unauthenticated">error::unauthenticated</a>(<a href="stake.md#0x1_stake_old_ENOT_OPERATOR">ENOT_OPERATOR</a>));
     // <b>assert</b>!(
-    //     <a href="stake.md#0x1_stake_get_validator_state">get_validator_state</a>(pool_address) == <a href="stake.md#0x1_stake_VALIDATOR_STATUS_INACTIVE">VALIDATOR_STATUS_INACTIVE</a>,
-    //     <a href="../../aptos-stdlib/../move-stdlib/doc/error.md#0x1_error_invalid_state">error::invalid_state</a>(<a href="stake.md#0x1_stake_EALREADY_ACTIVE_VALIDATOR">EALREADY_ACTIVE_VALIDATOR</a>),
+    //     <a href="stake.md#0x1_stake_old_get_validator_state">get_validator_state</a>(pool_address) == <a href="stake.md#0x1_stake_old_VALIDATOR_STATUS_INACTIVE">VALIDATOR_STATUS_INACTIVE</a>,
+    //     <a href="../../aptos-stdlib/../move-stdlib/doc/error.md#0x1_error_invalid_state">error::invalid_state</a>(<a href="stake.md#0x1_stake_old_EALREADY_ACTIVE_VALIDATOR">EALREADY_ACTIVE_VALIDATOR</a>),
     // );
 
     // <b>let</b> config = staking_config::get();
     // <b>let</b> (minimum_stake, maximum_stake) = staking_config::get_required_stake(&config);
-    // <b>let</b> voting_power = <a href="stake.md#0x1_stake_get_next_epoch_voting_power">get_next_epoch_voting_power</a>(stake_pool);
-    // <b>assert</b>!(voting_power &gt;= minimum_stake, <a href="../../aptos-stdlib/../move-stdlib/doc/error.md#0x1_error_invalid_argument">error::invalid_argument</a>(<a href="stake.md#0x1_stake_ESTAKE_TOO_LOW">ESTAKE_TOO_LOW</a>));
-    // <b>assert</b>!(voting_power &lt;= maximum_stake, <a href="../../aptos-stdlib/../move-stdlib/doc/error.md#0x1_error_invalid_argument">error::invalid_argument</a>(<a href="stake.md#0x1_stake_ESTAKE_TOO_HIGH">ESTAKE_TOO_HIGH</a>));
+    // <b>let</b> voting_power = <a href="stake.md#0x1_stake_old_get_next_epoch_voting_power">get_next_epoch_voting_power</a>(stake_pool);
+    // <b>assert</b>!(voting_power &gt;= minimum_stake, <a href="../../aptos-stdlib/../move-stdlib/doc/error.md#0x1_error_invalid_argument">error::invalid_argument</a>(<a href="stake.md#0x1_stake_old_ESTAKE_TOO_LOW">ESTAKE_TOO_LOW</a>));
+    // <b>assert</b>!(voting_power &lt;= maximum_stake, <a href="../../aptos-stdlib/../move-stdlib/doc/error.md#0x1_error_invalid_argument">error::invalid_argument</a>(<a href="stake.md#0x1_stake_old_ESTAKE_TOO_HIGH">ESTAKE_TOO_HIGH</a>));
 
     // Track and validate <a href="voting.md#0x1_voting">voting</a> power increase.
-    // <a href="stake.md#0x1_stake_update_voting_power_increase">update_voting_power_increase</a>(voting_power);
+    // <a href="stake.md#0x1_stake_old_update_voting_power_increase">update_voting_power_increase</a>(voting_power);
 
     // Add validator <b>to</b> pending_active, <b>to</b> be activated in the next epoch.
-    <b>let</b> validator_config = <b>borrow_global_mut</b>&lt;<a href="stake.md#0x1_stake_ValidatorConfig">ValidatorConfig</a>&gt;(pool_address);
-    <b>assert</b>!(!<a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector_is_empty">vector::is_empty</a>(&validator_config.consensus_pubkey), <a href="../../aptos-stdlib/../move-stdlib/doc/error.md#0x1_error_invalid_argument">error::invalid_argument</a>(<a href="stake.md#0x1_stake_EINVALID_PUBLIC_KEY">EINVALID_PUBLIC_KEY</a>));
+    <b>let</b> validator_config = <b>borrow_global_mut</b>&lt;<a href="stake.md#0x1_stake_old_ValidatorConfig">ValidatorConfig</a>&gt;(pool_address);
+    <b>assert</b>!(!<a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector_is_empty">vector::is_empty</a>(&validator_config.consensus_pubkey), <a href="../../aptos-stdlib/../move-stdlib/doc/error.md#0x1_error_invalid_argument">error::invalid_argument</a>(<a href="stake.md#0x1_stake_old_EINVALID_PUBLIC_KEY">EINVALID_PUBLIC_KEY</a>));
 
     // Validate the current validator set size <b>has</b> not exceeded the limit.
-    <b>let</b> validator_set = <b>borrow_global_mut</b>&lt;<a href="stake.md#0x1_stake_ValidatorSet">ValidatorSet</a>&gt;(@aptos_framework);
+    <b>let</b> validator_set = <b>borrow_global_mut</b>&lt;<a href="stake.md#0x1_stake_old_ValidatorSet">ValidatorSet</a>&gt;(@aptos_framework);
     // TODO: v7: refactor this
 
     // <a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector_push_back">vector::push_back</a>(&<b>mut</b> validator_set.pending_active,
-    // <a href="stake.md#0x1_stake_generate_validator_info">generate_validator_info</a>(pool_address, stake_pool, *validator_config));
+    // <a href="stake.md#0x1_stake_old_generate_validator_info">generate_validator_info</a>(pool_address, stake_pool, *validator_config));
 
     <b>let</b> validator_set_size = <a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector_length">vector::length</a>(&validator_set.active_validators) + <a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector_length">vector::length</a>(&validator_set.pending_active);
-    <b>assert</b>!(validator_set_size &lt;= <a href="stake.md#0x1_stake_MAX_VALIDATOR_SET_SIZE">MAX_VALIDATOR_SET_SIZE</a>, <a href="../../aptos-stdlib/../move-stdlib/doc/error.md#0x1_error_invalid_argument">error::invalid_argument</a>(<a href="stake.md#0x1_stake_EVALIDATOR_SET_TOO_LARGE">EVALIDATOR_SET_TOO_LARGE</a>));
+    <b>assert</b>!(validator_set_size &lt;= <a href="stake.md#0x1_stake_old_MAX_VALIDATOR_SET_SIZE">MAX_VALIDATOR_SET_SIZE</a>, <a href="../../aptos-stdlib/../move-stdlib/doc/error.md#0x1_error_invalid_argument">error::invalid_argument</a>(<a href="stake.md#0x1_stake_old_EVALIDATOR_SET_TOO_LARGE">EVALIDATOR_SET_TOO_LARGE</a>));
 
     // TODO: v7: refactor this
     // <a href="event.md#0x1_event_emit_event">event::emit_event</a>(
     //     &<b>mut</b> stake_pool.join_validator_set_events,
-    //     <a href="stake.md#0x1_stake_JoinValidatorSetEvent">JoinValidatorSetEvent</a> { pool_address },
+    //     <a href="stake.md#0x1_stake_old_JoinValidatorSetEvent">JoinValidatorSetEvent</a> { pool_address },
     // );
 }
 </code></pre>
@@ -2530,14 +2530,14 @@ This internal version can only be called by the Genesis module during Genesis.
 
 </details>
 
-<a name="0x1_stake_unlock"></a>
+<a name="0x1_stake_old_unlock"></a>
 
 ## Function `unlock`
 
 Similar to unlock_with_cap but will use ownership capability from the signing account.
 
 
-<pre><code><b>public</b> entry <b>fun</b> <a href="stake.md#0x1_stake_unlock">unlock</a>(owner: &<a href="../../aptos-stdlib/../move-stdlib/doc/signer.md#0x1_signer">signer</a>, amount: u64)
+<pre><code><b>public</b> entry <b>fun</b> <a href="stake.md#0x1_stake_old_unlock">unlock</a>(owner: &<a href="../../aptos-stdlib/../move-stdlib/doc/signer.md#0x1_signer">signer</a>, amount: u64)
 </code></pre>
 
 
@@ -2546,11 +2546,11 @@ Similar to unlock_with_cap but will use ownership capability from the signing ac
 <summary>Implementation</summary>
 
 
-<pre><code><b>public</b> entry <b>fun</b> <a href="stake.md#0x1_stake_unlock">unlock</a>(owner: &<a href="../../aptos-stdlib/../move-stdlib/doc/signer.md#0x1_signer">signer</a>, amount: u64) <b>acquires</b> <a href="stake.md#0x1_stake_OwnerCapability">OwnerCapability</a>, <a href="stake.md#0x1_stake_StakePool">StakePool</a> {
+<pre><code><b>public</b> entry <b>fun</b> <a href="stake.md#0x1_stake_old_unlock">unlock</a>(owner: &<a href="../../aptos-stdlib/../move-stdlib/doc/signer.md#0x1_signer">signer</a>, amount: u64) <b>acquires</b> <a href="stake.md#0x1_stake_old_OwnerCapability">OwnerCapability</a>, <a href="stake.md#0x1_stake_old_StakePool">StakePool</a> {
     <b>let</b> owner_address = <a href="../../aptos-stdlib/../move-stdlib/doc/signer.md#0x1_signer_address_of">signer::address_of</a>(owner);
-    <a href="stake.md#0x1_stake_assert_owner_cap_exists">assert_owner_cap_exists</a>(owner_address);
-    <b>let</b> ownership_cap = <b>borrow_global</b>&lt;<a href="stake.md#0x1_stake_OwnerCapability">OwnerCapability</a>&gt;(owner_address);
-    <a href="stake.md#0x1_stake_unlock_with_cap">unlock_with_cap</a>(amount, ownership_cap);
+    <a href="stake.md#0x1_stake_old_assert_owner_cap_exists">assert_owner_cap_exists</a>(owner_address);
+    <b>let</b> ownership_cap = <b>borrow_global</b>&lt;<a href="stake.md#0x1_stake_old_OwnerCapability">OwnerCapability</a>&gt;(owner_address);
+    <a href="stake.md#0x1_stake_old_unlock_with_cap">unlock_with_cap</a>(amount, ownership_cap);
 }
 </code></pre>
 
@@ -2558,14 +2558,14 @@ Similar to unlock_with_cap but will use ownership capability from the signing ac
 
 </details>
 
-<a name="0x1_stake_unlock_with_cap"></a>
+<a name="0x1_stake_old_unlock_with_cap"></a>
 
 ## Function `unlock_with_cap`
 
 Unlock <code>amount</code> from the active stake. Only possible if the lockup has expired.
 
 
-<pre><code><b>public</b> <b>fun</b> <a href="stake.md#0x1_stake_unlock_with_cap">unlock_with_cap</a>(amount: u64, owner_cap: &<a href="stake.md#0x1_stake_OwnerCapability">stake::OwnerCapability</a>)
+<pre><code><b>public</b> <b>fun</b> <a href="stake.md#0x1_stake_old_unlock_with_cap">unlock_with_cap</a>(amount: u64, owner_cap: &<a href="stake.md#0x1_stake_old_OwnerCapability">stake_old::OwnerCapability</a>)
 </code></pre>
 
 
@@ -2574,7 +2574,7 @@ Unlock <code>amount</code> from the active stake. Only possible if the lockup ha
 <summary>Implementation</summary>
 
 
-<pre><code><b>public</b> <b>fun</b> <a href="stake.md#0x1_stake_unlock_with_cap">unlock_with_cap</a>(amount: u64, owner_cap: &<a href="stake.md#0x1_stake_OwnerCapability">OwnerCapability</a>) <b>acquires</b> <a href="stake.md#0x1_stake_StakePool">StakePool</a> {
+<pre><code><b>public</b> <b>fun</b> <a href="stake.md#0x1_stake_old_unlock_with_cap">unlock_with_cap</a>(amount: u64, owner_cap: &<a href="stake.md#0x1_stake_old_OwnerCapability">OwnerCapability</a>) <b>acquires</b> <a href="stake.md#0x1_stake_old_StakePool">StakePool</a> {
     // Short-circuit <b>if</b> amount <b>to</b> unlock is 0 so we don't emit events.
     <b>if</b> (amount == 0) {
         <b>return</b>
@@ -2583,16 +2583,16 @@ Unlock <code>amount</code> from the active stake. Only possible if the lockup ha
     // Unlocked coins are moved <b>to</b> pending_inactive. When the current lockup cycle expires, they will be moved into
     // inactive in the earliest possible epoch transition.
     <b>let</b> pool_address = owner_cap.pool_address;
-    <a href="stake.md#0x1_stake_assert_stake_pool_exists">assert_stake_pool_exists</a>(pool_address);
-    <b>let</b> stake_pool = <b>borrow_global_mut</b>&lt;<a href="stake.md#0x1_stake_StakePool">StakePool</a>&gt;(pool_address);
-    // Cap amount <b>to</b> unlock by maximum active <a href="stake.md#0x1_stake">stake</a>.
+    <a href="stake.md#0x1_stake_old_assert_stake_pool_exists">assert_stake_pool_exists</a>(pool_address);
+    <b>let</b> stake_pool = <b>borrow_global_mut</b>&lt;<a href="stake.md#0x1_stake_old_StakePool">StakePool</a>&gt;(pool_address);
+    // Cap amount <b>to</b> unlock by maximum active stake.
     <b>let</b> amount = <b>min</b>(amount, <a href="coin.md#0x1_coin_value">coin::value</a>(&stake_pool.active));
     <b>let</b> unlocked_stake = <a href="coin.md#0x1_coin_extract">coin::extract</a>(&<b>mut</b> stake_pool.active, amount);
     <a href="coin.md#0x1_coin_merge">coin::merge</a>&lt;AptosCoin&gt;(&<b>mut</b> stake_pool.pending_inactive, unlocked_stake);
 
     <a href="event.md#0x1_event_emit_event">event::emit_event</a>(
         &<b>mut</b> stake_pool.unlock_stake_events,
-        <a href="stake.md#0x1_stake_UnlockStakeEvent">UnlockStakeEvent</a> {
+        <a href="stake.md#0x1_stake_old_UnlockStakeEvent">UnlockStakeEvent</a> {
             pool_address,
             amount_unlocked: amount,
         },
@@ -2604,14 +2604,14 @@ Unlock <code>amount</code> from the active stake. Only possible if the lockup ha
 
 </details>
 
-<a name="0x1_stake_withdraw"></a>
+<a name="0x1_stake_old_withdraw"></a>
 
 ## Function `withdraw`
 
 Withdraw from <code><a href="account.md#0x1_account">account</a></code>'s inactive stake.
 
 
-<pre><code><b>public</b> entry <b>fun</b> <a href="stake.md#0x1_stake_withdraw">withdraw</a>(owner: &<a href="../../aptos-stdlib/../move-stdlib/doc/signer.md#0x1_signer">signer</a>, withdraw_amount: u64)
+<pre><code><b>public</b> entry <b>fun</b> <a href="stake.md#0x1_stake_old_withdraw">withdraw</a>(owner: &<a href="../../aptos-stdlib/../move-stdlib/doc/signer.md#0x1_signer">signer</a>, withdraw_amount: u64)
 </code></pre>
 
 
@@ -2620,14 +2620,14 @@ Withdraw from <code><a href="account.md#0x1_account">account</a></code>'s inacti
 <summary>Implementation</summary>
 
 
-<pre><code><b>public</b> entry <b>fun</b> <a href="stake.md#0x1_stake_withdraw">withdraw</a>(
+<pre><code><b>public</b> entry <b>fun</b> <a href="stake.md#0x1_stake_old_withdraw">withdraw</a>(
     owner: &<a href="../../aptos-stdlib/../move-stdlib/doc/signer.md#0x1_signer">signer</a>,
     withdraw_amount: u64
-) <b>acquires</b> <a href="stake.md#0x1_stake_OwnerCapability">OwnerCapability</a>, <a href="stake.md#0x1_stake_StakePool">StakePool</a>, <a href="stake.md#0x1_stake_ValidatorSet">ValidatorSet</a> {
+) <b>acquires</b> <a href="stake.md#0x1_stake_old_OwnerCapability">OwnerCapability</a>, <a href="stake.md#0x1_stake_old_StakePool">StakePool</a>, <a href="stake.md#0x1_stake_old_ValidatorSet">ValidatorSet</a> {
     <b>let</b> owner_address = <a href="../../aptos-stdlib/../move-stdlib/doc/signer.md#0x1_signer_address_of">signer::address_of</a>(owner);
-    <a href="stake.md#0x1_stake_assert_owner_cap_exists">assert_owner_cap_exists</a>(owner_address);
-    <b>let</b> ownership_cap = <b>borrow_global</b>&lt;<a href="stake.md#0x1_stake_OwnerCapability">OwnerCapability</a>&gt;(owner_address);
-    <b>let</b> coins = <a href="stake.md#0x1_stake_withdraw_with_cap">withdraw_with_cap</a>(ownership_cap, withdraw_amount);
+    <a href="stake.md#0x1_stake_old_assert_owner_cap_exists">assert_owner_cap_exists</a>(owner_address);
+    <b>let</b> ownership_cap = <b>borrow_global</b>&lt;<a href="stake.md#0x1_stake_old_OwnerCapability">OwnerCapability</a>&gt;(owner_address);
+    <b>let</b> coins = <a href="stake.md#0x1_stake_old_withdraw_with_cap">withdraw_with_cap</a>(ownership_cap, withdraw_amount);
     <a href="coin.md#0x1_coin_deposit">coin::deposit</a>&lt;AptosCoin&gt;(owner_address, coins);
 }
 </code></pre>
@@ -2636,14 +2636,14 @@ Withdraw from <code><a href="account.md#0x1_account">account</a></code>'s inacti
 
 </details>
 
-<a name="0x1_stake_withdraw_with_cap"></a>
+<a name="0x1_stake_old_withdraw_with_cap"></a>
 
 ## Function `withdraw_with_cap`
 
 Withdraw from <code>pool_address</code>'s inactive stake with the corresponding <code>owner_cap</code>.
 
 
-<pre><code><b>public</b> <b>fun</b> <a href="stake.md#0x1_stake_withdraw_with_cap">withdraw_with_cap</a>(owner_cap: &<a href="stake.md#0x1_stake_OwnerCapability">stake::OwnerCapability</a>, withdraw_amount: u64): <a href="coin.md#0x1_coin_Coin">coin::Coin</a>&lt;<a href="aptos_coin.md#0x1_aptos_coin_AptosCoin">aptos_coin::AptosCoin</a>&gt;
+<pre><code><b>public</b> <b>fun</b> <a href="stake.md#0x1_stake_old_withdraw_with_cap">withdraw_with_cap</a>(owner_cap: &<a href="stake.md#0x1_stake_old_OwnerCapability">stake_old::OwnerCapability</a>, withdraw_amount: u64): <a href="coin.md#0x1_coin_Coin">coin::Coin</a>&lt;<a href="aptos_coin.md#0x1_aptos_coin_AptosCoin">aptos_coin::AptosCoin</a>&gt;
 </code></pre>
 
 
@@ -2652,17 +2652,17 @@ Withdraw from <code>pool_address</code>'s inactive stake with the corresponding 
 <summary>Implementation</summary>
 
 
-<pre><code><b>public</b> <b>fun</b> <a href="stake.md#0x1_stake_withdraw_with_cap">withdraw_with_cap</a>(
-    owner_cap: &<a href="stake.md#0x1_stake_OwnerCapability">OwnerCapability</a>,
+<pre><code><b>public</b> <b>fun</b> <a href="stake.md#0x1_stake_old_withdraw_with_cap">withdraw_with_cap</a>(
+    owner_cap: &<a href="stake.md#0x1_stake_old_OwnerCapability">OwnerCapability</a>,
     withdraw_amount: u64
-): Coin&lt;AptosCoin&gt; <b>acquires</b> <a href="stake.md#0x1_stake_StakePool">StakePool</a>, <a href="stake.md#0x1_stake_ValidatorSet">ValidatorSet</a> {
+): Coin&lt;AptosCoin&gt; <b>acquires</b> <a href="stake.md#0x1_stake_old_StakePool">StakePool</a>, <a href="stake.md#0x1_stake_old_ValidatorSet">ValidatorSet</a> {
     <b>let</b> pool_address = owner_cap.pool_address;
-    <a href="stake.md#0x1_stake_assert_stake_pool_exists">assert_stake_pool_exists</a>(pool_address);
-    <b>let</b> stake_pool = <b>borrow_global_mut</b>&lt;<a href="stake.md#0x1_stake_StakePool">StakePool</a>&gt;(pool_address);
-    // There's an edge case <b>where</b> a validator unlocks their <a href="stake.md#0x1_stake">stake</a> and leaves the validator set before
-    // the <a href="stake.md#0x1_stake">stake</a> is fully unlocked (the current lockup cycle <b>has</b> not expired yet).
-    // This can leave their <a href="stake.md#0x1_stake">stake</a> stuck in pending_inactive even after the current lockup cycle expires.
-    <b>if</b> (<a href="stake.md#0x1_stake_get_validator_state">get_validator_state</a>(pool_address) == <a href="stake.md#0x1_stake_VALIDATOR_STATUS_INACTIVE">VALIDATOR_STATUS_INACTIVE</a> &&
+    <a href="stake.md#0x1_stake_old_assert_stake_pool_exists">assert_stake_pool_exists</a>(pool_address);
+    <b>let</b> stake_pool = <b>borrow_global_mut</b>&lt;<a href="stake.md#0x1_stake_old_StakePool">StakePool</a>&gt;(pool_address);
+    // There's an edge case <b>where</b> a validator unlocks their stake and leaves the validator set before
+    // the stake is fully unlocked (the current lockup cycle <b>has</b> not expired yet).
+    // This can leave their stake stuck in pending_inactive even after the current lockup cycle expires.
+    <b>if</b> (<a href="stake.md#0x1_stake_old_get_validator_state">get_validator_state</a>(pool_address) == <a href="stake.md#0x1_stake_old_VALIDATOR_STATUS_INACTIVE">VALIDATOR_STATUS_INACTIVE</a> &&
         <a href="timestamp.md#0x1_timestamp_now_seconds">timestamp::now_seconds</a>() &gt;= stake_pool.locked_until_secs) {
         <b>let</b> pending_inactive_stake = <a href="coin.md#0x1_coin_extract_all">coin::extract_all</a>(&<b>mut</b> stake_pool.pending_inactive);
         <a href="coin.md#0x1_coin_merge">coin::merge</a>(&<b>mut</b> stake_pool.inactive, pending_inactive_stake);
@@ -2674,7 +2674,7 @@ Withdraw from <code>pool_address</code>'s inactive stake with the corresponding 
 
     <a href="event.md#0x1_event_emit_event">event::emit_event</a>(
         &<b>mut</b> stake_pool.withdraw_stake_events,
-        <a href="stake.md#0x1_stake_WithdrawStakeEvent">WithdrawStakeEvent</a> {
+        <a href="stake.md#0x1_stake_old_WithdrawStakeEvent">WithdrawStakeEvent</a> {
             pool_address,
             amount_withdrawn: withdraw_amount,
         },
@@ -2688,7 +2688,7 @@ Withdraw from <code>pool_address</code>'s inactive stake with the corresponding 
 
 </details>
 
-<a name="0x1_stake_is_current_epoch_validator"></a>
+<a name="0x1_stake_old_is_current_epoch_validator"></a>
 
 ## Function `is_current_epoch_validator`
 
@@ -2697,7 +2697,7 @@ This includes validators that requested to leave but are still in the pending_in
 when the epoch starts.
 
 
-<pre><code><b>public</b> <b>fun</b> <a href="stake.md#0x1_stake_is_current_epoch_validator">is_current_epoch_validator</a>(pool_address: <b>address</b>): bool
+<pre><code><b>public</b> <b>fun</b> <a href="stake.md#0x1_stake_old_is_current_epoch_validator">is_current_epoch_validator</a>(pool_address: <b>address</b>): bool
 </code></pre>
 
 
@@ -2706,10 +2706,10 @@ when the epoch starts.
 <summary>Implementation</summary>
 
 
-<pre><code><b>public</b> <b>fun</b> <a href="stake.md#0x1_stake_is_current_epoch_validator">is_current_epoch_validator</a>(pool_address: <b>address</b>): bool <b>acquires</b> <a href="stake.md#0x1_stake_ValidatorSet">ValidatorSet</a> {
-    <a href="stake.md#0x1_stake_assert_stake_pool_exists">assert_stake_pool_exists</a>(pool_address);
-    <b>let</b> validator_state = <a href="stake.md#0x1_stake_get_validator_state">get_validator_state</a>(pool_address);
-    validator_state == <a href="stake.md#0x1_stake_VALIDATOR_STATUS_ACTIVE">VALIDATOR_STATUS_ACTIVE</a> || validator_state == <a href="stake.md#0x1_stake_VALIDATOR_STATUS_PENDING_INACTIVE">VALIDATOR_STATUS_PENDING_INACTIVE</a>
+<pre><code><b>public</b> <b>fun</b> <a href="stake.md#0x1_stake_old_is_current_epoch_validator">is_current_epoch_validator</a>(pool_address: <b>address</b>): bool <b>acquires</b> <a href="stake.md#0x1_stake_old_ValidatorSet">ValidatorSet</a> {
+    <a href="stake.md#0x1_stake_old_assert_stake_pool_exists">assert_stake_pool_exists</a>(pool_address);
+    <b>let</b> validator_state = <a href="stake.md#0x1_stake_old_get_validator_state">get_validator_state</a>(pool_address);
+    validator_state == <a href="stake.md#0x1_stake_old_VALIDATOR_STATUS_ACTIVE">VALIDATOR_STATUS_ACTIVE</a> || validator_state == <a href="stake.md#0x1_stake_old_VALIDATOR_STATUS_PENDING_INACTIVE">VALIDATOR_STATUS_PENDING_INACTIVE</a>
 }
 </code></pre>
 
@@ -2717,7 +2717,7 @@ when the epoch starts.
 
 </details>
 
-<a name="0x1_stake_update_performance_statistics"></a>
+<a name="0x1_stake_old_update_performance_statistics"></a>
 
 ## Function `update_performance_statistics`
 
@@ -2725,7 +2725,7 @@ Update the validator performance (proposal statistics). This is only called by b
 This function cannot abort.
 
 
-<pre><code><b>public</b>(<b>friend</b>) <b>fun</b> <a href="stake.md#0x1_stake_update_performance_statistics">update_performance_statistics</a>(proposer_index: <a href="../../aptos-stdlib/../move-stdlib/doc/option.md#0x1_option_Option">option::Option</a>&lt;u64&gt;, failed_proposer_indices: <a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector">vector</a>&lt;u64&gt;)
+<pre><code><b>public</b>(<b>friend</b>) <b>fun</b> <a href="stake.md#0x1_stake_old_update_performance_statistics">update_performance_statistics</a>(proposer_index: <a href="../../aptos-stdlib/../move-stdlib/doc/option.md#0x1_option_Option">option::Option</a>&lt;u64&gt;, failed_proposer_indices: <a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector">vector</a>&lt;u64&gt;)
 </code></pre>
 
 
@@ -2734,10 +2734,10 @@ This function cannot abort.
 <summary>Implementation</summary>
 
 
-<pre><code><b>public</b>(<b>friend</b>) <b>fun</b> <a href="stake.md#0x1_stake_update_performance_statistics">update_performance_statistics</a>(proposer_index: Option&lt;u64&gt;, failed_proposer_indices: <a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector">vector</a>&lt;u64&gt;) <b>acquires</b> <a href="stake.md#0x1_stake_ValidatorPerformance">ValidatorPerformance</a> {
+<pre><code><b>public</b>(<b>friend</b>) <b>fun</b> <a href="stake.md#0x1_stake_old_update_performance_statistics">update_performance_statistics</a>(proposer_index: Option&lt;u64&gt;, failed_proposer_indices: <a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector">vector</a>&lt;u64&gt;) <b>acquires</b> <a href="stake.md#0x1_stake_old_ValidatorPerformance">ValidatorPerformance</a> {
     // Validator set cannot change until the end of the epoch, so the validator index in arguments should
-    // match <b>with</b> those of the validators in <a href="stake.md#0x1_stake_ValidatorPerformance">ValidatorPerformance</a> resource.
-    <b>let</b> validator_perf = <b>borrow_global_mut</b>&lt;<a href="stake.md#0x1_stake_ValidatorPerformance">ValidatorPerformance</a>&gt;(@aptos_framework);
+    // match <b>with</b> those of the validators in <a href="stake.md#0x1_stake_old_ValidatorPerformance">ValidatorPerformance</a> resource.
+    <b>let</b> validator_perf = <b>borrow_global_mut</b>&lt;<a href="stake.md#0x1_stake_old_ValidatorPerformance">ValidatorPerformance</a>&gt;(@aptos_framework);
     <b>let</b> validator_len = <a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector_length">vector::length</a>(&validator_perf.validators);
 
     // proposer_index is an <a href="../../aptos-stdlib/../move-stdlib/doc/option.md#0x1_option">option</a> because it can be missing (for NilBlocks)
@@ -2748,7 +2748,7 @@ This function cannot abort.
         <b>if</b> (cur_proposer_index &lt; validator_len) {
             <b>let</b> validator = <a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector_borrow_mut">vector::borrow_mut</a>(&<b>mut</b> validator_perf.validators, cur_proposer_index);
             <b>spec</b> {
-                <b>assume</b> validator.successful_proposals + 1 &lt;= <a href="stake.md#0x1_stake_MAX_U64">MAX_U64</a>;
+                <b>assume</b> validator.successful_proposals + 1 &lt;= <a href="stake.md#0x1_stake_old_MAX_U64">MAX_U64</a>;
             };
             validator.successful_proposals = validator.successful_proposals + 1;
         };
@@ -2766,7 +2766,7 @@ This function cannot abort.
         <b>if</b> (validator_index &lt; validator_len) {
             <b>let</b> validator = <a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector_borrow_mut">vector::borrow_mut</a>(&<b>mut</b> validator_perf.validators, validator_index);
             <b>spec</b> {
-                <b>assume</b> validator.failed_proposals + 1 &lt;= <a href="stake.md#0x1_stake_MAX_U64">MAX_U64</a>;
+                <b>assume</b> validator.failed_proposals + 1 &lt;= <a href="stake.md#0x1_stake_old_MAX_U64">MAX_U64</a>;
             };
             validator.failed_proposals = validator.failed_proposals + 1;
         };
@@ -2779,7 +2779,7 @@ This function cannot abort.
 
 </details>
 
-<a name="0x1_stake_on_new_epoch"></a>
+<a name="0x1_stake_old_on_new_epoch"></a>
 
 ## Function `on_new_epoch`
 
@@ -2795,7 +2795,7 @@ pending inactive validators so they no longer can vote.
 power.
 
 
-<pre><code><b>public</b>(<b>friend</b>) <b>fun</b> <a href="stake.md#0x1_stake_on_new_epoch">on_new_epoch</a>()
+<pre><code><b>public</b>(<b>friend</b>) <b>fun</b> <a href="stake.md#0x1_stake_old_on_new_epoch">on_new_epoch</a>()
 </code></pre>
 
 
@@ -2804,39 +2804,39 @@ power.
 <summary>Implementation</summary>
 
 
-<pre><code><b>public</b>(<b>friend</b>) <b>fun</b> <a href="stake.md#0x1_stake_on_new_epoch">on_new_epoch</a>() <b>acquires</b> <a href="stake.md#0x1_stake_ValidatorPerformance">ValidatorPerformance</a>, <a href="stake.md#0x1_stake_ValidatorSet">ValidatorSet</a> {
-    <b>let</b> _validator_set = <b>borrow_global_mut</b>&lt;<a href="stake.md#0x1_stake_ValidatorSet">ValidatorSet</a>&gt;(@aptos_framework);
+<pre><code><b>public</b>(<b>friend</b>) <b>fun</b> <a href="stake.md#0x1_stake_old_on_new_epoch">on_new_epoch</a>() <b>acquires</b> <a href="stake.md#0x1_stake_old_ValidatorPerformance">ValidatorPerformance</a>, <a href="stake.md#0x1_stake_old_ValidatorSet">ValidatorSet</a> {
+    <b>let</b> _validator_set = <b>borrow_global_mut</b>&lt;<a href="stake.md#0x1_stake_old_ValidatorSet">ValidatorSet</a>&gt;(@aptos_framework);
     // <b>let</b> config = staking_config::get();
-    <b>let</b> _validator_perf = <b>borrow_global_mut</b>&lt;<a href="stake.md#0x1_stake_ValidatorPerformance">ValidatorPerformance</a>&gt;(@aptos_framework);
+    <b>let</b> _validator_perf = <b>borrow_global_mut</b>&lt;<a href="stake.md#0x1_stake_old_ValidatorPerformance">ValidatorPerformance</a>&gt;(@aptos_framework);
 
-    // // Process pending <a href="stake.md#0x1_stake">stake</a> and distribute transaction fees and rewards for each currently active validator.
+    // // Process pending stake and distribute transaction fees and rewards for each currently active validator.
     // // <b>let</b> i = 0;
     // // <b>let</b> len = <a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector_length">vector::length</a>(&validator_set.active_validators);
     // // <b>while</b> (i &lt; len) {
     // //     <b>let</b> validator = <a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector_borrow">vector::borrow</a>(&validator_set.active_validators, i);
-    // //     <a href="stake.md#0x1_stake_update_stake_pool">update_stake_pool</a>(validator_perf, validator.addr, &config);
+    // //     <a href="stake.md#0x1_stake_old_update_stake_pool">update_stake_pool</a>(validator_perf, validator.addr, &config);
     // //     i = i + 1;
     // // };
 
-    // // Process pending <a href="stake.md#0x1_stake">stake</a> and distribute transaction fees and rewards for each currently pending_inactive validator
+    // // Process pending stake and distribute transaction fees and rewards for each currently pending_inactive validator
     // // (requested <b>to</b> leave but not removed yet).
     // // <b>let</b> i = 0;
     // // <b>let</b> len = <a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector_length">vector::length</a>(&validator_set.pending_inactive);
     // // <b>while</b> (i &lt; len) {
     // //     <b>let</b> validator = <a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector_borrow">vector::borrow</a>(&validator_set.pending_inactive, i);
-    // //     <a href="stake.md#0x1_stake_update_stake_pool">update_stake_pool</a>(validator_perf, validator.addr, &config);
+    // //     <a href="stake.md#0x1_stake_old_update_stake_pool">update_stake_pool</a>(validator_perf, validator.addr, &config);
     // //     i = i + 1;
     // // };
 
     // // Activate currently pending_active validators.
-    // <a href="stake.md#0x1_stake_append">append</a>(&<b>mut</b> validator_set.active_validators, &<b>mut</b> validator_set.pending_active);
+    // <a href="stake.md#0x1_stake_old_append">append</a>(&<b>mut</b> validator_set.active_validators, &<b>mut</b> validator_set.pending_active);
 
     // // Officially deactivate all pending_inactive validators. They will now no longer receive rewards.
     // validator_set.pending_inactive = <a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector_empty">vector::empty</a>();
 
     // // Update active validator set so that network <b>address</b>/<b>public</b> key change takes effect.
     // // Moreover, recalculate the total <a href="voting.md#0x1_voting">voting</a> power, and deactivate the validator whose
-    // // <a href="voting.md#0x1_voting">voting</a> power is less than the minimum required <a href="stake.md#0x1_stake">stake</a>.
+    // // <a href="voting.md#0x1_voting">voting</a> power is less than the minimum required stake.
     // <b>let</b> next_epoch_validators = <a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector_empty">vector::empty</a>();
     // // <b>let</b> (minimum_stake, _) = staking_config::get_required_stake(&config);
     // <b>let</b> vlen = <a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector_length">vector::length</a>(&validator_set.active_validators);
@@ -2844,17 +2844,17 @@ power.
     // <b>let</b> i = 0;
     // <b>while</b> ({
     //     <b>spec</b> {
-    //         <b>invariant</b> <a href="stake.md#0x1_stake_spec_validators_are_initialized">spec_validators_are_initialized</a>(next_epoch_validators);
+    //         <b>invariant</b> <a href="stake.md#0x1_stake_old_spec_validators_are_initialized">spec_validators_are_initialized</a>(next_epoch_validators);
     //     };
     //     i &lt; vlen
     // }) {
     //     <b>let</b> old_validator_info = <a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector_borrow_mut">vector::borrow_mut</a>(&<b>mut</b> validator_set.active_validators, i);
     //     <b>let</b> pool_address = old_validator_info.addr;
-    //     <b>let</b> validator_config = <b>borrow_global_mut</b>&lt;<a href="stake.md#0x1_stake_ValidatorConfig">ValidatorConfig</a>&gt;(pool_address);
-    //     <b>let</b> stake_pool = <b>borrow_global_mut</b>&lt;<a href="stake.md#0x1_stake_StakePool">StakePool</a>&gt;(pool_address);
-    //     <b>let</b> new_validator_info = <a href="stake.md#0x1_stake_generate_validator_info">generate_validator_info</a>(pool_address, stake_pool, *validator_config);
+    //     <b>let</b> validator_config = <b>borrow_global_mut</b>&lt;<a href="stake.md#0x1_stake_old_ValidatorConfig">ValidatorConfig</a>&gt;(pool_address);
+    //     <b>let</b> stake_pool = <b>borrow_global_mut</b>&lt;<a href="stake.md#0x1_stake_old_StakePool">StakePool</a>&gt;(pool_address);
+    //     <b>let</b> new_validator_info = <a href="stake.md#0x1_stake_old_generate_validator_info">generate_validator_info</a>(pool_address, stake_pool, *validator_config);
 
-    //     // A validator needs at least the <b>min</b> <a href="stake.md#0x1_stake">stake</a> required <b>to</b> join the validator set.
+    //     // A validator needs at least the <b>min</b> stake required <b>to</b> join the validator set.
 
     //     // TODO: v7: refactor
     //     <b>let</b> minimum_stake = 0;
@@ -2879,33 +2879,33 @@ power.
     // <b>let</b> validator_index = 0;
     // <b>while</b> ({
     //     <b>spec</b> {
-    //         <b>invariant</b> <a href="stake.md#0x1_stake_spec_validators_are_initialized">spec_validators_are_initialized</a>(validator_set.active_validators);
+    //         <b>invariant</b> <a href="stake.md#0x1_stake_old_spec_validators_are_initialized">spec_validators_are_initialized</a>(validator_set.active_validators);
     //         <b>invariant</b> len(validator_set.pending_active) == 0;
     //         <b>invariant</b> len(validator_set.pending_inactive) == 0;
     //         <b>invariant</b> 0 &lt;= validator_index && validator_index &lt;= vlen;
     //         <b>invariant</b> vlen == len(validator_set.active_validators);
     //         <b>invariant</b> <b>forall</b> i in 0..validator_index:
-    //             <b>global</b>&lt;<a href="stake.md#0x1_stake_ValidatorConfig">ValidatorConfig</a>&gt;(validator_set.active_validators[i].addr).validator_index &lt; validator_index;
+    //             <b>global</b>&lt;<a href="stake.md#0x1_stake_old_ValidatorConfig">ValidatorConfig</a>&gt;(validator_set.active_validators[i].addr).validator_index &lt; validator_index;
     //         <b>invariant</b> len(validator_perf.validators) == validator_index;
     //     };
     //     validator_index &lt; vlen
     // }) {
     //     <b>let</b> validator_info = <a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector_borrow_mut">vector::borrow_mut</a>(&<b>mut</b> validator_set.active_validators, validator_index);
     //     validator_info.config.validator_index = validator_index;
-    //     <b>let</b> validator_config = <b>borrow_global_mut</b>&lt;<a href="stake.md#0x1_stake_ValidatorConfig">ValidatorConfig</a>&gt;(validator_info.addr);
+    //     <b>let</b> validator_config = <b>borrow_global_mut</b>&lt;<a href="stake.md#0x1_stake_old_ValidatorConfig">ValidatorConfig</a>&gt;(validator_info.addr);
     //     validator_config.validator_index = validator_index;
 
-    //     <a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector_push_back">vector::push_back</a>(&<b>mut</b> validator_perf.validators, <a href="stake.md#0x1_stake_IndividualValidatorPerformance">IndividualValidatorPerformance</a> {
+    //     <a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector_push_back">vector::push_back</a>(&<b>mut</b> validator_perf.validators, <a href="stake.md#0x1_stake_old_IndividualValidatorPerformance">IndividualValidatorPerformance</a> {
     //         successful_proposals: 0,
     //         failed_proposals: 0,
     //     });
 
     //     // // Automatically renew a validator's lockup for validators that will still be in the validator set in the
     //     // // next epoch.
-    //     // <b>let</b> stake_pool = <b>borrow_global_mut</b>&lt;<a href="stake.md#0x1_stake_StakePool">StakePool</a>&gt;(validator_info.addr);
+    //     // <b>let</b> stake_pool = <b>borrow_global_mut</b>&lt;<a href="stake.md#0x1_stake_old_StakePool">StakePool</a>&gt;(validator_info.addr);
     //     // <b>if</b> (stake_pool.locked_until_secs &lt;= <a href="timestamp.md#0x1_timestamp_now_seconds">timestamp::now_seconds</a>()) {
     //     //     <b>spec</b> {
-    //     //         <b>assume</b> <a href="timestamp.md#0x1_timestamp_spec_now_seconds">timestamp::spec_now_seconds</a>() + recurring_lockup_duration_secs &lt;= <a href="stake.md#0x1_stake_MAX_U64">MAX_U64</a>;
+    //     //         <b>assume</b> <a href="timestamp.md#0x1_timestamp_spec_now_seconds">timestamp::spec_now_seconds</a>() + recurring_lockup_duration_secs &lt;= <a href="stake.md#0x1_stake_old_MAX_U64">MAX_U64</a>;
     //     //     };
     //     //     stake_pool.locked_until_secs =
     //     //         <a href="timestamp.md#0x1_timestamp_now_seconds">timestamp::now_seconds</a>() + recurring_lockup_duration_secs;
@@ -2920,7 +2920,7 @@ power.
 
 </details>
 
-<a name="0x1_stake_update_stake_pool"></a>
+<a name="0x1_stake_old_update_stake_pool"></a>
 
 ## Function `update_stake_pool`
 
@@ -2931,7 +2931,7 @@ Update individual validator's stake pool
 This function shouldn't abort.
 
 
-<pre><code><b>fun</b> <a href="stake.md#0x1_stake_update_stake_pool">update_stake_pool</a>(_validator_perf: &<a href="stake.md#0x1_stake_ValidatorPerformance">stake::ValidatorPerformance</a>, _pool_address: <b>address</b>)
+<pre><code><b>fun</b> <a href="stake.md#0x1_stake_old_update_stake_pool">update_stake_pool</a>(_validator_perf: &<a href="stake.md#0x1_stake_old_ValidatorPerformance">stake_old::ValidatorPerformance</a>, _pool_address: <b>address</b>)
 </code></pre>
 
 
@@ -2940,19 +2940,19 @@ This function shouldn't abort.
 <summary>Implementation</summary>
 
 
-<pre><code><b>fun</b> <a href="stake.md#0x1_stake_update_stake_pool">update_stake_pool</a>(
-    _validator_perf: &<a href="stake.md#0x1_stake_ValidatorPerformance">ValidatorPerformance</a>,
+<pre><code><b>fun</b> <a href="stake.md#0x1_stake_old_update_stake_pool">update_stake_pool</a>(
+    _validator_perf: &<a href="stake.md#0x1_stake_old_ValidatorPerformance">ValidatorPerformance</a>,
     _pool_address: <b>address</b>,
     // staking_config: &StakingConfig,
 ) {
-    // <b>let</b> stake_pool = <b>borrow_global_mut</b>&lt;<a href="stake.md#0x1_stake_StakePool">StakePool</a>&gt;(pool_address);
-    // <b>let</b> validator_config = <b>borrow_global</b>&lt;<a href="stake.md#0x1_stake_ValidatorConfig">ValidatorConfig</a>&gt;(pool_address);
+    // <b>let</b> stake_pool = <b>borrow_global_mut</b>&lt;<a href="stake.md#0x1_stake_old_StakePool">StakePool</a>&gt;(pool_address);
+    // <b>let</b> validator_config = <b>borrow_global</b>&lt;<a href="stake.md#0x1_stake_old_ValidatorConfig">ValidatorConfig</a>&gt;(pool_address);
     // <b>let</b> cur_validator_perf = <a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector_borrow">vector::borrow</a>(&validator_perf.validators, validator_config.validator_index);
     // <b>let</b> num_successful_proposals = cur_validator_perf.successful_proposals;
     // <b>spec</b> {
     //     // The following addition should not overflow because `num_total_proposals` cannot be larger than 86400,
     //     // the maximum number of proposals in a day (1 proposal per second).
-    //     <b>assume</b> cur_validator_perf.successful_proposals + cur_validator_perf.failed_proposals &lt;= <a href="stake.md#0x1_stake_MAX_U64">MAX_U64</a>;
+    //     <b>assume</b> cur_validator_perf.successful_proposals + cur_validator_perf.failed_proposals &lt;= <a href="stake.md#0x1_stake_old_MAX_U64">MAX_U64</a>;
     // };
     // <b>let</b> num_total_proposals = cur_validator_perf.successful_proposals + cur_validator_perf.failed_proposals;
     // <b>let</b> (rewards_rate, rewards_rate_denominator) = <b>if</b> (<a href="../../aptos-stdlib/../move-stdlib/doc/features.md#0x1_features_periodical_reward_rate_decrease_enabled">features::periodical_reward_rate_decrease_enabled</a>()) {
@@ -2961,10 +2961,10 @@ This function shouldn't abort.
     //         (0u64, 1u64)
     //     } <b>else</b> {
     //         // Maximize denominator for higher precision.
-    //         // Restriction: nominator &lt;= <a href="stake.md#0x1_stake_MAX_REWARDS_RATE">MAX_REWARDS_RATE</a> && denominator &lt;= <a href="stake.md#0x1_stake_MAX_U64">MAX_U64</a>
-    //         <b>let</b> denominator = fixed_point64::divide_u128((<a href="stake.md#0x1_stake_MAX_REWARDS_RATE">MAX_REWARDS_RATE</a> <b>as</b> u128), epoch_rewards_rate);
-    //         <b>if</b> (denominator &gt; <a href="stake.md#0x1_stake_MAX_U64">MAX_U64</a>) {
-    //             denominator = <a href="stake.md#0x1_stake_MAX_U64">MAX_U64</a>
+    //         // Restriction: nominator &lt;= <a href="stake.md#0x1_stake_old_MAX_REWARDS_RATE">MAX_REWARDS_RATE</a> && denominator &lt;= <a href="stake.md#0x1_stake_old_MAX_U64">MAX_U64</a>
+    //         <b>let</b> denominator = fixed_point64::divide_u128((<a href="stake.md#0x1_stake_old_MAX_REWARDS_RATE">MAX_REWARDS_RATE</a> <b>as</b> u128), epoch_rewards_rate);
+    //         <b>if</b> (denominator &gt; <a href="stake.md#0x1_stake_old_MAX_U64">MAX_U64</a>) {
+    //             denominator = <a href="stake.md#0x1_stake_old_MAX_U64">MAX_U64</a>
     //         };
     //         <b>let</b> nominator = (fixed_point64::multiply_u128(denominator, epoch_rewards_rate) <b>as</b> u64);
     //         (nominator, (denominator <b>as</b> u64))
@@ -2972,14 +2972,14 @@ This function shouldn't abort.
     // } <b>else</b> {
     //     staking_config::get_reward_rate(staking_config)
     // };
-    // <b>let</b> rewards_active = <a href="stake.md#0x1_stake_distribute_rewards">distribute_rewards</a>(
+    // <b>let</b> rewards_active = <a href="stake.md#0x1_stake_old_distribute_rewards">distribute_rewards</a>(
     //     &<b>mut</b> stake_pool.active,
     //     num_successful_proposals,
     //     num_total_proposals,
     //     rewards_rate,
     //     rewards_rate_denominator
     // );
-    // <b>let</b> rewards_pending_inactive = <a href="stake.md#0x1_stake_distribute_rewards">distribute_rewards</a>(
+    // <b>let</b> rewards_pending_inactive = <a href="stake.md#0x1_stake_old_distribute_rewards">distribute_rewards</a>(
     //     &<b>mut</b> stake_pool.pending_inactive,
     //     num_successful_proposals,
     //     num_total_proposals,
@@ -2987,22 +2987,22 @@ This function shouldn't abort.
     //     rewards_rate_denominator
     // );
     // <b>spec</b> {
-    //     <b>assume</b> rewards_active + rewards_pending_inactive &lt;= <a href="stake.md#0x1_stake_MAX_U64">MAX_U64</a>;
+    //     <b>assume</b> rewards_active + rewards_pending_inactive &lt;= <a href="stake.md#0x1_stake_old_MAX_U64">MAX_U64</a>;
     // };
     // <b>let</b> rewards_amount = rewards_active + rewards_pending_inactive;
-    // // Pending active <a href="stake.md#0x1_stake">stake</a> can now be active.
+    // // Pending active stake can now be active.
     // <a href="coin.md#0x1_coin_merge">coin::merge</a>(&<b>mut</b> stake_pool.active, <a href="coin.md#0x1_coin_extract_all">coin::extract_all</a>(&<b>mut</b> stake_pool.pending_active));
 
     // // Additionally, distribute transaction fees.
     // <b>if</b> (<a href="../../aptos-stdlib/../move-stdlib/doc/features.md#0x1_features_collect_and_distribute_gas_fees">features::collect_and_distribute_gas_fees</a>()) {
-    //     <b>let</b> fees_table = &<b>mut</b> <b>borrow_global_mut</b>&lt;<a href="stake.md#0x1_stake_ValidatorFees">ValidatorFees</a>&gt;(@aptos_framework).fees_table;
+    //     <b>let</b> fees_table = &<b>mut</b> <b>borrow_global_mut</b>&lt;<a href="stake.md#0x1_stake_old_ValidatorFees">ValidatorFees</a>&gt;(@aptos_framework).fees_table;
     //     <b>if</b> (<a href="../../aptos-stdlib/doc/table.md#0x1_table_contains">table::contains</a>(fees_table, pool_address)) {
     //         <b>let</b> <a href="coin.md#0x1_coin">coin</a> = <a href="../../aptos-stdlib/doc/table.md#0x1_table_remove">table::remove</a>(fees_table, pool_address);
     //         <a href="coin.md#0x1_coin_merge">coin::merge</a>(&<b>mut</b> stake_pool.active, <a href="coin.md#0x1_coin">coin</a>);
     //     };
     // };
 
-    // // Pending inactive <a href="stake.md#0x1_stake">stake</a> is only fully unlocked and moved into inactive <b>if</b> the current lockup cycle <b>has</b> expired
+    // // Pending inactive stake is only fully unlocked and moved into inactive <b>if</b> the current lockup cycle <b>has</b> expired
     // <b>let</b> current_lockup_expiration = stake_pool.locked_until_secs;
     // <b>if</b> (<a href="timestamp.md#0x1_timestamp_now_seconds">timestamp::now_seconds</a>() &gt;= current_lockup_expiration) {
     //     <a href="coin.md#0x1_coin_merge">coin::merge</a>(
@@ -3013,7 +3013,7 @@ This function shouldn't abort.
 
     // <a href="event.md#0x1_event_emit_event">event::emit_event</a>(
     //     &<b>mut</b> stake_pool.distribute_rewards_events,
-    //     <a href="stake.md#0x1_stake_DistributeRewardsEvent">DistributeRewardsEvent</a> {
+    //     <a href="stake.md#0x1_stake_old_DistributeRewardsEvent">DistributeRewardsEvent</a> {
     //         pool_address,
     //         rewards_amount,
     //     },
@@ -3025,14 +3025,14 @@ This function shouldn't abort.
 
 </details>
 
-<a name="0x1_stake_calculate_rewards_amount"></a>
+<a name="0x1_stake_old_calculate_rewards_amount"></a>
 
 ## Function `calculate_rewards_amount`
 
 Calculate the rewards amount.
 
 
-<pre><code><b>fun</b> <a href="stake.md#0x1_stake_calculate_rewards_amount">calculate_rewards_amount</a>(stake_amount: u64, num_successful_proposals: u64, num_total_proposals: u64, rewards_rate: u64, rewards_rate_denominator: u64): u64
+<pre><code><b>fun</b> <a href="stake.md#0x1_stake_old_calculate_rewards_amount">calculate_rewards_amount</a>(stake_amount: u64, num_successful_proposals: u64, num_total_proposals: u64, rewards_rate: u64, rewards_rate_denominator: u64): u64
 </code></pre>
 
 
@@ -3041,7 +3041,7 @@ Calculate the rewards amount.
 <summary>Implementation</summary>
 
 
-<pre><code><b>fun</b> <a href="stake.md#0x1_stake_calculate_rewards_amount">calculate_rewards_amount</a>(
+<pre><code><b>fun</b> <a href="stake.md#0x1_stake_old_calculate_rewards_amount">calculate_rewards_amount</a>(
     stake_amount: u64,
     num_successful_proposals: u64,
     num_total_proposals: u64,
@@ -3053,9 +3053,9 @@ Calculate the rewards amount.
         // (1) num_successful_proposals &lt;= num_total_proposals, and
         // (2) `num_total_proposals` cannot be larger than 86400, the maximum number of proposals
         //     in a day (1 proposal per second), and `num_total_proposals` is reset <b>to</b> 0 every epoch.
-        <b>assume</b> num_successful_proposals * <a href="stake.md#0x1_stake_MAX_REWARDS_RATE">MAX_REWARDS_RATE</a> &lt;= <a href="stake.md#0x1_stake_MAX_U64">MAX_U64</a>;
+        <b>assume</b> num_successful_proposals * <a href="stake.md#0x1_stake_old_MAX_REWARDS_RATE">MAX_REWARDS_RATE</a> &lt;= <a href="stake.md#0x1_stake_old_MAX_U64">MAX_U64</a>;
     };
-    // The rewards amount is equal <b>to</b> (<a href="stake.md#0x1_stake">stake</a> amount * rewards rate * performance multiplier).
+    // The rewards amount is equal <b>to</b> (stake amount * rewards rate * performance multiplier).
     // We do multiplication in u128 before division <b>to</b> avoid the overflow and minimize the rounding <a href="../../aptos-stdlib/../move-stdlib/doc/error.md#0x1_error">error</a>.
     <b>let</b> rewards_numerator = (stake_amount <b>as</b> u128) * (rewards_rate <b>as</b> u128) * (num_successful_proposals <b>as</b> u128);
     <b>let</b> rewards_denominator = (rewards_rate_denominator <b>as</b> u128) * (num_total_proposals <b>as</b> u128);
@@ -3071,14 +3071,14 @@ Calculate the rewards amount.
 
 </details>
 
-<a name="0x1_stake_distribute_rewards"></a>
+<a name="0x1_stake_old_distribute_rewards"></a>
 
 ## Function `distribute_rewards`
 
-Mint rewards corresponding to current epoch's <code><a href="stake.md#0x1_stake">stake</a></code> and <code>num_successful_votes</code>.
+Mint rewards corresponding to current epoch's <code>stake</code> and <code>num_successful_votes</code>.
 
 
-<pre><code><b>fun</b> <a href="stake.md#0x1_stake_distribute_rewards">distribute_rewards</a>(<a href="stake.md#0x1_stake">stake</a>: &<b>mut</b> <a href="coin.md#0x1_coin_Coin">coin::Coin</a>&lt;<a href="aptos_coin.md#0x1_aptos_coin_AptosCoin">aptos_coin::AptosCoin</a>&gt;, num_successful_proposals: u64, num_total_proposals: u64, rewards_rate: u64, rewards_rate_denominator: u64): u64
+<pre><code><b>fun</b> <a href="stake.md#0x1_stake_old_distribute_rewards">distribute_rewards</a>(stake: &<b>mut</b> <a href="coin.md#0x1_coin_Coin">coin::Coin</a>&lt;<a href="aptos_coin.md#0x1_aptos_coin_AptosCoin">aptos_coin::AptosCoin</a>&gt;, num_successful_proposals: u64, num_total_proposals: u64, rewards_rate: u64, rewards_rate_denominator: u64): u64
 </code></pre>
 
 
@@ -3087,23 +3087,23 @@ Mint rewards corresponding to current epoch's <code><a href="stake.md#0x1_stake"
 <summary>Implementation</summary>
 
 
-<pre><code><b>fun</b> <a href="stake.md#0x1_stake_distribute_rewards">distribute_rewards</a>(
-    <a href="stake.md#0x1_stake">stake</a>: &<b>mut</b> Coin&lt;AptosCoin&gt;,
+<pre><code><b>fun</b> <a href="stake.md#0x1_stake_old_distribute_rewards">distribute_rewards</a>(
+    stake: &<b>mut</b> Coin&lt;AptosCoin&gt;,
     num_successful_proposals: u64,
     num_total_proposals: u64,
     rewards_rate: u64,
     rewards_rate_denominator: u64,
-): u64 <b>acquires</b> <a href="stake.md#0x1_stake_AptosCoinCapabilities">AptosCoinCapabilities</a> {
-    <b>let</b> stake_amount = <a href="coin.md#0x1_coin_value">coin::value</a>(<a href="stake.md#0x1_stake">stake</a>);
+): u64 <b>acquires</b> <a href="stake.md#0x1_stake_old_AptosCoinCapabilities">AptosCoinCapabilities</a> {
+    <b>let</b> stake_amount = <a href="coin.md#0x1_coin_value">coin::value</a>(stake);
     <b>let</b> rewards_amount = <b>if</b> (stake_amount &gt; 0) {
-        <a href="stake.md#0x1_stake_calculate_rewards_amount">calculate_rewards_amount</a>(stake_amount, num_successful_proposals, num_total_proposals, rewards_rate, rewards_rate_denominator)
+        <a href="stake.md#0x1_stake_old_calculate_rewards_amount">calculate_rewards_amount</a>(stake_amount, num_successful_proposals, num_total_proposals, rewards_rate, rewards_rate_denominator)
     } <b>else</b> {
         0
     };
     <b>if</b> (rewards_amount &gt; 0) {
-        <b>let</b> mint_cap = &<b>borrow_global</b>&lt;<a href="stake.md#0x1_stake_AptosCoinCapabilities">AptosCoinCapabilities</a>&gt;(@aptos_framework).mint_cap;
+        <b>let</b> mint_cap = &<b>borrow_global</b>&lt;<a href="stake.md#0x1_stake_old_AptosCoinCapabilities">AptosCoinCapabilities</a>&gt;(@aptos_framework).mint_cap;
         <b>let</b> rewards = <a href="coin.md#0x1_coin_mint">coin::mint</a>(rewards_amount, mint_cap);
-        <a href="coin.md#0x1_coin_merge">coin::merge</a>(<a href="stake.md#0x1_stake">stake</a>, rewards);
+        <a href="coin.md#0x1_coin_merge">coin::merge</a>(stake, rewards);
     };
     rewards_amount
 }
@@ -3113,13 +3113,13 @@ Mint rewards corresponding to current epoch's <code><a href="stake.md#0x1_stake"
 
 </details>
 
-<a name="0x1_stake_append"></a>
+<a name="0x1_stake_old_append"></a>
 
 ## Function `append`
 
 
 
-<pre><code><b>fun</b> <a href="stake.md#0x1_stake_append">append</a>&lt;T&gt;(v1: &<b>mut</b> <a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector">vector</a>&lt;T&gt;, v2: &<b>mut</b> <a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector">vector</a>&lt;T&gt;)
+<pre><code><b>fun</b> <a href="stake.md#0x1_stake_old_append">append</a>&lt;T&gt;(v1: &<b>mut</b> <a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector">vector</a>&lt;T&gt;, v2: &<b>mut</b> <a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector">vector</a>&lt;T&gt;)
 </code></pre>
 
 
@@ -3128,7 +3128,7 @@ Mint rewards corresponding to current epoch's <code><a href="stake.md#0x1_stake"
 <summary>Implementation</summary>
 
 
-<pre><code><b>fun</b> <a href="stake.md#0x1_stake_append">append</a>&lt;T&gt;(v1: &<b>mut</b> <a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector">vector</a>&lt;T&gt;, v2: &<b>mut</b> <a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector">vector</a>&lt;T&gt;) {
+<pre><code><b>fun</b> <a href="stake.md#0x1_stake_old_append">append</a>&lt;T&gt;(v1: &<b>mut</b> <a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector">vector</a>&lt;T&gt;, v2: &<b>mut</b> <a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector">vector</a>&lt;T&gt;) {
     <b>while</b> (!<a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector_is_empty">vector::is_empty</a>(v2)) {
         <a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector_push_back">vector::push_back</a>(v1, <a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector_pop_back">vector::pop_back</a>(v2));
     }
@@ -3139,13 +3139,13 @@ Mint rewards corresponding to current epoch's <code><a href="stake.md#0x1_stake"
 
 </details>
 
-<a name="0x1_stake_find_validator"></a>
+<a name="0x1_stake_old_find_validator"></a>
 
 ## Function `find_validator`
 
 
 
-<pre><code><b>fun</b> <a href="stake.md#0x1_stake_find_validator">find_validator</a>(v: &<a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector">vector</a>&lt;<a href="stake.md#0x1_stake_ValidatorInfo">stake::ValidatorInfo</a>&gt;, addr: <b>address</b>): <a href="../../aptos-stdlib/../move-stdlib/doc/option.md#0x1_option_Option">option::Option</a>&lt;u64&gt;
+<pre><code><b>fun</b> <a href="stake.md#0x1_stake_old_find_validator">find_validator</a>(v: &<a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector">vector</a>&lt;<a href="stake.md#0x1_stake_old_ValidatorInfo">stake_old::ValidatorInfo</a>&gt;, addr: <b>address</b>): <a href="../../aptos-stdlib/../move-stdlib/doc/option.md#0x1_option_Option">option::Option</a>&lt;u64&gt;
 </code></pre>
 
 
@@ -3154,7 +3154,7 @@ Mint rewards corresponding to current epoch's <code><a href="stake.md#0x1_stake"
 <summary>Implementation</summary>
 
 
-<pre><code><b>fun</b> <a href="stake.md#0x1_stake_find_validator">find_validator</a>(v: &<a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector">vector</a>&lt;<a href="stake.md#0x1_stake_ValidatorInfo">ValidatorInfo</a>&gt;, addr: <b>address</b>): Option&lt;u64&gt; {
+<pre><code><b>fun</b> <a href="stake.md#0x1_stake_old_find_validator">find_validator</a>(v: &<a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector">vector</a>&lt;<a href="stake.md#0x1_stake_old_ValidatorInfo">ValidatorInfo</a>&gt;, addr: <b>address</b>): Option&lt;u64&gt; {
     <b>let</b> i = 0;
     <b>let</b> len = <a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector_length">vector::length</a>(v);
     <b>while</b> ({
@@ -3176,13 +3176,13 @@ Mint rewards corresponding to current epoch's <code><a href="stake.md#0x1_stake"
 
 </details>
 
-<a name="0x1_stake_generate_validator_info"></a>
+<a name="0x1_stake_old_generate_validator_info"></a>
 
 ## Function `generate_validator_info`
 
 
 
-<pre><code><b>fun</b> <a href="stake.md#0x1_stake_generate_validator_info">generate_validator_info</a>(addr: <b>address</b>, stake_pool: &<a href="stake.md#0x1_stake_StakePool">stake::StakePool</a>, config: <a href="stake.md#0x1_stake_ValidatorConfig">stake::ValidatorConfig</a>): <a href="stake.md#0x1_stake_ValidatorInfo">stake::ValidatorInfo</a>
+<pre><code><b>fun</b> <a href="stake.md#0x1_stake_old_generate_validator_info">generate_validator_info</a>(addr: <b>address</b>, stake_pool: &<a href="stake.md#0x1_stake_old_StakePool">stake_old::StakePool</a>, config: <a href="stake.md#0x1_stake_old_ValidatorConfig">stake_old::ValidatorConfig</a>): <a href="stake.md#0x1_stake_old_ValidatorInfo">stake_old::ValidatorInfo</a>
 </code></pre>
 
 
@@ -3191,9 +3191,9 @@ Mint rewards corresponding to current epoch's <code><a href="stake.md#0x1_stake"
 <summary>Implementation</summary>
 
 
-<pre><code><b>fun</b> <a href="stake.md#0x1_stake_generate_validator_info">generate_validator_info</a>(addr: <b>address</b>, stake_pool: &<a href="stake.md#0x1_stake_StakePool">StakePool</a>, config: <a href="stake.md#0x1_stake_ValidatorConfig">ValidatorConfig</a>): <a href="stake.md#0x1_stake_ValidatorInfo">ValidatorInfo</a> {
-    <b>let</b> voting_power = <a href="stake.md#0x1_stake_get_next_epoch_voting_power">get_next_epoch_voting_power</a>(stake_pool);
-    <a href="stake.md#0x1_stake_ValidatorInfo">ValidatorInfo</a> {
+<pre><code><b>fun</b> <a href="stake.md#0x1_stake_old_generate_validator_info">generate_validator_info</a>(addr: <b>address</b>, stake_pool: &<a href="stake.md#0x1_stake_old_StakePool">StakePool</a>, config: <a href="stake.md#0x1_stake_old_ValidatorConfig">ValidatorConfig</a>): <a href="stake.md#0x1_stake_old_ValidatorInfo">ValidatorInfo</a> {
+    <b>let</b> voting_power = <a href="stake.md#0x1_stake_old_get_next_epoch_voting_power">get_next_epoch_voting_power</a>(stake_pool);
+    <a href="stake.md#0x1_stake_old_ValidatorInfo">ValidatorInfo</a> {
         addr,
         voting_power,
         config,
@@ -3205,14 +3205,14 @@ Mint rewards corresponding to current epoch's <code><a href="stake.md#0x1_stake"
 
 </details>
 
-<a name="0x1_stake_get_next_epoch_voting_power"></a>
+<a name="0x1_stake_old_get_next_epoch_voting_power"></a>
 
 ## Function `get_next_epoch_voting_power`
 
 Returns validator's next epoch voting power, including pending_active, active, and pending_inactive stake.
 
 
-<pre><code><b>fun</b> <a href="stake.md#0x1_stake_get_next_epoch_voting_power">get_next_epoch_voting_power</a>(stake_pool: &<a href="stake.md#0x1_stake_StakePool">stake::StakePool</a>): u64
+<pre><code><b>fun</b> <a href="stake.md#0x1_stake_old_get_next_epoch_voting_power">get_next_epoch_voting_power</a>(stake_pool: &<a href="stake.md#0x1_stake_old_StakePool">stake_old::StakePool</a>): u64
 </code></pre>
 
 
@@ -3221,12 +3221,12 @@ Returns validator's next epoch voting power, including pending_active, active, a
 <summary>Implementation</summary>
 
 
-<pre><code><b>fun</b> <a href="stake.md#0x1_stake_get_next_epoch_voting_power">get_next_epoch_voting_power</a>(stake_pool: &<a href="stake.md#0x1_stake_StakePool">StakePool</a>): u64 {
+<pre><code><b>fun</b> <a href="stake.md#0x1_stake_old_get_next_epoch_voting_power">get_next_epoch_voting_power</a>(stake_pool: &<a href="stake.md#0x1_stake_old_StakePool">StakePool</a>): u64 {
     <b>let</b> value_pending_active = <a href="coin.md#0x1_coin_value">coin::value</a>(&stake_pool.pending_active);
     <b>let</b> value_active = <a href="coin.md#0x1_coin_value">coin::value</a>(&stake_pool.active);
     <b>let</b> value_pending_inactive = <a href="coin.md#0x1_coin_value">coin::value</a>(&stake_pool.pending_inactive);
     <b>spec</b> {
-        <b>assume</b> value_pending_active + value_active + value_pending_inactive &lt;= <a href="stake.md#0x1_stake_MAX_U64">MAX_U64</a>;
+        <b>assume</b> value_pending_active + value_active + value_pending_inactive &lt;= <a href="stake.md#0x1_stake_old_MAX_U64">MAX_U64</a>;
     };
     value_pending_active + value_active + value_pending_inactive
 }
@@ -3236,13 +3236,13 @@ Returns validator's next epoch voting power, including pending_active, active, a
 
 </details>
 
-<a name="0x1_stake_update_voting_power_increase"></a>
+<a name="0x1_stake_old_update_voting_power_increase"></a>
 
 ## Function `update_voting_power_increase`
 
 
 
-<pre><code><b>fun</b> <a href="stake.md#0x1_stake_update_voting_power_increase">update_voting_power_increase</a>(_increase_amount: u64)
+<pre><code><b>fun</b> <a href="stake.md#0x1_stake_old_update_voting_power_increase">update_voting_power_increase</a>(_increase_amount: u64)
 </code></pre>
 
 
@@ -3251,8 +3251,8 @@ Returns validator's next epoch voting power, including pending_active, active, a
 <summary>Implementation</summary>
 
 
-<pre><code><b>fun</b> <a href="stake.md#0x1_stake_update_voting_power_increase">update_voting_power_increase</a>(_increase_amount: u64)  {
-    // <b>let</b> validator_set = <b>borrow_global_mut</b>&lt;<a href="stake.md#0x1_stake_ValidatorSet">ValidatorSet</a>&gt;(@aptos_framework);
+<pre><code><b>fun</b> <a href="stake.md#0x1_stake_old_update_voting_power_increase">update_voting_power_increase</a>(_increase_amount: u64)  {
+    // <b>let</b> validator_set = <b>borrow_global_mut</b>&lt;<a href="stake.md#0x1_stake_old_ValidatorSet">ValidatorSet</a>&gt;(@aptos_framework);
     // <b>let</b> voting_power_increase_limit =
     //     (staking_config::get_voting_power_increase_limit(&staking_config::get()) <b>as</b> u128);
     // validator_set.total_joining_power = validator_set.total_joining_power + (increase_amount <b>as</b> u128);
@@ -3261,7 +3261,7 @@ Returns validator's next epoch voting power, including pending_active, active, a
     // <b>if</b> (validator_set.total_voting_power &gt; 0) {
     //     <b>assert</b>!(
     //         validator_set.total_joining_power &lt;= validator_set.total_voting_power * voting_power_increase_limit / 100,
-    //         <a href="../../aptos-stdlib/../move-stdlib/doc/error.md#0x1_error_invalid_argument">error::invalid_argument</a>(<a href="stake.md#0x1_stake_EVOTING_POWER_INCREASE_EXCEEDS_LIMIT">EVOTING_POWER_INCREASE_EXCEEDS_LIMIT</a>),
+    //         <a href="../../aptos-stdlib/../move-stdlib/doc/error.md#0x1_error_invalid_argument">error::invalid_argument</a>(<a href="stake.md#0x1_stake_old_EVOTING_POWER_INCREASE_EXCEEDS_LIMIT">EVOTING_POWER_INCREASE_EXCEEDS_LIMIT</a>),
     //     );
     // }
 }
@@ -3271,13 +3271,13 @@ Returns validator's next epoch voting power, including pending_active, active, a
 
 </details>
 
-<a name="0x1_stake_assert_stake_pool_exists"></a>
+<a name="0x1_stake_old_assert_stake_pool_exists"></a>
 
 ## Function `assert_stake_pool_exists`
 
 
 
-<pre><code><b>fun</b> <a href="stake.md#0x1_stake_assert_stake_pool_exists">assert_stake_pool_exists</a>(pool_address: <b>address</b>)
+<pre><code><b>fun</b> <a href="stake.md#0x1_stake_old_assert_stake_pool_exists">assert_stake_pool_exists</a>(pool_address: <b>address</b>)
 </code></pre>
 
 
@@ -3286,8 +3286,8 @@ Returns validator's next epoch voting power, including pending_active, active, a
 <summary>Implementation</summary>
 
 
-<pre><code><b>fun</b> <a href="stake.md#0x1_stake_assert_stake_pool_exists">assert_stake_pool_exists</a>(pool_address: <b>address</b>) {
-    <b>assert</b>!(<a href="stake.md#0x1_stake_stake_pool_exists">stake_pool_exists</a>(pool_address), <a href="../../aptos-stdlib/../move-stdlib/doc/error.md#0x1_error_invalid_argument">error::invalid_argument</a>(<a href="stake.md#0x1_stake_ESTAKE_POOL_DOES_NOT_EXIST">ESTAKE_POOL_DOES_NOT_EXIST</a>));
+<pre><code><b>fun</b> <a href="stake.md#0x1_stake_old_assert_stake_pool_exists">assert_stake_pool_exists</a>(pool_address: <b>address</b>) {
+    <b>assert</b>!(<a href="stake.md#0x1_stake_old_stake_pool_exists">stake_pool_exists</a>(pool_address), <a href="../../aptos-stdlib/../move-stdlib/doc/error.md#0x1_error_invalid_argument">error::invalid_argument</a>(<a href="stake.md#0x1_stake_old_ESTAKE_POOL_DOES_NOT_EXIST">ESTAKE_POOL_DOES_NOT_EXIST</a>));
 }
 </code></pre>
 
@@ -3295,13 +3295,13 @@ Returns validator's next epoch voting power, including pending_active, active, a
 
 </details>
 
-<a name="0x1_stake_configure_allowed_validators"></a>
+<a name="0x1_stake_old_configure_allowed_validators"></a>
 
 ## Function `configure_allowed_validators`
 
 
 
-<pre><code><b>public</b> <b>fun</b> <a href="stake.md#0x1_stake_configure_allowed_validators">configure_allowed_validators</a>(aptos_framework: &<a href="../../aptos-stdlib/../move-stdlib/doc/signer.md#0x1_signer">signer</a>, accounts: <a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector">vector</a>&lt;<b>address</b>&gt;)
+<pre><code><b>public</b> <b>fun</b> <a href="stake.md#0x1_stake_old_configure_allowed_validators">configure_allowed_validators</a>(aptos_framework: &<a href="../../aptos-stdlib/../move-stdlib/doc/signer.md#0x1_signer">signer</a>, accounts: <a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector">vector</a>&lt;<b>address</b>&gt;)
 </code></pre>
 
 
@@ -3310,13 +3310,13 @@ Returns validator's next epoch voting power, including pending_active, active, a
 <summary>Implementation</summary>
 
 
-<pre><code><b>public</b> <b>fun</b> <a href="stake.md#0x1_stake_configure_allowed_validators">configure_allowed_validators</a>(aptos_framework: &<a href="../../aptos-stdlib/../move-stdlib/doc/signer.md#0x1_signer">signer</a>, accounts: <a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector">vector</a>&lt;<b>address</b>&gt;) <b>acquires</b> <a href="stake.md#0x1_stake_AllowedValidators">AllowedValidators</a> {
+<pre><code><b>public</b> <b>fun</b> <a href="stake.md#0x1_stake_old_configure_allowed_validators">configure_allowed_validators</a>(aptos_framework: &<a href="../../aptos-stdlib/../move-stdlib/doc/signer.md#0x1_signer">signer</a>, accounts: <a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector">vector</a>&lt;<b>address</b>&gt;) <b>acquires</b> <a href="stake.md#0x1_stake_old_AllowedValidators">AllowedValidators</a> {
     <b>let</b> aptos_framework_address = <a href="../../aptos-stdlib/../move-stdlib/doc/signer.md#0x1_signer_address_of">signer::address_of</a>(aptos_framework);
     <a href="system_addresses.md#0x1_system_addresses_assert_aptos_framework">system_addresses::assert_aptos_framework</a>(aptos_framework);
-    <b>if</b> (!<b>exists</b>&lt;<a href="stake.md#0x1_stake_AllowedValidators">AllowedValidators</a>&gt;(aptos_framework_address)) {
-        <b>move_to</b>(aptos_framework, <a href="stake.md#0x1_stake_AllowedValidators">AllowedValidators</a> { accounts });
+    <b>if</b> (!<b>exists</b>&lt;<a href="stake.md#0x1_stake_old_AllowedValidators">AllowedValidators</a>&gt;(aptos_framework_address)) {
+        <b>move_to</b>(aptos_framework, <a href="stake.md#0x1_stake_old_AllowedValidators">AllowedValidators</a> { accounts });
     } <b>else</b> {
-        <b>let</b> allowed = <b>borrow_global_mut</b>&lt;<a href="stake.md#0x1_stake_AllowedValidators">AllowedValidators</a>&gt;(aptos_framework_address);
+        <b>let</b> allowed = <b>borrow_global_mut</b>&lt;<a href="stake.md#0x1_stake_old_AllowedValidators">AllowedValidators</a>&gt;(aptos_framework_address);
         allowed.accounts = accounts;
     }
 }
@@ -3326,13 +3326,13 @@ Returns validator's next epoch voting power, including pending_active, active, a
 
 </details>
 
-<a name="0x1_stake_is_allowed"></a>
+<a name="0x1_stake_old_is_allowed"></a>
 
 ## Function `is_allowed`
 
 
 
-<pre><code><b>fun</b> <a href="stake.md#0x1_stake_is_allowed">is_allowed</a>(<a href="account.md#0x1_account">account</a>: <b>address</b>): bool
+<pre><code><b>fun</b> <a href="stake.md#0x1_stake_old_is_allowed">is_allowed</a>(<a href="account.md#0x1_account">account</a>: <b>address</b>): bool
 </code></pre>
 
 
@@ -3341,11 +3341,11 @@ Returns validator's next epoch voting power, including pending_active, active, a
 <summary>Implementation</summary>
 
 
-<pre><code><b>fun</b> <a href="stake.md#0x1_stake_is_allowed">is_allowed</a>(<a href="account.md#0x1_account">account</a>: <b>address</b>): bool <b>acquires</b> <a href="stake.md#0x1_stake_AllowedValidators">AllowedValidators</a> {
-    <b>if</b> (!<b>exists</b>&lt;<a href="stake.md#0x1_stake_AllowedValidators">AllowedValidators</a>&gt;(@aptos_framework)) {
+<pre><code><b>fun</b> <a href="stake.md#0x1_stake_old_is_allowed">is_allowed</a>(<a href="account.md#0x1_account">account</a>: <b>address</b>): bool <b>acquires</b> <a href="stake.md#0x1_stake_old_AllowedValidators">AllowedValidators</a> {
+    <b>if</b> (!<b>exists</b>&lt;<a href="stake.md#0x1_stake_old_AllowedValidators">AllowedValidators</a>&gt;(@aptos_framework)) {
         <b>true</b>
     } <b>else</b> {
-        <b>let</b> allowed = <b>borrow_global</b>&lt;<a href="stake.md#0x1_stake_AllowedValidators">AllowedValidators</a>&gt;(@aptos_framework);
+        <b>let</b> allowed = <b>borrow_global</b>&lt;<a href="stake.md#0x1_stake_old_AllowedValidators">AllowedValidators</a>&gt;(@aptos_framework);
         <a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector_contains">vector::contains</a>(&allowed.accounts, &<a href="account.md#0x1_account">account</a>)
     }
 }
@@ -3355,13 +3355,13 @@ Returns validator's next epoch voting power, including pending_active, active, a
 
 </details>
 
-<a name="0x1_stake_assert_owner_cap_exists"></a>
+<a name="0x1_stake_old_assert_owner_cap_exists"></a>
 
 ## Function `assert_owner_cap_exists`
 
 
 
-<pre><code><b>fun</b> <a href="stake.md#0x1_stake_assert_owner_cap_exists">assert_owner_cap_exists</a>(owner: <b>address</b>)
+<pre><code><b>fun</b> <a href="stake.md#0x1_stake_old_assert_owner_cap_exists">assert_owner_cap_exists</a>(owner: <b>address</b>)
 </code></pre>
 
 
@@ -3370,8 +3370,8 @@ Returns validator's next epoch voting power, including pending_active, active, a
 <summary>Implementation</summary>
 
 
-<pre><code><b>fun</b> <a href="stake.md#0x1_stake_assert_owner_cap_exists">assert_owner_cap_exists</a>(owner: <b>address</b>) {
-    <b>assert</b>!(<b>exists</b>&lt;<a href="stake.md#0x1_stake_OwnerCapability">OwnerCapability</a>&gt;(owner), <a href="../../aptos-stdlib/../move-stdlib/doc/error.md#0x1_error_not_found">error::not_found</a>(<a href="stake.md#0x1_stake_EOWNER_CAP_NOT_FOUND">EOWNER_CAP_NOT_FOUND</a>));
+<pre><code><b>fun</b> <a href="stake.md#0x1_stake_old_assert_owner_cap_exists">assert_owner_cap_exists</a>(owner: <b>address</b>) {
+    <b>assert</b>!(<b>exists</b>&lt;<a href="stake.md#0x1_stake_old_OwnerCapability">OwnerCapability</a>&gt;(owner), <a href="../../aptos-stdlib/../move-stdlib/doc/error.md#0x1_error_not_found">error::not_found</a>(<a href="stake.md#0x1_stake_old_EOWNER_CAP_NOT_FOUND">EOWNER_CAP_NOT_FOUND</a>));
 }
 </code></pre>
 
@@ -3385,25 +3385,80 @@ Returns validator's next epoch voting power, including pending_active, active, a
 
 
 
-<pre><code><b>invariant</b> [suspendable] <b>exists</b>&lt;<a href="stake.md#0x1_stake_ValidatorSet">ValidatorSet</a>&gt;(@aptos_framework) ==&gt; <a href="stake.md#0x1_stake_validator_set_is_valid">validator_set_is_valid</a>();
-<b>invariant</b> [suspendable] <a href="chain_status.md#0x1_chain_status_is_operating">chain_status::is_operating</a>() ==&gt; <b>exists</b>&lt;<a href="stake.md#0x1_stake_AptosCoinCapabilities">AptosCoinCapabilities</a>&gt;(@aptos_framework);
-<b>invariant</b> [suspendable] <a href="chain_status.md#0x1_chain_status_is_operating">chain_status::is_operating</a>() ==&gt; <b>exists</b>&lt;<a href="stake.md#0x1_stake_ValidatorPerformance">ValidatorPerformance</a>&gt;(@aptos_framework);
-<b>invariant</b> [suspendable] <a href="chain_status.md#0x1_chain_status_is_operating">chain_status::is_operating</a>() ==&gt; <b>exists</b>&lt;<a href="stake.md#0x1_stake_ValidatorSet">ValidatorSet</a>&gt;(@aptos_framework);
+<pre><code><b>invariant</b> [suspendable] <b>exists</b>&lt;<a href="stake.md#0x1_stake_old_ValidatorSet">ValidatorSet</a>&gt;(@aptos_framework) ==&gt; <a href="stake.md#0x1_stake_old_validator_set_is_valid">validator_set_is_valid</a>();
+<b>invariant</b> [suspendable] <a href="chain_status.md#0x1_chain_status_is_operating">chain_status::is_operating</a>() ==&gt; <b>exists</b>&lt;<a href="stake.md#0x1_stake_old_AptosCoinCapabilities">AptosCoinCapabilities</a>&gt;(@aptos_framework);
+<b>invariant</b> [suspendable] <a href="chain_status.md#0x1_chain_status_is_operating">chain_status::is_operating</a>() ==&gt; <b>exists</b>&lt;<a href="stake.md#0x1_stake_old_ValidatorPerformance">ValidatorPerformance</a>&gt;(@aptos_framework);
+<b>invariant</b> [suspendable] <a href="chain_status.md#0x1_chain_status_is_operating">chain_status::is_operating</a>() ==&gt; <b>exists</b>&lt;<a href="stake.md#0x1_stake_old_ValidatorSet">ValidatorSet</a>&gt;(@aptos_framework);
 </code></pre>
 
 
 
 
-<a name="0x1_stake_validator_set_is_valid"></a>
+<a name="0x1_stake_old_validator_set_is_valid"></a>
 
 
-<pre><code><b>fun</b> <a href="stake.md#0x1_stake_validator_set_is_valid">validator_set_is_valid</a>(): bool {
-   <b>let</b> validator_set = <b>global</b>&lt;<a href="stake.md#0x1_stake_ValidatorSet">ValidatorSet</a>&gt;(@aptos_framework);
-   <a href="stake.md#0x1_stake_spec_validators_are_initialized">spec_validators_are_initialized</a>(validator_set.active_validators) &&
-       <a href="stake.md#0x1_stake_spec_validators_are_initialized">spec_validators_are_initialized</a>(validator_set.pending_inactive) &&
-       <a href="stake.md#0x1_stake_spec_validators_are_initialized">spec_validators_are_initialized</a>(validator_set.pending_active) &&
-       <a href="stake.md#0x1_stake_spec_validator_indices_are_valid">spec_validator_indices_are_valid</a>(validator_set.active_validators) &&
-       <a href="stake.md#0x1_stake_spec_validator_indices_are_valid">spec_validator_indices_are_valid</a>(validator_set.pending_inactive)
+<pre><code><b>fun</b> <a href="stake.md#0x1_stake_old_validator_set_is_valid">validator_set_is_valid</a>(): bool {
+   <b>let</b> validator_set = <b>global</b>&lt;<a href="stake.md#0x1_stake_old_ValidatorSet">ValidatorSet</a>&gt;(@aptos_framework);
+   <a href="stake.md#0x1_stake_old_spec_validators_are_initialized">spec_validators_are_initialized</a>(validator_set.active_validators) &&
+       <a href="stake.md#0x1_stake_old_spec_validators_are_initialized">spec_validators_are_initialized</a>(validator_set.pending_inactive) &&
+       <a href="stake.md#0x1_stake_old_spec_validators_are_initialized">spec_validators_are_initialized</a>(validator_set.pending_active) &&
+       <a href="stake.md#0x1_stake_old_spec_validator_indices_are_valid">spec_validator_indices_are_valid</a>(validator_set.active_validators) &&
+       <a href="stake.md#0x1_stake_old_spec_validator_indices_are_valid">spec_validator_indices_are_valid</a>(validator_set.pending_inactive)
+}
+</code></pre>
+
+
+
+
+<a name="0x1_stake_old_spec_rewards_amount"></a>
+
+
+<pre><code><b>fun</b> <a href="stake.md#0x1_stake_old_spec_rewards_amount">spec_rewards_amount</a>(
+   stake_amount: u64,
+   num_successful_proposals: u64,
+   num_total_proposals: u64,
+   rewards_rate: u64,
+   rewards_rate_denominator: u64,
+): u64;
+</code></pre>
+
+
+
+
+<a name="0x1_stake_old_spec_contains"></a>
+
+
+<pre><code><b>fun</b> <a href="stake.md#0x1_stake_old_spec_contains">spec_contains</a>(validators: <a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector">vector</a>&lt;<a href="stake.md#0x1_stake_old_ValidatorInfo">ValidatorInfo</a>&gt;, addr: <b>address</b>): bool {
+   <b>exists</b> i in 0..len(validators): validators[i].addr == addr
+}
+</code></pre>
+
+
+
+
+<a name="0x1_stake_old_spec_is_current_epoch_validator"></a>
+
+
+<pre><code><b>fun</b> <a href="stake.md#0x1_stake_old_spec_is_current_epoch_validator">spec_is_current_epoch_validator</a>(pool_address: <b>address</b>): bool {
+   <b>let</b> validator_set = <b>global</b>&lt;<a href="stake.md#0x1_stake_old_ValidatorSet">ValidatorSet</a>&gt;(@aptos_framework);
+   !<a href="stake.md#0x1_stake_old_spec_contains">spec_contains</a>(validator_set.pending_active, pool_address)
+       && (<a href="stake.md#0x1_stake_old_spec_contains">spec_contains</a>(validator_set.active_validators, pool_address)
+       || <a href="stake.md#0x1_stake_old_spec_contains">spec_contains</a>(validator_set.pending_inactive, pool_address))
+}
+</code></pre>
+
+
+
+
+<a name="0x1_stake_old_ResourceRequirement"></a>
+
+
+<pre><code><b>schema</b> <a href="stake.md#0x1_stake_old_ResourceRequirement">ResourceRequirement</a> {
+    <b>requires</b> <b>exists</b>&lt;<a href="stake.md#0x1_stake_old_AptosCoinCapabilities">AptosCoinCapabilities</a>&gt;(@aptos_framework);
+    <b>requires</b> <b>exists</b>&lt;<a href="stake.md#0x1_stake_old_ValidatorPerformance">ValidatorPerformance</a>&gt;(@aptos_framework);
+    <b>requires</b> <b>exists</b>&lt;<a href="stake.md#0x1_stake_old_ValidatorSet">ValidatorSet</a>&gt;(@aptos_framework);
+    <b>requires</b> <b>exists</b>&lt;<a href="timestamp.md#0x1_timestamp_CurrentTimeMicroseconds">timestamp::CurrentTimeMicroseconds</a>&gt;(@aptos_framework);
+    <b>requires</b> <b>exists</b>&lt;<a href="stake.md#0x1_stake_old_ValidatorFees">ValidatorFees</a>&gt;(@aptos_framework);
 }
 </code></pre>
 
@@ -3414,13 +3469,13 @@ Returns validator's next epoch voting power, including pending_active, active, a
 ### Function `add_transaction_fee`
 
 
-<pre><code><b>public</b>(<b>friend</b>) <b>fun</b> <a href="stake.md#0x1_stake_add_transaction_fee">add_transaction_fee</a>(validator_addr: <b>address</b>, fee: <a href="coin.md#0x1_coin_Coin">coin::Coin</a>&lt;<a href="aptos_coin.md#0x1_aptos_coin_AptosCoin">aptos_coin::AptosCoin</a>&gt;)
+<pre><code><b>public</b>(<b>friend</b>) <b>fun</b> <a href="stake.md#0x1_stake_old_add_transaction_fee">add_transaction_fee</a>(validator_addr: <b>address</b>, fee: <a href="coin.md#0x1_coin_Coin">coin::Coin</a>&lt;<a href="aptos_coin.md#0x1_aptos_coin_AptosCoin">aptos_coin::AptosCoin</a>&gt;)
 </code></pre>
 
 
 
 
-<pre><code><b>aborts_if</b> !<b>exists</b>&lt;<a href="stake.md#0x1_stake_ValidatorFees">ValidatorFees</a>&gt;(@aptos_framework);
+<pre><code><b>aborts_if</b> !<b>exists</b>&lt;<a href="stake.md#0x1_stake_old_ValidatorFees">ValidatorFees</a>&gt;(@aptos_framework);
 </code></pre>
 
 
@@ -3430,20 +3485,20 @@ Returns validator's next epoch voting power, including pending_active, active, a
 ### Function `get_validator_state`
 
 
-<pre><code><b>public</b> <b>fun</b> <a href="stake.md#0x1_stake_get_validator_state">get_validator_state</a>(pool_address: <b>address</b>): u64
+<pre><code><b>public</b> <b>fun</b> <a href="stake.md#0x1_stake_old_get_validator_state">get_validator_state</a>(pool_address: <b>address</b>): u64
 </code></pre>
 
 
 
 
-<pre><code><b>let</b> validator_set = <b>global</b>&lt;<a href="stake.md#0x1_stake_ValidatorSet">ValidatorSet</a>&gt;(@aptos_framework);
-<b>ensures</b> result == <a href="stake.md#0x1_stake_VALIDATOR_STATUS_PENDING_ACTIVE">VALIDATOR_STATUS_PENDING_ACTIVE</a> ==&gt; <a href="stake.md#0x1_stake_spec_contains">spec_contains</a>(validator_set.pending_active, pool_address);
-<b>ensures</b> result == <a href="stake.md#0x1_stake_VALIDATOR_STATUS_ACTIVE">VALIDATOR_STATUS_ACTIVE</a> ==&gt; <a href="stake.md#0x1_stake_spec_contains">spec_contains</a>(validator_set.active_validators, pool_address);
-<b>ensures</b> result == <a href="stake.md#0x1_stake_VALIDATOR_STATUS_PENDING_INACTIVE">VALIDATOR_STATUS_PENDING_INACTIVE</a> ==&gt; <a href="stake.md#0x1_stake_spec_contains">spec_contains</a>(validator_set.pending_inactive, pool_address);
-<b>ensures</b> result == <a href="stake.md#0x1_stake_VALIDATOR_STATUS_INACTIVE">VALIDATOR_STATUS_INACTIVE</a> ==&gt; (
-    !<a href="stake.md#0x1_stake_spec_contains">spec_contains</a>(validator_set.pending_active, pool_address)
-        && !<a href="stake.md#0x1_stake_spec_contains">spec_contains</a>(validator_set.active_validators, pool_address)
-        && !<a href="stake.md#0x1_stake_spec_contains">spec_contains</a>(validator_set.pending_inactive, pool_address)
+<pre><code><b>let</b> validator_set = <b>global</b>&lt;<a href="stake.md#0x1_stake_old_ValidatorSet">ValidatorSet</a>&gt;(@aptos_framework);
+<b>ensures</b> result == <a href="stake.md#0x1_stake_old_VALIDATOR_STATUS_PENDING_ACTIVE">VALIDATOR_STATUS_PENDING_ACTIVE</a> ==&gt; <a href="stake.md#0x1_stake_old_spec_contains">spec_contains</a>(validator_set.pending_active, pool_address);
+<b>ensures</b> result == <a href="stake.md#0x1_stake_old_VALIDATOR_STATUS_ACTIVE">VALIDATOR_STATUS_ACTIVE</a> ==&gt; <a href="stake.md#0x1_stake_old_spec_contains">spec_contains</a>(validator_set.active_validators, pool_address);
+<b>ensures</b> result == <a href="stake.md#0x1_stake_old_VALIDATOR_STATUS_PENDING_INACTIVE">VALIDATOR_STATUS_PENDING_INACTIVE</a> ==&gt; <a href="stake.md#0x1_stake_old_spec_contains">spec_contains</a>(validator_set.pending_inactive, pool_address);
+<b>ensures</b> result == <a href="stake.md#0x1_stake_old_VALIDATOR_STATUS_INACTIVE">VALIDATOR_STATUS_INACTIVE</a> ==&gt; (
+    !<a href="stake.md#0x1_stake_old_spec_contains">spec_contains</a>(validator_set.pending_active, pool_address)
+        && !<a href="stake.md#0x1_stake_old_spec_contains">spec_contains</a>(validator_set.active_validators, pool_address)
+        && !<a href="stake.md#0x1_stake_old_spec_contains">spec_contains</a>(validator_set.pending_inactive, pool_address)
 );
 </code></pre>
 
@@ -3454,7 +3509,7 @@ Returns validator's next epoch voting power, including pending_active, active, a
 ### Function `initialize`
 
 
-<pre><code><b>public</b>(<b>friend</b>) <b>fun</b> <a href="stake.md#0x1_stake_initialize">initialize</a>(aptos_framework: &<a href="../../aptos-stdlib/../move-stdlib/doc/signer.md#0x1_signer">signer</a>)
+<pre><code><b>public</b>(<b>friend</b>) <b>fun</b> <a href="stake.md#0x1_stake_old_initialize">initialize</a>(aptos_framework: &<a href="../../aptos-stdlib/../move-stdlib/doc/signer.md#0x1_signer">signer</a>)
 </code></pre>
 
 
@@ -3462,8 +3517,8 @@ Returns validator's next epoch voting power, including pending_active, active, a
 
 <pre><code><b>let</b> aptos_addr = <a href="../../aptos-stdlib/../move-stdlib/doc/signer.md#0x1_signer_address_of">signer::address_of</a>(aptos_framework);
 <b>aborts_if</b> !<a href="system_addresses.md#0x1_system_addresses_is_aptos_framework_address">system_addresses::is_aptos_framework_address</a>(aptos_addr);
-<b>aborts_if</b> <b>exists</b>&lt;<a href="stake.md#0x1_stake_ValidatorSet">ValidatorSet</a>&gt;(aptos_addr);
-<b>aborts_if</b> <b>exists</b>&lt;<a href="stake.md#0x1_stake_ValidatorPerformance">ValidatorPerformance</a>&gt;(aptos_addr);
+<b>aborts_if</b> <b>exists</b>&lt;<a href="stake.md#0x1_stake_old_ValidatorSet">ValidatorSet</a>&gt;(aptos_addr);
+<b>aborts_if</b> <b>exists</b>&lt;<a href="stake.md#0x1_stake_old_ValidatorPerformance">ValidatorPerformance</a>&gt;(aptos_addr);
 </code></pre>
 
 
@@ -3473,7 +3528,7 @@ Returns validator's next epoch voting power, including pending_active, active, a
 ### Function `remove_validators`
 
 
-<pre><code><b>public</b> <b>fun</b> <a href="stake.md#0x1_stake_remove_validators">remove_validators</a>(aptos_framework: &<a href="../../aptos-stdlib/../move-stdlib/doc/signer.md#0x1_signer">signer</a>, validators: &<a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector">vector</a>&lt;<b>address</b>&gt;)
+<pre><code><b>public</b> <b>fun</b> <a href="stake.md#0x1_stake_old_remove_validators">remove_validators</a>(aptos_framework: &<a href="../../aptos-stdlib/../move-stdlib/doc/signer.md#0x1_signer">signer</a>, validators: &<a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector">vector</a>&lt;<b>address</b>&gt;)
 </code></pre>
 
 
@@ -3489,13 +3544,13 @@ Returns validator's next epoch voting power, including pending_active, active, a
 ### Function `initialize_stake_owner`
 
 
-<pre><code><b>public</b> entry <b>fun</b> <a href="stake.md#0x1_stake_initialize_stake_owner">initialize_stake_owner</a>(owner: &<a href="../../aptos-stdlib/../move-stdlib/doc/signer.md#0x1_signer">signer</a>, initial_stake_amount: u64, operator: <b>address</b>, voter: <b>address</b>)
+<pre><code><b>public</b> entry <b>fun</b> <a href="stake.md#0x1_stake_old_initialize_stake_owner">initialize_stake_owner</a>(owner: &<a href="../../aptos-stdlib/../move-stdlib/doc/signer.md#0x1_signer">signer</a>, initial_stake_amount: u64, operator: <b>address</b>, voter: <b>address</b>)
 </code></pre>
 
 
 
 
-<pre><code><b>include</b> <a href="stake.md#0x1_stake_ResourceRequirement">ResourceRequirement</a>;
+<pre><code><b>include</b> <a href="stake.md#0x1_stake_old_ResourceRequirement">ResourceRequirement</a>;
 </code></pre>
 
 
@@ -3505,14 +3560,14 @@ Returns validator's next epoch voting power, including pending_active, active, a
 ### Function `extract_owner_cap`
 
 
-<pre><code><b>public</b> <b>fun</b> <a href="stake.md#0x1_stake_extract_owner_cap">extract_owner_cap</a>(owner: &<a href="../../aptos-stdlib/../move-stdlib/doc/signer.md#0x1_signer">signer</a>): <a href="stake.md#0x1_stake_OwnerCapability">stake::OwnerCapability</a>
+<pre><code><b>public</b> <b>fun</b> <a href="stake.md#0x1_stake_old_extract_owner_cap">extract_owner_cap</a>(owner: &<a href="../../aptos-stdlib/../move-stdlib/doc/signer.md#0x1_signer">signer</a>): <a href="stake.md#0x1_stake_old_OwnerCapability">stake_old::OwnerCapability</a>
 </code></pre>
 
 
 
 
 <pre><code><b>let</b> owner_address = <a href="../../aptos-stdlib/../move-stdlib/doc/signer.md#0x1_signer_address_of">signer::address_of</a>(owner);
-<b>aborts_if</b> !<b>exists</b>&lt;<a href="stake.md#0x1_stake_OwnerCapability">OwnerCapability</a>&gt;(owner_address);
+<b>aborts_if</b> !<b>exists</b>&lt;<a href="stake.md#0x1_stake_old_OwnerCapability">OwnerCapability</a>&gt;(owner_address);
 </code></pre>
 
 
@@ -3522,14 +3577,14 @@ Returns validator's next epoch voting power, including pending_active, active, a
 ### Function `deposit_owner_cap`
 
 
-<pre><code><b>public</b> <b>fun</b> <a href="stake.md#0x1_stake_deposit_owner_cap">deposit_owner_cap</a>(owner: &<a href="../../aptos-stdlib/../move-stdlib/doc/signer.md#0x1_signer">signer</a>, owner_cap: <a href="stake.md#0x1_stake_OwnerCapability">stake::OwnerCapability</a>)
+<pre><code><b>public</b> <b>fun</b> <a href="stake.md#0x1_stake_old_deposit_owner_cap">deposit_owner_cap</a>(owner: &<a href="../../aptos-stdlib/../move-stdlib/doc/signer.md#0x1_signer">signer</a>, owner_cap: <a href="stake.md#0x1_stake_old_OwnerCapability">stake_old::OwnerCapability</a>)
 </code></pre>
 
 
 
 
 <pre><code><b>let</b> owner_address = <a href="../../aptos-stdlib/../move-stdlib/doc/signer.md#0x1_signer_address_of">signer::address_of</a>(owner);
-<b>aborts_if</b> <b>exists</b>&lt;<a href="stake.md#0x1_stake_OwnerCapability">OwnerCapability</a>&gt;(owner_address);
+<b>aborts_if</b> <b>exists</b>&lt;<a href="stake.md#0x1_stake_old_OwnerCapability">OwnerCapability</a>&gt;(owner_address);
 </code></pre>
 
 
@@ -3539,15 +3594,15 @@ Returns validator's next epoch voting power, including pending_active, active, a
 ### Function `set_operator_with_cap`
 
 
-<pre><code><b>public</b> <b>fun</b> <a href="stake.md#0x1_stake_set_operator_with_cap">set_operator_with_cap</a>(owner_cap: &<a href="stake.md#0x1_stake_OwnerCapability">stake::OwnerCapability</a>, new_operator: <b>address</b>)
+<pre><code><b>public</b> <b>fun</b> <a href="stake.md#0x1_stake_old_set_operator_with_cap">set_operator_with_cap</a>(owner_cap: &<a href="stake.md#0x1_stake_old_OwnerCapability">stake_old::OwnerCapability</a>, new_operator: <b>address</b>)
 </code></pre>
 
 
 
 
 <pre><code><b>let</b> pool_address = owner_cap.pool_address;
-<b>let</b> <b>post</b> stake_pool = <b>global</b>&lt;<a href="stake.md#0x1_stake_StakePool">StakePool</a>&gt;(pool_address);
-<b>modifies</b> <b>global</b>&lt;<a href="stake.md#0x1_stake_StakePool">StakePool</a>&gt;(pool_address);
+<b>let</b> <b>post</b> stake_pool = <b>global</b>&lt;<a href="stake.md#0x1_stake_old_StakePool">StakePool</a>&gt;(pool_address);
+<b>modifies</b> <b>global</b>&lt;<a href="stake.md#0x1_stake_old_StakePool">StakePool</a>&gt;(pool_address);
 <b>ensures</b> stake_pool.operator_address == new_operator;
 </code></pre>
 
@@ -3558,15 +3613,15 @@ Returns validator's next epoch voting power, including pending_active, active, a
 ### Function `set_delegated_voter_with_cap`
 
 
-<pre><code><b>public</b> <b>fun</b> <a href="stake.md#0x1_stake_set_delegated_voter_with_cap">set_delegated_voter_with_cap</a>(owner_cap: &<a href="stake.md#0x1_stake_OwnerCapability">stake::OwnerCapability</a>, new_voter: <b>address</b>)
+<pre><code><b>public</b> <b>fun</b> <a href="stake.md#0x1_stake_old_set_delegated_voter_with_cap">set_delegated_voter_with_cap</a>(owner_cap: &<a href="stake.md#0x1_stake_old_OwnerCapability">stake_old::OwnerCapability</a>, new_voter: <b>address</b>)
 </code></pre>
 
 
 
 
 <pre><code><b>let</b> pool_address = owner_cap.pool_address;
-<b>let</b> <b>post</b> stake_pool = <b>global</b>&lt;<a href="stake.md#0x1_stake_StakePool">StakePool</a>&gt;(pool_address);
-<b>modifies</b> <b>global</b>&lt;<a href="stake.md#0x1_stake_StakePool">StakePool</a>&gt;(pool_address);
+<b>let</b> <b>post</b> stake_pool = <b>global</b>&lt;<a href="stake.md#0x1_stake_old_StakePool">StakePool</a>&gt;(pool_address);
+<b>modifies</b> <b>global</b>&lt;<a href="stake.md#0x1_stake_old_StakePool">StakePool</a>&gt;(pool_address);
 <b>ensures</b> stake_pool.delegated_voter == new_voter;
 </code></pre>
 
@@ -3577,13 +3632,13 @@ Returns validator's next epoch voting power, including pending_active, active, a
 ### Function `add_stake`
 
 
-<pre><code><b>public</b> entry <b>fun</b> <a href="stake.md#0x1_stake_add_stake">add_stake</a>(owner: &<a href="../../aptos-stdlib/../move-stdlib/doc/signer.md#0x1_signer">signer</a>, amount: u64)
+<pre><code><b>public</b> entry <b>fun</b> <a href="stake.md#0x1_stake_old_add_stake">add_stake</a>(owner: &<a href="../../aptos-stdlib/../move-stdlib/doc/signer.md#0x1_signer">signer</a>, amount: u64)
 </code></pre>
 
 
 
 
-<pre><code><b>include</b> <a href="stake.md#0x1_stake_ResourceRequirement">ResourceRequirement</a>;
+<pre><code><b>include</b> <a href="stake.md#0x1_stake_old_ResourceRequirement">ResourceRequirement</a>;
 </code></pre>
 
 
@@ -3593,13 +3648,13 @@ Returns validator's next epoch voting power, including pending_active, active, a
 ### Function `add_stake_with_cap`
 
 
-<pre><code><b>public</b> <b>fun</b> <a href="stake.md#0x1_stake_add_stake_with_cap">add_stake_with_cap</a>(owner_cap: &<a href="stake.md#0x1_stake_OwnerCapability">stake::OwnerCapability</a>, coins: <a href="coin.md#0x1_coin_Coin">coin::Coin</a>&lt;<a href="aptos_coin.md#0x1_aptos_coin_AptosCoin">aptos_coin::AptosCoin</a>&gt;)
+<pre><code><b>public</b> <b>fun</b> <a href="stake.md#0x1_stake_old_add_stake_with_cap">add_stake_with_cap</a>(owner_cap: &<a href="stake.md#0x1_stake_old_OwnerCapability">stake_old::OwnerCapability</a>, coins: <a href="coin.md#0x1_coin_Coin">coin::Coin</a>&lt;<a href="aptos_coin.md#0x1_aptos_coin_AptosCoin">aptos_coin::AptosCoin</a>&gt;)
 </code></pre>
 
 
 
 
-<pre><code><b>include</b> <a href="stake.md#0x1_stake_ResourceRequirement">ResourceRequirement</a>;
+<pre><code><b>include</b> <a href="stake.md#0x1_stake_old_ResourceRequirement">ResourceRequirement</a>;
 </code></pre>
 
 
@@ -3609,17 +3664,17 @@ Returns validator's next epoch voting power, including pending_active, active, a
 ### Function `reactivate_stake_with_cap`
 
 
-<pre><code><b>public</b> <b>fun</b> <a href="stake.md#0x1_stake_reactivate_stake_with_cap">reactivate_stake_with_cap</a>(owner_cap: &<a href="stake.md#0x1_stake_OwnerCapability">stake::OwnerCapability</a>, amount: u64)
+<pre><code><b>public</b> <b>fun</b> <a href="stake.md#0x1_stake_old_reactivate_stake_with_cap">reactivate_stake_with_cap</a>(owner_cap: &<a href="stake.md#0x1_stake_old_OwnerCapability">stake_old::OwnerCapability</a>, amount: u64)
 </code></pre>
 
 
 
 
 <pre><code><b>let</b> pool_address = owner_cap.pool_address;
-<b>aborts_if</b> !<a href="stake.md#0x1_stake_stake_pool_exists">stake_pool_exists</a>(pool_address);
-<b>let</b> pre_stake_pool = <b>global</b>&lt;<a href="stake.md#0x1_stake_StakePool">StakePool</a>&gt;(pool_address);
-<b>let</b> <b>post</b> stake_pool = <b>global</b>&lt;<a href="stake.md#0x1_stake_StakePool">StakePool</a>&gt;(pool_address);
-<b>modifies</b> <b>global</b>&lt;<a href="stake.md#0x1_stake_StakePool">StakePool</a>&gt;(pool_address);
+<b>aborts_if</b> !<a href="stake.md#0x1_stake_old_stake_pool_exists">stake_pool_exists</a>(pool_address);
+<b>let</b> pre_stake_pool = <b>global</b>&lt;<a href="stake.md#0x1_stake_old_StakePool">StakePool</a>&gt;(pool_address);
+<b>let</b> <b>post</b> stake_pool = <b>global</b>&lt;<a href="stake.md#0x1_stake_old_StakePool">StakePool</a>&gt;(pool_address);
+<b>modifies</b> <b>global</b>&lt;<a href="stake.md#0x1_stake_old_StakePool">StakePool</a>&gt;(pool_address);
 <b>let</b> min_amount = aptos_std::math64::min(amount,pre_stake_pool.pending_inactive.value);
 <b>ensures</b> stake_pool.active.value == pre_stake_pool.active.value + min_amount;
 </code></pre>
@@ -3631,15 +3686,15 @@ Returns validator's next epoch voting power, including pending_active, active, a
 ### Function `rotate_consensus_key`
 
 
-<pre><code><b>public</b> entry <b>fun</b> <a href="stake.md#0x1_stake_rotate_consensus_key">rotate_consensus_key</a>(operator: &<a href="../../aptos-stdlib/../move-stdlib/doc/signer.md#0x1_signer">signer</a>, pool_address: <b>address</b>, new_consensus_pubkey: <a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector">vector</a>&lt;u8&gt;, proof_of_possession: <a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector">vector</a>&lt;u8&gt;)
+<pre><code><b>public</b> entry <b>fun</b> <a href="stake.md#0x1_stake_old_rotate_consensus_key">rotate_consensus_key</a>(operator: &<a href="../../aptos-stdlib/../move-stdlib/doc/signer.md#0x1_signer">signer</a>, pool_address: <b>address</b>, new_consensus_pubkey: <a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector">vector</a>&lt;u8&gt;, proof_of_possession: <a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector">vector</a>&lt;u8&gt;)
 </code></pre>
 
 
 
 
-<pre><code><b>let</b> pre_stake_pool = <b>global</b>&lt;<a href="stake.md#0x1_stake_StakePool">StakePool</a>&gt;(pool_address);
-<b>let</b> <b>post</b> validator_info = <b>global</b>&lt;<a href="stake.md#0x1_stake_ValidatorConfig">ValidatorConfig</a>&gt;(pool_address);
-<b>modifies</b> <b>global</b>&lt;<a href="stake.md#0x1_stake_ValidatorConfig">ValidatorConfig</a>&gt;(pool_address);
+<pre><code><b>let</b> pre_stake_pool = <b>global</b>&lt;<a href="stake.md#0x1_stake_old_StakePool">StakePool</a>&gt;(pool_address);
+<b>let</b> <b>post</b> validator_info = <b>global</b>&lt;<a href="stake.md#0x1_stake_old_ValidatorConfig">ValidatorConfig</a>&gt;(pool_address);
+<b>modifies</b> <b>global</b>&lt;<a href="stake.md#0x1_stake_old_ValidatorConfig">ValidatorConfig</a>&gt;(pool_address);
 <b>ensures</b> validator_info.consensus_pubkey == new_consensus_pubkey;
 </code></pre>
 
@@ -3650,17 +3705,17 @@ Returns validator's next epoch voting power, including pending_active, active, a
 ### Function `update_network_and_fullnode_addresses`
 
 
-<pre><code><b>public</b> entry <b>fun</b> <a href="stake.md#0x1_stake_update_network_and_fullnode_addresses">update_network_and_fullnode_addresses</a>(operator: &<a href="../../aptos-stdlib/../move-stdlib/doc/signer.md#0x1_signer">signer</a>, pool_address: <b>address</b>, new_network_addresses: <a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector">vector</a>&lt;u8&gt;, new_fullnode_addresses: <a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector">vector</a>&lt;u8&gt;)
+<pre><code><b>public</b> entry <b>fun</b> <a href="stake.md#0x1_stake_old_update_network_and_fullnode_addresses">update_network_and_fullnode_addresses</a>(operator: &<a href="../../aptos-stdlib/../move-stdlib/doc/signer.md#0x1_signer">signer</a>, pool_address: <b>address</b>, new_network_addresses: <a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector">vector</a>&lt;u8&gt;, new_fullnode_addresses: <a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector">vector</a>&lt;u8&gt;)
 </code></pre>
 
 
 
 
-<pre><code><b>let</b> pre_stake_pool = <b>global</b>&lt;<a href="stake.md#0x1_stake_StakePool">StakePool</a>&gt;(pool_address);
-<b>let</b> <b>post</b> validator_info = <b>global</b>&lt;<a href="stake.md#0x1_stake_ValidatorConfig">ValidatorConfig</a>&gt;(pool_address);
-<b>modifies</b> <b>global</b>&lt;<a href="stake.md#0x1_stake_ValidatorConfig">ValidatorConfig</a>&gt;(pool_address);
-<b>aborts_if</b> !<b>exists</b>&lt;<a href="stake.md#0x1_stake_StakePool">StakePool</a>&gt;(pool_address);
-<b>aborts_if</b> !<b>exists</b>&lt;<a href="stake.md#0x1_stake_ValidatorConfig">ValidatorConfig</a>&gt;(pool_address);
+<pre><code><b>let</b> pre_stake_pool = <b>global</b>&lt;<a href="stake.md#0x1_stake_old_StakePool">StakePool</a>&gt;(pool_address);
+<b>let</b> <b>post</b> validator_info = <b>global</b>&lt;<a href="stake.md#0x1_stake_old_ValidatorConfig">ValidatorConfig</a>&gt;(pool_address);
+<b>modifies</b> <b>global</b>&lt;<a href="stake.md#0x1_stake_old_ValidatorConfig">ValidatorConfig</a>&gt;(pool_address);
+<b>aborts_if</b> !<b>exists</b>&lt;<a href="stake.md#0x1_stake_old_StakePool">StakePool</a>&gt;(pool_address);
+<b>aborts_if</b> !<b>exists</b>&lt;<a href="stake.md#0x1_stake_old_ValidatorConfig">ValidatorConfig</a>&gt;(pool_address);
 <b>aborts_if</b> <a href="../../aptos-stdlib/../move-stdlib/doc/signer.md#0x1_signer_address_of">signer::address_of</a>(operator) != pre_stake_pool.operator_address;
 <b>ensures</b> validator_info.network_addresses == new_network_addresses;
 <b>ensures</b> validator_info.fullnode_addresses == new_fullnode_addresses;
@@ -3673,16 +3728,16 @@ Returns validator's next epoch voting power, including pending_active, active, a
 ### Function `unlock_with_cap`
 
 
-<pre><code><b>public</b> <b>fun</b> <a href="stake.md#0x1_stake_unlock_with_cap">unlock_with_cap</a>(amount: u64, owner_cap: &<a href="stake.md#0x1_stake_OwnerCapability">stake::OwnerCapability</a>)
+<pre><code><b>public</b> <b>fun</b> <a href="stake.md#0x1_stake_old_unlock_with_cap">unlock_with_cap</a>(amount: u64, owner_cap: &<a href="stake.md#0x1_stake_old_OwnerCapability">stake_old::OwnerCapability</a>)
 </code></pre>
 
 
 
 
 <pre><code><b>let</b> pool_address = owner_cap.pool_address;
-<b>let</b> pre_stake_pool = <b>global</b>&lt;<a href="stake.md#0x1_stake_StakePool">StakePool</a>&gt;(pool_address);
-<b>let</b> <b>post</b> stake_pool = <b>global</b>&lt;<a href="stake.md#0x1_stake_StakePool">StakePool</a>&gt;(pool_address);
-<b>modifies</b> <b>global</b>&lt;<a href="stake.md#0x1_stake_StakePool">StakePool</a>&gt;(pool_address);
+<b>let</b> pre_stake_pool = <b>global</b>&lt;<a href="stake.md#0x1_stake_old_StakePool">StakePool</a>&gt;(pool_address);
+<b>let</b> <b>post</b> stake_pool = <b>global</b>&lt;<a href="stake.md#0x1_stake_old_StakePool">StakePool</a>&gt;(pool_address);
+<b>modifies</b> <b>global</b>&lt;<a href="stake.md#0x1_stake_old_StakePool">StakePool</a>&gt;(pool_address);
 <b>let</b> min_amount = aptos_std::math64::min(amount,pre_stake_pool.active.value);
 <b>ensures</b> stake_pool.pending_inactive.value == pre_stake_pool.pending_inactive.value + min_amount;
 </code></pre>
@@ -3694,15 +3749,15 @@ Returns validator's next epoch voting power, including pending_active, active, a
 ### Function `is_current_epoch_validator`
 
 
-<pre><code><b>public</b> <b>fun</b> <a href="stake.md#0x1_stake_is_current_epoch_validator">is_current_epoch_validator</a>(pool_address: <b>address</b>): bool
+<pre><code><b>public</b> <b>fun</b> <a href="stake.md#0x1_stake_old_is_current_epoch_validator">is_current_epoch_validator</a>(pool_address: <b>address</b>): bool
 </code></pre>
 
 
 
 
-<pre><code><b>include</b> <a href="stake.md#0x1_stake_ResourceRequirement">ResourceRequirement</a>;
-<b>aborts_if</b> !<a href="stake.md#0x1_stake_spec_has_stake_pool">spec_has_stake_pool</a>(pool_address);
-<b>ensures</b> result == <a href="stake.md#0x1_stake_spec_is_current_epoch_validator">spec_is_current_epoch_validator</a>(pool_address);
+<pre><code><b>include</b> <a href="stake.md#0x1_stake_old_ResourceRequirement">ResourceRequirement</a>;
+<b>aborts_if</b> !<a href="stake.md#0x1_stake_old_spec_has_stake_pool">spec_has_stake_pool</a>(pool_address);
+<b>ensures</b> result == <a href="stake.md#0x1_stake_old_spec_is_current_epoch_validator">spec_is_current_epoch_validator</a>(pool_address);
 </code></pre>
 
 
@@ -3712,7 +3767,7 @@ Returns validator's next epoch voting power, including pending_active, active, a
 ### Function `update_performance_statistics`
 
 
-<pre><code><b>public</b>(<b>friend</b>) <b>fun</b> <a href="stake.md#0x1_stake_update_performance_statistics">update_performance_statistics</a>(proposer_index: <a href="../../aptos-stdlib/../move-stdlib/doc/option.md#0x1_option_Option">option::Option</a>&lt;u64&gt;, failed_proposer_indices: <a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector">vector</a>&lt;u64&gt;)
+<pre><code><b>public</b>(<b>friend</b>) <b>fun</b> <a href="stake.md#0x1_stake_old_update_performance_statistics">update_performance_statistics</a>(proposer_index: <a href="../../aptos-stdlib/../move-stdlib/doc/option.md#0x1_option_Option">option::Option</a>&lt;u64&gt;, failed_proposer_indices: <a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector">vector</a>&lt;u64&gt;)
 </code></pre>
 
 
@@ -3729,14 +3784,14 @@ Returns validator's next epoch voting power, including pending_active, active, a
 ### Function `on_new_epoch`
 
 
-<pre><code><b>public</b>(<b>friend</b>) <b>fun</b> <a href="stake.md#0x1_stake_on_new_epoch">on_new_epoch</a>()
+<pre><code><b>public</b>(<b>friend</b>) <b>fun</b> <a href="stake.md#0x1_stake_old_on_new_epoch">on_new_epoch</a>()
 </code></pre>
 
 
 
 
 <pre><code><b>pragma</b> disable_invariants_in_body;
-<b>include</b> <a href="stake.md#0x1_stake_ResourceRequirement">ResourceRequirement</a>;
+<b>include</b> <a href="stake.md#0x1_stake_old_ResourceRequirement">ResourceRequirement</a>;
 <b>aborts_if</b> <b>false</b>;
 </code></pre>
 
@@ -3747,14 +3802,14 @@ Returns validator's next epoch voting power, including pending_active, active, a
 ### Function `calculate_rewards_amount`
 
 
-<pre><code><b>fun</b> <a href="stake.md#0x1_stake_calculate_rewards_amount">calculate_rewards_amount</a>(stake_amount: u64, num_successful_proposals: u64, num_total_proposals: u64, rewards_rate: u64, rewards_rate_denominator: u64): u64
+<pre><code><b>fun</b> <a href="stake.md#0x1_stake_old_calculate_rewards_amount">calculate_rewards_amount</a>(stake_amount: u64, num_successful_proposals: u64, num_total_proposals: u64, rewards_rate: u64, rewards_rate_denominator: u64): u64
 </code></pre>
 
 
 
 
 <pre><code><b>pragma</b> opaque;
-<b>requires</b> rewards_rate &lt;= <a href="stake.md#0x1_stake_MAX_REWARDS_RATE">MAX_REWARDS_RATE</a>;
+<b>requires</b> rewards_rate &lt;= <a href="stake.md#0x1_stake_old_MAX_REWARDS_RATE">MAX_REWARDS_RATE</a>;
 <b>requires</b> rewards_rate_denominator &gt; 0;
 <b>requires</b> rewards_rate &lt;= rewards_rate_denominator;
 <b>requires</b> num_successful_proposals &lt;= num_total_proposals;
@@ -3765,7 +3820,7 @@ Returns validator's next epoch voting power, including pending_active, active, a
     result == amount
 };
 <b>aborts_if</b> <b>false</b>;
-<b>ensures</b> [abstract] result == <a href="stake.md#0x1_stake_spec_rewards_amount">spec_rewards_amount</a>(
+<b>ensures</b> [abstract] result == <a href="stake.md#0x1_stake_old_spec_rewards_amount">spec_rewards_amount</a>(
     stake_amount,
     num_successful_proposals,
     num_total_proposals,
@@ -3780,34 +3835,34 @@ Returns validator's next epoch voting power, including pending_active, active, a
 ### Function `distribute_rewards`
 
 
-<pre><code><b>fun</b> <a href="stake.md#0x1_stake_distribute_rewards">distribute_rewards</a>(<a href="stake.md#0x1_stake">stake</a>: &<b>mut</b> <a href="coin.md#0x1_coin_Coin">coin::Coin</a>&lt;<a href="aptos_coin.md#0x1_aptos_coin_AptosCoin">aptos_coin::AptosCoin</a>&gt;, num_successful_proposals: u64, num_total_proposals: u64, rewards_rate: u64, rewards_rate_denominator: u64): u64
+<pre><code><b>fun</b> <a href="stake.md#0x1_stake_old_distribute_rewards">distribute_rewards</a>(stake: &<b>mut</b> <a href="coin.md#0x1_coin_Coin">coin::Coin</a>&lt;<a href="aptos_coin.md#0x1_aptos_coin_AptosCoin">aptos_coin::AptosCoin</a>&gt;, num_successful_proposals: u64, num_total_proposals: u64, rewards_rate: u64, rewards_rate_denominator: u64): u64
 </code></pre>
 
 
 
 
-<pre><code><b>include</b> <a href="stake.md#0x1_stake_ResourceRequirement">ResourceRequirement</a>;
-<b>requires</b> rewards_rate &lt;= <a href="stake.md#0x1_stake_MAX_REWARDS_RATE">MAX_REWARDS_RATE</a>;
+<pre><code><b>include</b> <a href="stake.md#0x1_stake_old_ResourceRequirement">ResourceRequirement</a>;
+<b>requires</b> rewards_rate &lt;= <a href="stake.md#0x1_stake_old_MAX_REWARDS_RATE">MAX_REWARDS_RATE</a>;
 <b>requires</b> rewards_rate_denominator &gt; 0;
 <b>requires</b> rewards_rate &lt;= rewards_rate_denominator;
 <b>requires</b> num_successful_proposals &lt;= num_total_proposals;
 <b>aborts_if</b> <b>false</b>;
-<b>ensures</b> <b>old</b>(<a href="stake.md#0x1_stake">stake</a>.value) &gt; 0 ==&gt;
-    result == <a href="stake.md#0x1_stake_spec_rewards_amount">spec_rewards_amount</a>(
-        <b>old</b>(<a href="stake.md#0x1_stake">stake</a>.value),
+<b>ensures</b> <b>old</b>(stake.value) &gt; 0 ==&gt;
+    result == <a href="stake.md#0x1_stake_old_spec_rewards_amount">spec_rewards_amount</a>(
+        <b>old</b>(stake.value),
         num_successful_proposals,
         num_total_proposals,
         rewards_rate,
         rewards_rate_denominator);
-<b>ensures</b> <b>old</b>(<a href="stake.md#0x1_stake">stake</a>.value) &gt; 0 ==&gt;
-    <a href="stake.md#0x1_stake">stake</a>.value == <b>old</b>(<a href="stake.md#0x1_stake">stake</a>.value) + <a href="stake.md#0x1_stake_spec_rewards_amount">spec_rewards_amount</a>(
-        <b>old</b>(<a href="stake.md#0x1_stake">stake</a>.value),
+<b>ensures</b> <b>old</b>(stake.value) &gt; 0 ==&gt;
+    stake.value == <b>old</b>(stake.value) + <a href="stake.md#0x1_stake_old_spec_rewards_amount">spec_rewards_amount</a>(
+        <b>old</b>(stake.value),
         num_successful_proposals,
         num_total_proposals,
         rewards_rate,
         rewards_rate_denominator);
-<b>ensures</b> <b>old</b>(<a href="stake.md#0x1_stake">stake</a>.value) == 0 ==&gt; result == 0;
-<b>ensures</b> <b>old</b>(<a href="stake.md#0x1_stake">stake</a>.value) == 0 ==&gt; <a href="stake.md#0x1_stake">stake</a>.value == <b>old</b>(<a href="stake.md#0x1_stake">stake</a>.value);
+<b>ensures</b> <b>old</b>(stake.value) == 0 ==&gt; result == 0;
+<b>ensures</b> <b>old</b>(stake.value) == 0 ==&gt; stake.value == <b>old</b>(stake.value);
 </code></pre>
 
 
@@ -3817,7 +3872,7 @@ Returns validator's next epoch voting power, including pending_active, active, a
 ### Function `append`
 
 
-<pre><code><b>fun</b> <a href="stake.md#0x1_stake_append">append</a>&lt;T&gt;(v1: &<b>mut</b> <a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector">vector</a>&lt;T&gt;, v2: &<b>mut</b> <a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector">vector</a>&lt;T&gt;)
+<pre><code><b>fun</b> <a href="stake.md#0x1_stake_old_append">append</a>&lt;T&gt;(v1: &<b>mut</b> <a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector">vector</a>&lt;T&gt;, v2: &<b>mut</b> <a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector">vector</a>&lt;T&gt;)
 </code></pre>
 
 
@@ -3838,7 +3893,7 @@ Returns validator's next epoch voting power, including pending_active, active, a
 ### Function `find_validator`
 
 
-<pre><code><b>fun</b> <a href="stake.md#0x1_stake_find_validator">find_validator</a>(v: &<a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector">vector</a>&lt;<a href="stake.md#0x1_stake_ValidatorInfo">stake::ValidatorInfo</a>&gt;, addr: <b>address</b>): <a href="../../aptos-stdlib/../move-stdlib/doc/option.md#0x1_option_Option">option::Option</a>&lt;u64&gt;
+<pre><code><b>fun</b> <a href="stake.md#0x1_stake_old_find_validator">find_validator</a>(v: &<a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector">vector</a>&lt;<a href="stake.md#0x1_stake_old_ValidatorInfo">stake_old::ValidatorInfo</a>&gt;, addr: <b>address</b>): <a href="../../aptos-stdlib/../move-stdlib/doc/option.md#0x1_option_Option">option::Option</a>&lt;u64&gt;
 </code></pre>
 
 
@@ -3848,7 +3903,7 @@ Returns validator's next epoch voting power, including pending_active, active, a
 <b>aborts_if</b> <b>false</b>;
 <b>ensures</b> <a href="../../aptos-stdlib/../move-stdlib/doc/option.md#0x1_option_is_none">option::is_none</a>(result) ==&gt; (<b>forall</b> i in 0..len(v): v[i].addr != addr);
 <b>ensures</b> <a href="../../aptos-stdlib/../move-stdlib/doc/option.md#0x1_option_is_some">option::is_some</a>(result) ==&gt; v[<a href="../../aptos-stdlib/../move-stdlib/doc/option.md#0x1_option_borrow">option::borrow</a>(result)].addr == addr;
-<b>ensures</b> <a href="../../aptos-stdlib/../move-stdlib/doc/option.md#0x1_option_is_some">option::is_some</a>(result) ==&gt; <a href="stake.md#0x1_stake_spec_contains">spec_contains</a>(v, addr);
+<b>ensures</b> <a href="../../aptos-stdlib/../move-stdlib/doc/option.md#0x1_option_is_some">option::is_some</a>(result) ==&gt; <a href="stake.md#0x1_stake_old_spec_contains">spec_contains</a>(v, addr);
 </code></pre>
 
 
@@ -3858,7 +3913,7 @@ Returns validator's next epoch voting power, including pending_active, active, a
 ### Function `configure_allowed_validators`
 
 
-<pre><code><b>public</b> <b>fun</b> <a href="stake.md#0x1_stake_configure_allowed_validators">configure_allowed_validators</a>(aptos_framework: &<a href="../../aptos-stdlib/../move-stdlib/doc/signer.md#0x1_signer">signer</a>, accounts: <a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector">vector</a>&lt;<b>address</b>&gt;)
+<pre><code><b>public</b> <b>fun</b> <a href="stake.md#0x1_stake_old_configure_allowed_validators">configure_allowed_validators</a>(aptos_framework: &<a href="../../aptos-stdlib/../move-stdlib/doc/signer.md#0x1_signer">signer</a>, accounts: <a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector">vector</a>&lt;<b>address</b>&gt;)
 </code></pre>
 
 
@@ -3866,7 +3921,7 @@ Returns validator's next epoch voting power, including pending_active, active, a
 
 <pre><code><b>let</b> aptos_framework_address = <a href="../../aptos-stdlib/../move-stdlib/doc/signer.md#0x1_signer_address_of">signer::address_of</a>(aptos_framework);
 <b>aborts_if</b> !<a href="system_addresses.md#0x1_system_addresses_is_aptos_framework_address">system_addresses::is_aptos_framework_address</a>(aptos_framework_address);
-<b>let</b> <b>post</b> allowed = <b>global</b>&lt;<a href="stake.md#0x1_stake_AllowedValidators">AllowedValidators</a>&gt;(aptos_framework_address);
+<b>let</b> <b>post</b> allowed = <b>global</b>&lt;<a href="stake.md#0x1_stake_old_AllowedValidators">AllowedValidators</a>&gt;(aptos_framework_address);
 <b>ensures</b> allowed.accounts == accounts;
 </code></pre>
 
@@ -3877,125 +3932,70 @@ Returns validator's next epoch voting power, including pending_active, active, a
 ### Function `assert_owner_cap_exists`
 
 
-<pre><code><b>fun</b> <a href="stake.md#0x1_stake_assert_owner_cap_exists">assert_owner_cap_exists</a>(owner: <b>address</b>)
+<pre><code><b>fun</b> <a href="stake.md#0x1_stake_old_assert_owner_cap_exists">assert_owner_cap_exists</a>(owner: <b>address</b>)
 </code></pre>
 
 
 
 
-<pre><code><b>aborts_if</b> !<b>exists</b>&lt;<a href="stake.md#0x1_stake_OwnerCapability">OwnerCapability</a>&gt;(owner);
+<pre><code><b>aborts_if</b> !<b>exists</b>&lt;<a href="stake.md#0x1_stake_old_OwnerCapability">OwnerCapability</a>&gt;(owner);
 </code></pre>
 
 
 
 
-<a name="0x1_stake_spec_validators_are_initialized"></a>
+<a name="0x1_stake_old_spec_validators_are_initialized"></a>
 
 
-<pre><code><b>fun</b> <a href="stake.md#0x1_stake_spec_validators_are_initialized">spec_validators_are_initialized</a>(validators: <a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector">vector</a>&lt;<a href="stake.md#0x1_stake_ValidatorInfo">ValidatorInfo</a>&gt;): bool {
+<pre><code><b>fun</b> <a href="stake.md#0x1_stake_old_spec_validators_are_initialized">spec_validators_are_initialized</a>(validators: <a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector">vector</a>&lt;<a href="stake.md#0x1_stake_old_ValidatorInfo">ValidatorInfo</a>&gt;): bool {
    <b>forall</b> i in 0..len(validators):
-       <a href="stake.md#0x1_stake_spec_has_stake_pool">spec_has_stake_pool</a>(validators[i].addr) &&
-           <a href="stake.md#0x1_stake_spec_has_validator_config">spec_has_validator_config</a>(validators[i].addr)
+       <a href="stake.md#0x1_stake_old_spec_has_stake_pool">spec_has_stake_pool</a>(validators[i].addr) &&
+           <a href="stake.md#0x1_stake_old_spec_has_validator_config">spec_has_validator_config</a>(validators[i].addr)
 }
 </code></pre>
 
 
 
 
-<a name="0x1_stake_spec_validator_indices_are_valid"></a>
+<a name="0x1_stake_old_spec_validator_indices_are_valid"></a>
 
 
-<pre><code><b>fun</b> <a href="stake.md#0x1_stake_spec_validator_indices_are_valid">spec_validator_indices_are_valid</a>(validators: <a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector">vector</a>&lt;<a href="stake.md#0x1_stake_ValidatorInfo">ValidatorInfo</a>&gt;): bool {
+<pre><code><b>fun</b> <a href="stake.md#0x1_stake_old_spec_validator_indices_are_valid">spec_validator_indices_are_valid</a>(validators: <a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector">vector</a>&lt;<a href="stake.md#0x1_stake_old_ValidatorInfo">ValidatorInfo</a>&gt;): bool {
    <b>forall</b> i in 0..len(validators):
-       <b>global</b>&lt;<a href="stake.md#0x1_stake_ValidatorConfig">ValidatorConfig</a>&gt;(validators[i].addr).validator_index &lt; <a href="stake.md#0x1_stake_spec_validator_index_upper_bound">spec_validator_index_upper_bound</a>()
+       <b>global</b>&lt;<a href="stake.md#0x1_stake_old_ValidatorConfig">ValidatorConfig</a>&gt;(validators[i].addr).validator_index &lt; <a href="stake.md#0x1_stake_old_spec_validator_index_upper_bound">spec_validator_index_upper_bound</a>()
 }
 </code></pre>
 
 
 
 
-<a name="0x1_stake_spec_validator_index_upper_bound"></a>
+<a name="0x1_stake_old_spec_validator_index_upper_bound"></a>
 
 
-<pre><code><b>fun</b> <a href="stake.md#0x1_stake_spec_validator_index_upper_bound">spec_validator_index_upper_bound</a>(): u64 {
-   len(<b>global</b>&lt;<a href="stake.md#0x1_stake_ValidatorPerformance">ValidatorPerformance</a>&gt;(@aptos_framework).validators)
+<pre><code><b>fun</b> <a href="stake.md#0x1_stake_old_spec_validator_index_upper_bound">spec_validator_index_upper_bound</a>(): u64 {
+   len(<b>global</b>&lt;<a href="stake.md#0x1_stake_old_ValidatorPerformance">ValidatorPerformance</a>&gt;(@aptos_framework).validators)
 }
 </code></pre>
 
 
 
 
-<a name="0x1_stake_spec_has_stake_pool"></a>
+<a name="0x1_stake_old_spec_has_stake_pool"></a>
 
 
-<pre><code><b>fun</b> <a href="stake.md#0x1_stake_spec_has_stake_pool">spec_has_stake_pool</a>(a: <b>address</b>): bool {
-   <b>exists</b>&lt;<a href="stake.md#0x1_stake_StakePool">StakePool</a>&gt;(a)
+<pre><code><b>fun</b> <a href="stake.md#0x1_stake_old_spec_has_stake_pool">spec_has_stake_pool</a>(a: <b>address</b>): bool {
+   <b>exists</b>&lt;<a href="stake.md#0x1_stake_old_StakePool">StakePool</a>&gt;(a)
 }
 </code></pre>
 
 
 
 
-<a name="0x1_stake_spec_has_validator_config"></a>
+<a name="0x1_stake_old_spec_has_validator_config"></a>
 
 
-<pre><code><b>fun</b> <a href="stake.md#0x1_stake_spec_has_validator_config">spec_has_validator_config</a>(a: <b>address</b>): bool {
-   <b>exists</b>&lt;<a href="stake.md#0x1_stake_ValidatorConfig">ValidatorConfig</a>&gt;(a)
-}
-</code></pre>
-
-
-
-
-<a name="0x1_stake_spec_rewards_amount"></a>
-
-
-<pre><code><b>fun</b> <a href="stake.md#0x1_stake_spec_rewards_amount">spec_rewards_amount</a>(
-   stake_amount: u64,
-   num_successful_proposals: u64,
-   num_total_proposals: u64,
-   rewards_rate: u64,
-   rewards_rate_denominator: u64,
-): u64;
-</code></pre>
-
-
-
-
-<a name="0x1_stake_spec_contains"></a>
-
-
-<pre><code><b>fun</b> <a href="stake.md#0x1_stake_spec_contains">spec_contains</a>(validators: <a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector">vector</a>&lt;<a href="stake.md#0x1_stake_ValidatorInfo">ValidatorInfo</a>&gt;, addr: <b>address</b>): bool {
-   <b>exists</b> i in 0..len(validators): validators[i].addr == addr
-}
-</code></pre>
-
-
-
-
-<a name="0x1_stake_spec_is_current_epoch_validator"></a>
-
-
-<pre><code><b>fun</b> <a href="stake.md#0x1_stake_spec_is_current_epoch_validator">spec_is_current_epoch_validator</a>(pool_address: <b>address</b>): bool {
-   <b>let</b> validator_set = <b>global</b>&lt;<a href="stake.md#0x1_stake_ValidatorSet">ValidatorSet</a>&gt;(@aptos_framework);
-   !<a href="stake.md#0x1_stake_spec_contains">spec_contains</a>(validator_set.pending_active, pool_address)
-       && (<a href="stake.md#0x1_stake_spec_contains">spec_contains</a>(validator_set.active_validators, pool_address)
-       || <a href="stake.md#0x1_stake_spec_contains">spec_contains</a>(validator_set.pending_inactive, pool_address))
-}
-</code></pre>
-
-
-
-
-<a name="0x1_stake_ResourceRequirement"></a>
-
-
-<pre><code><b>schema</b> <a href="stake.md#0x1_stake_ResourceRequirement">ResourceRequirement</a> {
-    <b>requires</b> <b>exists</b>&lt;<a href="stake.md#0x1_stake_AptosCoinCapabilities">AptosCoinCapabilities</a>&gt;(@aptos_framework);
-    <b>requires</b> <b>exists</b>&lt;<a href="stake.md#0x1_stake_ValidatorPerformance">ValidatorPerformance</a>&gt;(@aptos_framework);
-    <b>requires</b> <b>exists</b>&lt;<a href="stake.md#0x1_stake_ValidatorSet">ValidatorSet</a>&gt;(@aptos_framework);
-    <b>requires</b> <b>exists</b>&lt;<a href="timestamp.md#0x1_timestamp_CurrentTimeMicroseconds">timestamp::CurrentTimeMicroseconds</a>&gt;(@aptos_framework);
-    <b>requires</b> <b>exists</b>&lt;<a href="stake.md#0x1_stake_ValidatorFees">ValidatorFees</a>&gt;(@aptos_framework);
+<pre><code><b>fun</b> <a href="stake.md#0x1_stake_old_spec_has_validator_config">spec_has_validator_config</a>(a: <b>address</b>): bool {
+   <b>exists</b>&lt;<a href="stake.md#0x1_stake_old_ValidatorConfig">ValidatorConfig</a>&gt;(a)
 }
 </code></pre>
 

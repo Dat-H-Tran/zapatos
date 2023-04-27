@@ -26,7 +26,7 @@ module aptos_framework::aptos_governance {
     use aptos_framework::event::{Self, EventHandle};
     use aptos_framework::governance_proposal::{Self, GovernanceProposal};
     use aptos_framework::reconfiguration;
-    use aptos_framework::stake;
+    use aptos_framework::stake_old;
     // use aptos_framework::staking_config;
     use aptos_framework::system_addresses;
     use aptos_framework::aptos_coin::{Self, AptosCoin};
@@ -236,23 +236,23 @@ module aptos_framework::aptos_governance {
         is_multi_step_proposal: bool,
     ) acquires GovernanceConfig, GovernanceEvents {
         let proposer_address = signer::address_of(proposer);
-        assert!(stake::get_delegated_voter(stake_pool) == proposer_address, error::invalid_argument(ENOT_DELEGATED_VOTER));
+        // assert!(stake::get_delegated_voter(stake_pool) == proposer_address, error::invalid_argument(ENOT_DELEGATED_VOTER));
 
         // The proposer's stake needs to be at least the required bond amount.
         let governance_config = borrow_global<GovernanceConfig>(@aptos_framework);
-        let stake_balance = get_voting_power(stake_pool);
-        assert!(
-            stake_balance >= governance_config.required_proposer_stake,
-            error::invalid_argument(EINSUFFICIENT_PROPOSER_STAKE),
-        );
+        // let stake_balance = get_voting_power(stake_pool);
+        // assert!(
+        //     stake_balance >= governance_config.required_proposer_stake,
+        //     error::invalid_argument(EINSUFFICIENT_PROPOSER_STAKE),
+        // );
 
-        // The proposer's stake needs to be locked up at least as long as the proposal's voting period.
+        // // The proposer's stake needs to be locked up at least as long as the proposal's voting period.
         let current_time = timestamp::now_seconds();
         let proposal_expiration = current_time + governance_config.voting_duration_secs;
-        assert!(
-            stake::get_lockup_secs(stake_pool) >= proposal_expiration,
-            error::invalid_argument(EINSUFFICIENT_STAKE_LOCKUP),
-        );
+        // assert!(
+        //     stake::get_lockup_secs(stake_pool) >= proposal_expiration,
+        //     error::invalid_argument(EINSUFFICIENT_STAKE_LOCKUP),
+        // );
 
         // Create and validate proposal metadata.
         let proposal_metadata = create_proposal_metadata(metadata_location, metadata_hash);
@@ -302,7 +302,7 @@ module aptos_framework::aptos_governance {
         should_pass: bool,
     ) acquires ApprovedExecutionHashes, GovernanceEvents, VotingRecords {
         let voter_address = signer::address_of(voter);
-        assert!(stake::get_delegated_voter(stake_pool) == voter_address, error::invalid_argument(ENOT_DELEGATED_VOTER));
+        // assert!(stake::get_delegated_voter(stake_pool) == voter_address, error::invalid_argument(ENOT_DELEGATED_VOTER));
 
         // Ensure the voter doesn't double vote with the same stake pool.
         let voting_records = borrow_global_mut<VotingRecords>(@aptos_framework);
@@ -320,11 +320,11 @@ module aptos_framework::aptos_governance {
         assert!(voting_power > 0, error::invalid_argument(ENO_VOTING_POWER));
 
         // The voter's stake needs to be locked up at least as long as the proposal's expiration.
-        let proposal_expiration = voting::get_proposal_expiration_secs<GovernanceProposal>(@aptos_framework, proposal_id);
-        assert!(
-            stake::get_lockup_secs(stake_pool) >= proposal_expiration,
-            error::invalid_argument(EINSUFFICIENT_STAKE_LOCKUP),
-        );
+        // let proposal_expiration = voting::get_proposal_expiration_secs<GovernanceProposal>(@aptos_framework, proposal_id);
+        // assert!(
+        //     stake::get_lockup_secs(stake_pool) >= proposal_expiration,
+        //     error::invalid_argument(EINSUFFICIENT_STAKE_LOCKUP),
+        // );
 
         voting::vote<GovernanceProposal>(
             &governance_proposal::create_empty_proposal(),
@@ -442,7 +442,7 @@ module aptos_framework::aptos_governance {
         // } else {
         //     stake::get_current_epoch_voting_power(pool_address)
         // }
-        stake::get_current_epoch_voting_power(pool_address)
+        stake_old::get_current_epoch_voting_power(pool_address)
     }
 
     /// Return a signer for making changes to 0x1 as part of on-chain governance proposal process.

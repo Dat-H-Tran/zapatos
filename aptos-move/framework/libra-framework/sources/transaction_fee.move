@@ -2,7 +2,7 @@
 module aptos_framework::transaction_fee {
     use aptos_framework::coin::{Self, AggregatableCoin, BurnCapability, Coin};
     use aptos_framework::aptos_coin::AptosCoin;
-    use aptos_framework::stake;
+    use aptos_framework::stake_old;
     use aptos_framework::system_addresses;
     use std::error;
     use std::option::{Self, Option};
@@ -43,7 +43,7 @@ module aptos_framework::transaction_fee {
         assert!(burn_percentage <= 100, error::out_of_range(EINVALID_BURN_PERCENTAGE));
 
         // Make sure stakng module is aware of transaction fees collection.
-        stake::initialize_validator_fees(aptos_framework);
+        // stake::initialize_validator_fees(aptos_framework);
 
         // Initially, no fees are collected and the block proposer is not set.
         let collected_fees = CollectedFeesPerBlock {
@@ -108,7 +108,9 @@ module aptos_framework::transaction_fee {
 
     /// Calculates the fee which should be distributed to the block proposer at the
     /// end of an epoch, and records it in the system. This function can only be called
-    /// at the beginning of the block or during reconfiguration.
+    /// at the beginning of the block or during reconfiguration
+
+    // TODO: V7: this just requires a burn
     public(friend) fun process_collected_fees() acquires AptosCoinCapabilities, CollectedFeesPerBlock {
         if (!is_fees_collection_enabled()) {
             return
@@ -145,7 +147,8 @@ module aptos_framework::transaction_fee {
             };
 
             burn_coin_fraction(&mut coin, collected_fees.burn_percentage);
-            stake::add_transaction_fee(proposer, coin);
+            // TODO: V7 rename pay rewards
+            stake_old::add_transaction_fee(proposer, coin);
             return
         };
 

@@ -8,7 +8,7 @@ module aptos_framework::block {
     use aptos_framework::account;
     use aptos_framework::event::{Self, EventHandle};
     use aptos_framework::reconfiguration;
-    use aptos_framework::stake;
+    use aptos_framework::stake_old;
     use aptos_framework::state_storage;
     use aptos_framework::system_addresses;
     use aptos_framework::timestamp;
@@ -113,13 +113,13 @@ module aptos_framework::block {
 
         // Blocks can only be produced by a valid proposer or by the VM itself for Nil blocks (no user txs).
         assert!(
-            proposer == @vm_reserved || stake::is_current_epoch_validator(proposer),
+            proposer == @vm_reserved || stake_old::is_current_epoch_validator(proposer),
             error::permission_denied(EINVALID_PROPOSER),
         );
 
         let proposer_index = option::none();
         if (proposer != @vm_reserved) {
-            proposer_index = option::some(stake::get_validator_index(proposer));
+            proposer_index = option::some(stake_old::get_validator_index(proposer));
         };
 
         let block_metadata_ref = borrow_global_mut<BlockResource>(@aptos_framework);
@@ -148,7 +148,7 @@ module aptos_framework::block {
 
         // Performance scores have to be updated before the epoch transition as the transaction that triggers the
         // transition is the last block in the previous epoch.
-        stake::update_performance_statistics(proposer_index, failed_proposer_indices);
+        stake_old::update_performance_statistics(proposer_index, failed_proposer_indices);
         state_storage::on_new_block(reconfiguration::current_epoch());
 
         if (timestamp - reconfiguration::last_reconfiguration_time() >= block_metadata_ref.epoch_interval) {

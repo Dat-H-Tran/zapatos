@@ -16,11 +16,11 @@ spec aptos_framework::block {
 
         requires chain_status::is_operating();
         requires system_addresses::is_vm(vm);
-        requires proposer == @vm_reserved || stake::spec_is_current_epoch_validator(proposer);
+        requires proposer == @vm_reserved || stake_old::spec_is_current_epoch_validator(proposer);
         requires timestamp >= reconfiguration::last_reconfiguration_time();
         requires (proposer == @vm_reserved) ==> (timestamp::spec_now_microseconds() == timestamp);
         requires (proposer != @vm_reserved) ==> (timestamp::spec_now_microseconds() < timestamp);
-        requires exists<stake::ValidatorFees>(@aptos_framework);
+        // requires exists<stake::ValidatorFees>(@aptos_framework);
         requires exists<CoinInfo<AptosCoin>>(@aptos_framework);
         include transaction_fee::RequiresCollectedFeesPerValueLeqBlockAptosSupply;
         // include staking_config::StakingRewardsConfigRequirement;

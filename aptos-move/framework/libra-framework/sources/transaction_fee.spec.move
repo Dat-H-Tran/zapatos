@@ -64,7 +64,7 @@ spec aptos_framework::transaction_fee {
         use aptos_framework::coin::CoinInfo;
         use aptos_framework::aptos_coin::AptosCoin;
         requires exists<AptosCoinCapabilities>(@aptos_framework);
-        requires exists<stake::ValidatorFees>(@aptos_framework);
+        // requires exists<stake::ValidatorFees>(@aptos_framework);
         requires exists<CoinInfo<AptosCoin>>(@aptos_framework);
         include RequiresCollectedFeesPerValueLeqBlockAptosSupply;
     }

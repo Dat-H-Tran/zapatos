@@ -1,4 +1,5 @@
-spec aptos_framework::stake {
+spec aptos_framework::stake_old {
+    use aptos_framework::chain_status;
     // -----------------
     // Global invariants
     // -----------------

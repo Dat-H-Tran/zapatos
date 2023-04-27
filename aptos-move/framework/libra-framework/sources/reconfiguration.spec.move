@@ -69,7 +69,7 @@ spec aptos_framework::reconfiguration {
 
         pragma verify = false; // TODO: set to false because of timeout
 
-        requires exists<stake::ValidatorFees>(@aptos_framework);
+        // requires exists<stake::ValidatorFees>(@aptos_framework);
         requires exists<CoinInfo<AptosCoin>>(@aptos_framework);
 
         include transaction_fee::RequiresCollectedFeesPerValueLeqBlockAptosSupply;
