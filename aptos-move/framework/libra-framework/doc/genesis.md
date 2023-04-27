@@ -372,8 +372,10 @@ Genesis step 2: Initialize Aptos coin.
 
 <pre><code><b>fun</b> <a href="genesis.md#0x1_genesis_initialize_aptos_coin">initialize_aptos_coin</a>(aptos_framework: &<a href="../../aptos-stdlib/../move-stdlib/doc/signer.md#0x1_signer">signer</a>) {
     <b>let</b> (burn_cap, mint_cap) = <a href="aptos_coin.md#0x1_aptos_coin_initialize">aptos_coin::initialize</a>(aptos_framework);
+
+    <a href="coin.md#0x1_coin_destroy_mint_cap">coin::destroy_mint_cap</a>(mint_cap);
     // Give stake <b>module</b> MintCapability&lt;AptosCoin&gt; so it can mint rewards.
-    <a href="validator_ol.md#0x1_validator_store_aptos_coin_mint_cap">validator::store_aptos_coin_mint_cap</a>(aptos_framework, mint_cap);
+    // validator::store_aptos_coin_mint_cap(aptos_framework, mint_cap);
     // Give <a href="transaction_fee.md#0x1_transaction_fee">transaction_fee</a> <b>module</b> BurnCapability&lt;AptosCoin&gt; so it can burn gas.
     <a href="transaction_fee.md#0x1_transaction_fee_store_aptos_coin_burn_cap">transaction_fee::store_aptos_coin_burn_cap</a>(aptos_framework, burn_cap);
 }
@@ -406,7 +408,7 @@ Only called for testnets and e2e tests.
     <b>let</b> (burn_cap, mint_cap) = <a href="aptos_coin.md#0x1_aptos_coin_initialize">aptos_coin::initialize</a>(aptos_framework);
     <a href="coin.md#0x1_coin_destroy_burn_cap">coin::destroy_burn_cap</a>(burn_cap);
     // Give stake <b>module</b> MintCapability&lt;AptosCoin&gt; so it can mint rewards.
-    // <a href="validator_ol.md#0x1_validator_store_aptos_coin_mint_cap">validator::store_aptos_coin_mint_cap</a>(aptos_framework, mint_cap);
+    // validator::store_aptos_coin_mint_cap(aptos_framework, mint_cap);
     // Give <a href="transaction_fee.md#0x1_transaction_fee">transaction_fee</a> <b>module</b> BurnCapability&lt;AptosCoin&gt; so it can burn gas.
     // <a href="transaction_fee.md#0x1_transaction_fee_store_aptos_coin_burn_cap">transaction_fee::store_aptos_coin_burn_cap</a>(aptos_framework, burn_cap);
 

@@ -44,7 +44,6 @@
 -  [Function `remove_approved_hash`](#0x1_aptos_governance_remove_approved_hash)
 -  [Function `reconfigure`](#0x1_aptos_governance_reconfigure)
 -  [Function `get_signer_testnet_only`](#0x1_aptos_governance_get_signer_testnet_only)
--  [Function `get_voting_power`](#0x1_aptos_governance_get_voting_power)
 -  [Function `get_signer`](#0x1_aptos_governance_get_signer)
 -  [Function `create_proposal_metadata`](#0x1_aptos_governance_create_proposal_metadata)
 -  [Function `initialize_for_verification`](#0x1_aptos_governance_initialize_for_verification)
@@ -64,7 +63,6 @@
 <b>use</b> <a href="system_addresses.md#0x1_system_addresses">0x1::system_addresses</a>;
 <b>use</b> <a href="../../aptos-stdlib/doc/table.md#0x1_table">0x1::table</a>;
 <b>use</b> <a href="timestamp.md#0x1_timestamp">0x1::timestamp</a>;
-<b>use</b> <a href="validator_ol.md#0x1_validator">0x1::validator</a>;
 <b>use</b> <a href="voting.md#0x1_voting">0x1::voting</a>;
 </code></pre>
 
@@ -817,7 +815,7 @@ only the exact script with matching hash can be successfully executed.
 
     // The proposer's stake needs <b>to</b> be at least the required bond amount.
     <b>let</b> governance_config = <b>borrow_global</b>&lt;<a href="aptos_governance.md#0x1_aptos_governance_GovernanceConfig">GovernanceConfig</a>&gt;(@aptos_framework);
-    // <b>let</b> stake_balance = <a href="aptos_governance.md#0x1_aptos_governance_get_voting_power">get_voting_power</a>(stake_pool);
+    // <b>let</b> stake_balance = get_voting_power(stake_pool);
     // <b>assert</b>!(
     //     stake_balance &gt;= governance_config.required_proposer_stake,
     //     <a href="../../aptos-stdlib/../move-stdlib/doc/error.md#0x1_error_invalid_argument">error::invalid_argument</a>(<a href="aptos_governance.md#0x1_aptos_governance_EINSUFFICIENT_PROPOSER_STAKE">EINSUFFICIENT_PROPOSER_STAKE</a>),
@@ -912,7 +910,8 @@ Vote on proposal with <code>proposal_id</code> and voting power from <code>stake
         <a href="../../aptos-stdlib/../move-stdlib/doc/error.md#0x1_error_invalid_argument">error::invalid_argument</a>(<a href="aptos_governance.md#0x1_aptos_governance_EALREADY_VOTED">EALREADY_VOTED</a>));
     <a href="../../aptos-stdlib/doc/table.md#0x1_table_add">table::add</a>(&<b>mut</b> voting_records.votes, record_key, <b>true</b>);
 
-    <b>let</b> voting_power = <a href="aptos_governance.md#0x1_aptos_governance_get_voting_power">get_voting_power</a>(stake_pool);
+    // TODO: V7: Remove this check.
+    <b>let</b> voting_power = 1000;
     // Short-circuit <b>if</b> the voter <b>has</b> no <a href="voting.md#0x1_voting">voting</a> power.
     <b>assert</b>!(voting_power &gt; 0, <a href="../../aptos-stdlib/../move-stdlib/doc/error.md#0x1_error_invalid_argument">error::invalid_argument</a>(<a href="aptos_governance.md#0x1_aptos_governance_ENO_VOTING_POWER">ENO_VOTING_POWER</a>));
 
@@ -1172,45 +1171,11 @@ Only called in testnet where the core resources account exists and has been gran
 
 </details>
 
-<a name="0x1_aptos_governance_get_voting_power"></a>
-
-## Function `get_voting_power`
-
-Return the voting power a stake pool has with respect to governance proposals.
-
-
-<pre><code><b>fun</b> <a href="aptos_governance.md#0x1_aptos_governance_get_voting_power">get_voting_power</a>(pool_address: <b>address</b>): u64
-</code></pre>
-
-
-
-<details>
-<summary>Implementation</summary>
-
-
-<pre><code><b>fun</b> <a href="aptos_governance.md#0x1_aptos_governance_get_voting_power">get_voting_power</a>(pool_address: <b>address</b>): u64 {
-    // <b>let</b> allow_validator_set_change = staking_config::get_allow_validator_set_change(&staking_config::get());
-    // <b>if</b> (allow_validator_set_change) {
-    //     <b>let</b> (active, _, pending_active, pending_inactive) = stake::get_stake(pool_address);
-    //     // We calculate the <a href="voting.md#0x1_voting">voting</a> power <b>as</b> total non-inactive stakes of the pool. Even <b>if</b> the <a href="validator_ol.md#0x1_validator">validator</a> is not in the
-    //     // active <a href="validator_ol.md#0x1_validator">validator</a> set, <b>as</b> long <b>as</b> they have a lockup (separately checked in create_proposal and <a href="voting.md#0x1_voting">voting</a>), their
-    //     // stake would still count in their <a href="voting.md#0x1_voting">voting</a> power for governance proposals.
-    //     active + pending_active + pending_inactive
-    // } <b>else</b> {
-    //     stake::get_current_epoch_voting_power(pool_address)
-    // }
-    <a href="validator_ol.md#0x1_validator_get_current_epoch_voting_power">validator::get_current_epoch_voting_power</a>(pool_address)
-}
-</code></pre>
-
-
-
-</details>
-
 <a name="0x1_aptos_governance_get_signer"></a>
 
 ## Function `get_signer`
 
+Return the voting power a stake pool has with respect to governance proposals.
 Return a signer for making changes to 0x1 as part of on-chain governance proposal process.
 
 

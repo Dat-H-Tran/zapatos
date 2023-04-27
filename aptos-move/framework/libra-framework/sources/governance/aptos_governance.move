@@ -26,7 +26,7 @@ module aptos_framework::aptos_governance {
     use aptos_framework::event::{Self, EventHandle};
     use aptos_framework::governance_proposal::{Self, GovernanceProposal};
     use aptos_framework::reconfiguration;
-    use aptos_framework::validator;
+    // use aptos_framework::validator;
     // use aptos_framework::staking_config;
     use aptos_framework::system_addresses;
     use aptos_framework::aptos_coin::{Self, AptosCoin};
@@ -315,7 +315,8 @@ module aptos_framework::aptos_governance {
             error::invalid_argument(EALREADY_VOTED));
         table::add(&mut voting_records.votes, record_key, true);
 
-        let voting_power = get_voting_power(stake_pool);
+        // TODO: V7: Remove this check.
+        let voting_power = 1000;
         // Short-circuit if the voter has no voting power.
         assert!(voting_power > 0, error::invalid_argument(ENO_VOTING_POWER));
 
@@ -431,7 +432,7 @@ module aptos_framework::aptos_governance {
     }
 
     /// Return the voting power a stake pool has with respect to governance proposals.
-    fun get_voting_power(pool_address: address): u64 {
+    // fun get_voting_power(pool_address: address): u64 {
         // let allow_validator_set_change = staking_config::get_allow_validator_set_change(&staking_config::get());
         // if (allow_validator_set_change) {
         //     let (active, _, pending_active, pending_inactive) = stake::get_stake(pool_address);
@@ -442,8 +443,8 @@ module aptos_framework::aptos_governance {
         // } else {
         //     stake::get_current_epoch_voting_power(pool_address)
         // }
-        validator::get_current_epoch_voting_power(pool_address)
-    }
+        // validator::get_current_epoch_voting_power(pool_address)
+    // }
 
     /// Return a signer for making changes to 0x1 as part of on-chain governance proposal process.
     fun get_signer(signer_address: address): signer acquires GovernanceResponsbility {
