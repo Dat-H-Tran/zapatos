@@ -36,7 +36,7 @@ spec aptos_framework::gas_schedule {
     }
 
     spec set_storage_gas_config(aptos_framework: &signer, config: StorageGasConfig) {
-        // use aptos_framework::stake_old;
+        // use aptos_framework::validator;
         use aptos_framework::coin::CoinInfo;
         use aptos_framework::aptos_coin::AptosCoin;
         use aptos_framework::transaction_fee;

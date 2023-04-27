@@ -2,7 +2,7 @@
 module aptos_framework::transaction_fee {
     use aptos_framework::coin::{Self, AggregatableCoin, BurnCapability, Coin};
     use aptos_framework::aptos_coin::AptosCoin;
-    use aptos_framework::stake_old;
+    use aptos_framework::validator;
     use aptos_framework::system_addresses;
     use std::error;
     use std::option::{Self, Option};
@@ -148,7 +148,7 @@ module aptos_framework::transaction_fee {
 
             burn_coin_fraction(&mut coin, collected_fees.burn_percentage);
             // TODO: V7 rename pay rewards
-            stake_old::add_transaction_fee(proposer, coin);
+            validator::add_transaction_fee(proposer, coin);
             return
         };
 

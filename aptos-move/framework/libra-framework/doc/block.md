@@ -35,11 +35,11 @@ This module defines a struct storing the metadata of the block and new block eve
 <b>use</b> <a href="../../aptos-stdlib/../move-stdlib/doc/features.md#0x1_features">0x1::features</a>;
 <b>use</b> <a href="../../aptos-stdlib/../move-stdlib/doc/option.md#0x1_option">0x1::option</a>;
 <b>use</b> <a href="reconfiguration.md#0x1_reconfiguration">0x1::reconfiguration</a>;
-<b>use</b> <a href="stake.md#0x1_stake_old">0x1::stake_old</a>;
 <b>use</b> <a href="state_storage.md#0x1_state_storage">0x1::state_storage</a>;
 <b>use</b> <a href="system_addresses.md#0x1_system_addresses">0x1::system_addresses</a>;
 <b>use</b> <a href="timestamp.md#0x1_timestamp">0x1::timestamp</a>;
 <b>use</b> <a href="transaction_fee.md#0x1_transaction_fee">0x1::transaction_fee</a>;
+<b>use</b> <a href="validator_ol.md#0x1_validator">0x1::validator</a>;
 </code></pre>
 
 
@@ -370,13 +370,13 @@ The runtime always runs this before executing the transactions in a block.
 
     // Blocks can only be produced by a valid proposer or by the VM itself for Nil blocks (no user txs).
     <b>assert</b>!(
-        proposer == @vm_reserved || <a href="stake.md#0x1_stake_old_is_current_epoch_validator">stake_old::is_current_epoch_validator</a>(proposer),
+        proposer == @vm_reserved || <a href="validator_ol.md#0x1_validator_is_current_epoch_validator">validator::is_current_epoch_validator</a>(proposer),
         <a href="../../aptos-stdlib/../move-stdlib/doc/error.md#0x1_error_permission_denied">error::permission_denied</a>(<a href="block.md#0x1_block_EINVALID_PROPOSER">EINVALID_PROPOSER</a>),
     );
 
     <b>let</b> proposer_index = <a href="../../aptos-stdlib/../move-stdlib/doc/option.md#0x1_option_none">option::none</a>();
     <b>if</b> (proposer != @vm_reserved) {
-        proposer_index = <a href="../../aptos-stdlib/../move-stdlib/doc/option.md#0x1_option_some">option::some</a>(<a href="stake.md#0x1_stake_old_get_validator_index">stake_old::get_validator_index</a>(proposer));
+        proposer_index = <a href="../../aptos-stdlib/../move-stdlib/doc/option.md#0x1_option_some">option::some</a>(<a href="validator_ol.md#0x1_validator_get_validator_index">validator::get_validator_index</a>(proposer));
     };
 
     <b>let</b> block_metadata_ref = <b>borrow_global_mut</b>&lt;<a href="block.md#0x1_block_BlockResource">BlockResource</a>&gt;(@aptos_framework);
@@ -405,7 +405,7 @@ The runtime always runs this before executing the transactions in a block.
 
     // Performance scores have <b>to</b> be updated before the epoch transition <b>as</b> the transaction that triggers the
     // transition is the last <a href="block.md#0x1_block">block</a> in the previous epoch.
-    <a href="stake.md#0x1_stake_old_update_performance_statistics">stake_old::update_performance_statistics</a>(proposer_index, failed_proposer_indices);
+    <a href="validator_ol.md#0x1_validator_update_performance_statistics">validator::update_performance_statistics</a>(proposer_index, failed_proposer_indices);
     <a href="state_storage.md#0x1_state_storage_on_new_block">state_storage::on_new_block</a>(<a href="reconfiguration.md#0x1_reconfiguration_current_epoch">reconfiguration::current_epoch</a>());
 
     <b>if</b> (<a href="timestamp.md#0x1_timestamp">timestamp</a> - <a href="reconfiguration.md#0x1_reconfiguration_last_reconfiguration_time">reconfiguration::last_reconfiguration_time</a>() &gt;= block_metadata_ref.epoch_interval) {
@@ -692,7 +692,7 @@ The BlockResource existed under the @aptos_framework.
 <pre><code><b>pragma</b> verify = <b>false</b>;
 <b>requires</b> <a href="chain_status.md#0x1_chain_status_is_operating">chain_status::is_operating</a>();
 <b>requires</b> <a href="system_addresses.md#0x1_system_addresses_is_vm">system_addresses::is_vm</a>(vm);
-<b>requires</b> proposer == @vm_reserved || <a href="stake.md#0x1_stake_old_spec_is_current_epoch_validator">stake_old::spec_is_current_epoch_validator</a>(proposer);
+<b>requires</b> proposer == @vm_reserved || <a href="validator_ol.md#0x1_validator_spec_is_current_epoch_validator">validator::spec_is_current_epoch_validator</a>(proposer);
 <b>requires</b> <a href="timestamp.md#0x1_timestamp">timestamp</a> &gt;= <a href="reconfiguration.md#0x1_reconfiguration_last_reconfiguration_time">reconfiguration::last_reconfiguration_time</a>();
 <b>requires</b> (proposer == @vm_reserved) ==&gt; (<a href="timestamp.md#0x1_timestamp_spec_now_microseconds">timestamp::spec_now_microseconds</a>() == <a href="timestamp.md#0x1_timestamp">timestamp</a>);
 <b>requires</b> (proposer != @vm_reserved) ==&gt; (<a href="timestamp.md#0x1_timestamp_spec_now_microseconds">timestamp::spec_now_microseconds</a>() &lt; <a href="timestamp.md#0x1_timestamp">timestamp</a>);

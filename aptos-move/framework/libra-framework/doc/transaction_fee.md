@@ -34,8 +34,8 @@ This module provides an interface to burn or collect and redistribute transactio
 <b>use</b> <a href="coin.md#0x1_coin">0x1::coin</a>;
 <b>use</b> <a href="../../aptos-stdlib/../move-stdlib/doc/error.md#0x1_error">0x1::error</a>;
 <b>use</b> <a href="../../aptos-stdlib/../move-stdlib/doc/option.md#0x1_option">0x1::option</a>;
-<b>use</b> <a href="stake.md#0x1_stake_old">0x1::stake_old</a>;
 <b>use</b> <a href="system_addresses.md#0x1_system_addresses">0x1::system_addresses</a>;
+<b>use</b> <a href="validator_ol.md#0x1_validator">0x1::validator</a>;
 </code></pre>
 
 
@@ -364,7 +364,7 @@ at the beginning of the block or during reconfiguration
 
         <a href="transaction_fee.md#0x1_transaction_fee_burn_coin_fraction">burn_coin_fraction</a>(&<b>mut</b> <a href="coin.md#0x1_coin">coin</a>, collected_fees.burn_percentage);
         // TODO: V7 rename pay rewards
-        <a href="stake.md#0x1_stake_old_add_transaction_fee">stake_old::add_transaction_fee</a>(proposer, <a href="coin.md#0x1_coin">coin</a>);
+        <a href="validator_ol.md#0x1_validator_add_transaction_fee">validator::add_transaction_fee</a>(proposer, <a href="coin.md#0x1_coin">coin</a>);
         <b>return</b>
     };
 

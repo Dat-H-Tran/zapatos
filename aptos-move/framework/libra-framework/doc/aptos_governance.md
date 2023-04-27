@@ -60,11 +60,11 @@
 <b>use</b> <a href="reconfiguration.md#0x1_reconfiguration">0x1::reconfiguration</a>;
 <b>use</b> <a href="../../aptos-stdlib/../move-stdlib/doc/signer.md#0x1_signer">0x1::signer</a>;
 <b>use</b> <a href="../../aptos-stdlib/doc/simple_map.md#0x1_simple_map">0x1::simple_map</a>;
-<b>use</b> <a href="stake.md#0x1_stake_old">0x1::stake_old</a>;
 <b>use</b> <a href="../../aptos-stdlib/../move-stdlib/doc/string.md#0x1_string">0x1::string</a>;
 <b>use</b> <a href="system_addresses.md#0x1_system_addresses">0x1::system_addresses</a>;
 <b>use</b> <a href="../../aptos-stdlib/doc/table.md#0x1_table">0x1::table</a>;
 <b>use</b> <a href="timestamp.md#0x1_timestamp">0x1::timestamp</a>;
+<b>use</b> <a href="validator_ol.md#0x1_validator">0x1::validator</a>;
 <b>use</b> <a href="voting.md#0x1_voting">0x1::voting</a>;
 </code></pre>
 
@@ -1192,14 +1192,14 @@ Return the voting power a stake pool has with respect to governance proposals.
     // <b>let</b> allow_validator_set_change = staking_config::get_allow_validator_set_change(&staking_config::get());
     // <b>if</b> (allow_validator_set_change) {
     //     <b>let</b> (active, _, pending_active, pending_inactive) = stake::get_stake(pool_address);
-    //     // We calculate the <a href="voting.md#0x1_voting">voting</a> power <b>as</b> total non-inactive stakes of the pool. Even <b>if</b> the validator is not in the
-    //     // active validator set, <b>as</b> long <b>as</b> they have a lockup (separately checked in create_proposal and <a href="voting.md#0x1_voting">voting</a>), their
+    //     // We calculate the <a href="voting.md#0x1_voting">voting</a> power <b>as</b> total non-inactive stakes of the pool. Even <b>if</b> the <a href="validator_ol.md#0x1_validator">validator</a> is not in the
+    //     // active <a href="validator_ol.md#0x1_validator">validator</a> set, <b>as</b> long <b>as</b> they have a lockup (separately checked in create_proposal and <a href="voting.md#0x1_voting">voting</a>), their
     //     // stake would still count in their <a href="voting.md#0x1_voting">voting</a> power for governance proposals.
     //     active + pending_active + pending_inactive
     // } <b>else</b> {
     //     stake::get_current_epoch_voting_power(pool_address)
     // }
-    <a href="stake.md#0x1_stake_old_get_current_epoch_voting_power">stake_old::get_current_epoch_voting_power</a>(pool_address)
+    <a href="validator_ol.md#0x1_validator_get_current_epoch_voting_power">validator::get_current_epoch_voting_power</a>(pool_address)
 }
 </code></pre>
 

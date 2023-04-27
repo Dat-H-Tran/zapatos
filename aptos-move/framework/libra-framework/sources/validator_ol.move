@@ -18,7 +18,7 @@
  * 9. An owner can always switch operators by calling stake::set_operator.
  * 10. An owner can always switch designated voter by calling stake::set_designated_voter.
 */
-module aptos_framework::stake_old {
+module aptos_framework::validator {
     use std::error;
     // use std::features;
     use std::option::{Self, Option};

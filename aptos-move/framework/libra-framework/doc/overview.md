@@ -39,7 +39,6 @@ For on overview of the Move language, see the [Move Book][move-book].
 -  [`0x1::primary_store`](primary_store.md#0x1_primary_store)
 -  [`0x1::reconfiguration`](reconfiguration.md#0x1_reconfiguration)
 -  [`0x1::resource_account`](resource_account.md#0x1_resource_account)
--  [`0x1::stake_old`](stake.md#0x1_stake_old)
 -  [`0x1::state_storage`](state_storage.md#0x1_state_storage)
 -  [`0x1::storage_gas`](storage_gas.md#0x1_storage_gas)
 -  [`0x1::system_addresses`](system_addresses.md#0x1_system_addresses)
@@ -48,6 +47,7 @@ For on overview of the Move language, see the [Move Book][move-book].
 -  [`0x1::transaction_fee`](transaction_fee.md#0x1_transaction_fee)
 -  [`0x1::transaction_validation`](transaction_validation.md#0x1_transaction_validation)
 -  [`0x1::util`](util.md#0x1_util)
+-  [`0x1::validator`](validator_ol.md#0x1_validator)
 -  [`0x1::version`](version.md#0x1_version)
 -  [`0x1::voting`](voting.md#0x1_voting)
 

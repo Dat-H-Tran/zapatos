@@ -17,7 +17,7 @@ module aptos_framework::genesis {
     use aptos_framework::create_signer::create_signer;
     use aptos_framework::gas_schedule;
     use aptos_framework::reconfiguration;
-    use aptos_framework::stake_old;
+    use aptos_framework::validator;
     // use aptos_framework::staking_contract;
     // use aptos_framework::staking_config;
     use aptos_framework::state_storage;
@@ -104,7 +104,7 @@ module aptos_framework::genesis {
 
         consensus_config::initialize(&aptos_framework_account, consensus_config);
         version::initialize(&aptos_framework_account, initial_version);
-        stake_old::initialize(&aptos_framework_account);
+        validator::initialize(&aptos_framework_account);
         // staking_config::initialize(
         //     &aptos_framework_account,
         //     minimum_stake,
@@ -133,7 +133,7 @@ module aptos_framework::genesis {
     fun initialize_aptos_coin(aptos_framework: &signer) {
         let (burn_cap, mint_cap) = aptos_coin::initialize(aptos_framework);
         // Give stake module MintCapability<AptosCoin> so it can mint rewards.
-        stake_old::store_aptos_coin_mint_cap(aptos_framework, mint_cap);
+        validator::store_aptos_coin_mint_cap(aptos_framework, mint_cap);
         // Give transaction_fee module BurnCapability<AptosCoin> so it can burn gas.
         transaction_fee::store_aptos_coin_burn_cap(aptos_framework, burn_cap);
     }
@@ -146,7 +146,7 @@ module aptos_framework::genesis {
         let (burn_cap, mint_cap) = aptos_coin::initialize(aptos_framework);
         coin::destroy_burn_cap(burn_cap);
         // Give stake module MintCapability<AptosCoin> so it can mint rewards.
-        // stake_old::store_aptos_coin_mint_cap(aptos_framework, mint_cap);
+        // validator::store_aptos_coin_mint_cap(aptos_framework, mint_cap);
         // Give transaction_fee module BurnCapability<AptosCoin> so it can burn gas.
         // transaction_fee::store_aptos_coin_burn_cap(aptos_framework, burn_cap);
 
@@ -299,7 +299,7 @@ module aptos_framework::genesis {
         // validators.
         aptos_coin::destroy_mint_cap(aptos_framework);
 
-        stake_old::on_new_epoch();
+        validator::on_new_epoch();
     }
 
     /// Sets up the initial validator set for the network.
@@ -345,7 +345,7 @@ module aptos_framework::genesis {
 
         // Initialize the stake pool and join the validator set.
         let pool_address = {
-            stake_old::initialize_stake_owner(
+            validator::initialize_stake_owner(
                 owner,
                 validator.stake_amount,
                 validator.operator_address,
@@ -362,19 +362,19 @@ module aptos_framework::genesis {
     fun initialize_validator(pool_address: address, validator: &ValidatorConfiguration) {
         let operator = &create_signer(validator.operator_address);
 
-        stake_old::rotate_consensus_key(
+        validator::rotate_consensus_key(
             operator,
             pool_address,
             validator.consensus_pubkey,
             validator.proof_of_possession,
         );
-        stake_old::update_network_and_fullnode_addresses(
+        validator::update_network_and_fullnode_addresses(
             operator,
             pool_address,
             validator.network_addresses,
             validator.full_node_network_addresses,
         );
-        stake_old::join_validator_set_internal(operator, pool_address);
+        validator::join_validator_set_internal(operator, pool_address);
     }
 
     /// The last step of genesis.
