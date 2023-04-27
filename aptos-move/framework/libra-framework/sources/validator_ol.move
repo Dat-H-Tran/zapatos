@@ -138,6 +138,9 @@ module aptos_framework::validator {
         // total_joining_power: u128,
     }
 
+    struct ValidatorUniverse has key {
+      all_vals: vector<address>
+    }
 
     struct IndividualValidatorPerformance has store, drop {
         successful_proposals: u64,
@@ -200,6 +203,12 @@ module aptos_framework::validator {
             error::already_exists(EFEES_TABLE_ALREADY_EXISTS)
         );
         move_to(aptos_framework, ValidatorFees { fees_table: table::new() });
+        move_to(
+            aptos_framework,
+            ValidatorUniverse {
+                all_vals: vector::empty(),
+            },
+        );
     }
 
     /// Stores the transaction fee collected to the specified validator address.
@@ -341,6 +350,8 @@ module aptos_framework::validator {
     }
 
     fun initialize_owner(owner: &signer) {
+        debug::print(&2001);
+
         let owner_address = signer::address_of(owner);
         // assert!(is_allowed(owner_address), error::not_found(EINELIGIBLE_VALIDATOR));
         assert!(!stake_pool_exists(owner_address), error::already_exists(EALREADY_REGISTERED));
@@ -575,10 +586,31 @@ module aptos_framework::validator {
     /// pending inactive validators so they no longer can vote.
     /// 4. The validator's voting power in the validator set is updated to be the corresponding staking pool's voting
     /// power.
-    public(friend) fun on_new_epoch() acquires ValidatorPerformance, ValidatorSet {
-        let _validator_set = borrow_global_mut<ValidatorSet>(@aptos_framework);
+    public(friend) fun on_new_epoch() acquires ValidatorPerformance, ValidatorSet, ValidatorUniverse, ValidatorConfig {
+        let validator_set = borrow_global_mut<ValidatorSet>(@aptos_framework);
+        debug::print(validator_set);
+
         // let config = staking_config::get();
         let _validator_perf = borrow_global_mut<ValidatorPerformance>(@aptos_framework);
+
+        let universe = borrow_global<ValidatorUniverse>(@aptos_framework);
+
+        validator_set.active_validators = vector::empty<ValidatorInfo>();
+        let i = 0;
+        let len = vector::length<address>(&universe.all_vals);
+        while (i < len) {
+            let addr = vector::borrow(&universe.all_vals, i);
+            let config =  borrow_global<ValidatorConfig>(*addr);
+            let info = ValidatorInfo {
+              addr: *addr,
+              config: *config,
+            };
+
+
+            vector::push_back(&mut validator_set.active_validators, info);
+            i = i + 1;
+        };
+
 
     }
 

@@ -28,6 +28,7 @@
 -  [Resource `ValidatorConfig`](#0x1_validator_ValidatorConfig)
 -  [Struct `ValidatorInfo`](#0x1_validator_ValidatorInfo)
 -  [Resource `ValidatorSet`](#0x1_validator_ValidatorSet)
+-  [Resource `ValidatorUniverse`](#0x1_validator_ValidatorUniverse)
 -  [Struct `IndividualValidatorPerformance`](#0x1_validator_IndividualValidatorPerformance)
 -  [Resource `ValidatorPerformance`](#0x1_validator_ValidatorPerformance)
 -  [Struct `RegisterValidatorCandidateEvent`](#0x1_validator_RegisterValidatorCandidateEvent)
@@ -284,6 +285,33 @@ Full ValidatorSet, stored in @aptos_framework.
 </dd>
 <dt>
 <code>pending_active: <a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector">vector</a>&lt;<a href="validator_ol.md#0x1_validator_ValidatorInfo">validator::ValidatorInfo</a>&gt;</code>
+</dt>
+<dd>
+
+</dd>
+</dl>
+
+
+</details>
+
+<a name="0x1_validator_ValidatorUniverse"></a>
+
+## Resource `ValidatorUniverse`
+
+
+
+<pre><code><b>struct</b> <a href="validator_ol.md#0x1_validator_ValidatorUniverse">ValidatorUniverse</a> <b>has</b> key
+</code></pre>
+
+
+
+<details>
+<summary>Fields</summary>
+
+
+<dl>
+<dt>
+<code>all_vals: <a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector">vector</a>&lt;<b>address</b>&gt;</code>
 </dt>
 <dd>
 
@@ -812,6 +840,12 @@ Used by <code><a href="transaction_fee.md#0x1_transaction_fee">transaction_fee</
         <a href="../../aptos-stdlib/../move-stdlib/doc/error.md#0x1_error_already_exists">error::already_exists</a>(<a href="validator_ol.md#0x1_validator_EFEES_TABLE_ALREADY_EXISTS">EFEES_TABLE_ALREADY_EXISTS</a>)
     );
     <b>move_to</b>(aptos_framework, <a href="validator_ol.md#0x1_validator_ValidatorFees">ValidatorFees</a> { fees_table: <a href="../../aptos-stdlib/doc/table.md#0x1_table_new">table::new</a>() });
+    <b>move_to</b>(
+        aptos_framework,
+        <a href="validator_ol.md#0x1_validator_ValidatorUniverse">ValidatorUniverse</a> {
+            all_vals: <a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector_empty">vector::empty</a>(),
+        },
+    );
 }
 </code></pre>
 
@@ -1164,6 +1198,8 @@ Initialize the validator account and give ownership to the signing account.
 
 
 <pre><code><b>fun</b> <a href="validator_ol.md#0x1_validator_initialize_owner">initialize_owner</a>(owner: &<a href="../../aptos-stdlib/../move-stdlib/doc/signer.md#0x1_signer">signer</a>) {
+    <a href="../../aptos-stdlib/doc/debug.md#0x1_debug_print">debug::print</a>(&2001);
+
     <b>let</b> owner_address = <a href="../../aptos-stdlib/../move-stdlib/doc/signer.md#0x1_signer_address_of">signer::address_of</a>(owner);
     // <b>assert</b>!(is_allowed(owner_address), <a href="../../aptos-stdlib/../move-stdlib/doc/error.md#0x1_error_not_found">error::not_found</a>(EINELIGIBLE_VALIDATOR));
     <b>assert</b>!(!<a href="validator_ol.md#0x1_validator_stake_pool_exists">stake_pool_exists</a>(owner_address), <a href="../../aptos-stdlib/../move-stdlib/doc/error.md#0x1_error_already_exists">error::already_exists</a>(<a href="validator_ol.md#0x1_validator_EALREADY_REGISTERED">EALREADY_REGISTERED</a>));
@@ -1556,10 +1592,31 @@ power.
 <summary>Implementation</summary>
 
 
-<pre><code><b>public</b>(<b>friend</b>) <b>fun</b> <a href="validator_ol.md#0x1_validator_on_new_epoch">on_new_epoch</a>() <b>acquires</b> <a href="validator_ol.md#0x1_validator_ValidatorPerformance">ValidatorPerformance</a>, <a href="validator_ol.md#0x1_validator_ValidatorSet">ValidatorSet</a> {
-    <b>let</b> _validator_set = <b>borrow_global_mut</b>&lt;<a href="validator_ol.md#0x1_validator_ValidatorSet">ValidatorSet</a>&gt;(@aptos_framework);
+<pre><code><b>public</b>(<b>friend</b>) <b>fun</b> <a href="validator_ol.md#0x1_validator_on_new_epoch">on_new_epoch</a>() <b>acquires</b> <a href="validator_ol.md#0x1_validator_ValidatorPerformance">ValidatorPerformance</a>, <a href="validator_ol.md#0x1_validator_ValidatorSet">ValidatorSet</a>, <a href="validator_ol.md#0x1_validator_ValidatorUniverse">ValidatorUniverse</a>, <a href="validator_ol.md#0x1_validator_ValidatorConfig">ValidatorConfig</a> {
+    <b>let</b> validator_set = <b>borrow_global_mut</b>&lt;<a href="validator_ol.md#0x1_validator_ValidatorSet">ValidatorSet</a>&gt;(@aptos_framework);
+    <a href="../../aptos-stdlib/doc/debug.md#0x1_debug_print">debug::print</a>(validator_set);
+
     // <b>let</b> config = staking_config::get();
     <b>let</b> _validator_perf = <b>borrow_global_mut</b>&lt;<a href="validator_ol.md#0x1_validator_ValidatorPerformance">ValidatorPerformance</a>&gt;(@aptos_framework);
+
+    <b>let</b> universe = <b>borrow_global</b>&lt;<a href="validator_ol.md#0x1_validator_ValidatorUniverse">ValidatorUniverse</a>&gt;(@aptos_framework);
+
+    validator_set.active_validators = <a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector_empty">vector::empty</a>&lt;<a href="validator_ol.md#0x1_validator_ValidatorInfo">ValidatorInfo</a>&gt;();
+    <b>let</b> i = 0;
+    <b>let</b> len = <a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector_length">vector::length</a>&lt;<b>address</b>&gt;(&universe.all_vals);
+    <b>while</b> (i &lt; len) {
+        <b>let</b> addr = <a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector_borrow">vector::borrow</a>(&universe.all_vals, i);
+        <b>let</b> config =  <b>borrow_global</b>&lt;<a href="validator_ol.md#0x1_validator_ValidatorConfig">ValidatorConfig</a>&gt;(*addr);
+        <b>let</b> info = <a href="validator_ol.md#0x1_validator_ValidatorInfo">ValidatorInfo</a> {
+          addr: *addr,
+          config: *config,
+        };
+
+
+        <a href="../../aptos-stdlib/../move-stdlib/doc/vector.md#0x1_vector_push_back">vector::push_back</a>(&<b>mut</b> validator_set.active_validators, info);
+        i = i + 1;
+    };
+
 
 }
 </code></pre>

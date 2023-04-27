@@ -1047,110 +1047,110 @@ module aptos_framework::stake {
         // let config = staking_config::get();
         let _validator_perf = borrow_global_mut<ValidatorPerformance>(@aptos_framework);
 
-        // // Process pending stake and distribute transaction fees and rewards for each currently active validator.
-        // // let i = 0;
-        // // let len = vector::length(&validator_set.active_validators);
-        // // while (i < len) {
-        // //     let validator = vector::borrow(&validator_set.active_validators, i);
-        // //     update_stake_pool(validator_perf, validator.addr, &config);
-        // //     i = i + 1;
-        // // };
-
-        // // Process pending stake and distribute transaction fees and rewards for each currently pending_inactive validator
-        // // (requested to leave but not removed yet).
-        // // let i = 0;
-        // // let len = vector::length(&validator_set.pending_inactive);
-        // // while (i < len) {
-        // //     let validator = vector::borrow(&validator_set.pending_inactive, i);
-        // //     update_stake_pool(validator_perf, validator.addr, &config);
-        // //     i = i + 1;
-        // // };
-
-        // // Activate currently pending_active validators.
-        // append(&mut validator_set.active_validators, &mut validator_set.pending_active);
-
-        // // Officially deactivate all pending_inactive validators. They will now no longer receive rewards.
-        // validator_set.pending_inactive = vector::empty();
-
-        // // Update active validator set so that network address/public key change takes effect.
-        // // Moreover, recalculate the total voting power, and deactivate the validator whose
-        // // voting power is less than the minimum required stake.
-        // let next_epoch_validators = vector::empty();
-        // // let (minimum_stake, _) = staking_config::get_required_stake(&config);
-        // let vlen = vector::length(&validator_set.active_validators);
-        // let total_voting_power = 0;
+        // Process pending stake and distribute transaction fees and rewards for each currently active validator.
         // let i = 0;
-        // while ({
-        //     spec {
-        //         invariant spec_validators_are_initialized(next_epoch_validators);
-        //     };
-        //     i < vlen
-        // }) {
-        //     let old_validator_info = vector::borrow_mut(&mut validator_set.active_validators, i);
-        //     let pool_address = old_validator_info.addr;
-        //     let validator_config = borrow_global_mut<ValidatorConfig>(pool_address);
-        //     let stake_pool = borrow_global_mut<StakePool>(pool_address);
-        //     let new_validator_info = generate_validator_info(pool_address, stake_pool, *validator_config);
-
-        //     // A validator needs at least the min stake required to join the validator set.
-
-        //     // TODO: v7: refactor
-        //     let minimum_stake = 0;
-        //     if (new_validator_info.voting_power >= minimum_stake) {
-        //         spec {
-        //             assume total_voting_power + new_validator_info.voting_power <= MAX_U128;
-        //         };
-        //         total_voting_power = total_voting_power + (new_validator_info.voting_power as u128);
-        //         vector::push_back(&mut next_epoch_validators, new_validator_info);
-        //     };
+        // let len = vector::length(&validator_set.active_validators);
+        // while (i < len) {
+        //     let validator = vector::borrow(&validator_set.active_validators, i);
+        //     update_stake_pool(validator_perf, validator.addr, &config);
         //     i = i + 1;
         // };
 
-        // validator_set.active_validators = next_epoch_validators;
-        // validator_set.total_voting_power = total_voting_power;
-        // validator_set.total_joining_power = 0;
-
-        // // Update validator indices, reset performance scores, and renew lockups.
-        // validator_perf.validators = vector::empty();
-        // // let recurring_lockup_duration_secs = staking_config::get_recurring_lockup_duration(&config);
-        // let vlen = vector::length(&validator_set.active_validators);
-        // let validator_index = 0;
-        // while ({
-        //     spec {
-        //         invariant spec_validators_are_initialized(validator_set.active_validators);
-        //         invariant len(validator_set.pending_active) == 0;
-        //         invariant len(validator_set.pending_inactive) == 0;
-        //         invariant 0 <= validator_index && validator_index <= vlen;
-        //         invariant vlen == len(validator_set.active_validators);
-        //         invariant forall i in 0..validator_index:
-        //             global<ValidatorConfig>(validator_set.active_validators[i].addr).validator_index < validator_index;
-        //         invariant len(validator_perf.validators) == validator_index;
-        //     };
-        //     validator_index < vlen
-        // }) {
-        //     let validator_info = vector::borrow_mut(&mut validator_set.active_validators, validator_index);
-        //     validator_info.config.validator_index = validator_index;
-        //     let validator_config = borrow_global_mut<ValidatorConfig>(validator_info.addr);
-        //     validator_config.validator_index = validator_index;
-
-        //     vector::push_back(&mut validator_perf.validators, IndividualValidatorPerformance {
-        //         successful_proposals: 0,
-        //         failed_proposals: 0,
-        //     });
-
-        //     // // Automatically renew a validator's lockup for validators that will still be in the validator set in the
-        //     // // next epoch.
-        //     // let stake_pool = borrow_global_mut<StakePool>(validator_info.addr);
-        //     // if (stake_pool.locked_until_secs <= timestamp::now_seconds()) {
-        //     //     spec {
-        //     //         assume timestamp::spec_now_seconds() + recurring_lockup_duration_secs <= MAX_U64;
-        //     //     };
-        //     //     stake_pool.locked_until_secs =
-        //     //         timestamp::now_seconds() + recurring_lockup_duration_secs;
-        //     // };
-
-        //     validator_index = validator_index + 1;
+        // Process pending stake and distribute transaction fees and rewards for each currently pending_inactive validator
+        // (requested to leave but not removed yet).
+        // let i = 0;
+        // let len = vector::length(&validator_set.pending_inactive);
+        // while (i < len) {
+        //     let validator = vector::borrow(&validator_set.pending_inactive, i);
+        //     update_stake_pool(validator_perf, validator.addr, &config);
+        //     i = i + 1;
         // };
+
+        // Activate currently pending_active validators.
+        append(&mut validator_set.active_validators, &mut validator_set.pending_active);
+
+        // Officially deactivate all pending_inactive validators. They will now no longer receive rewards.
+        validator_set.pending_inactive = vector::empty();
+
+        // Update active validator set so that network address/public key change takes effect.
+        // Moreover, recalculate the total voting power, and deactivate the validator whose
+        // voting power is less than the minimum required stake.
+        let next_epoch_validators = vector::empty();
+        // let (minimum_stake, _) = staking_config::get_required_stake(&config);
+        let vlen = vector::length(&validator_set.active_validators);
+        let total_voting_power = 0;
+        let i = 0;
+        while ({
+            spec {
+                invariant spec_validators_are_initialized(next_epoch_validators);
+            };
+            i < vlen
+        }) {
+            let old_validator_info = vector::borrow_mut(&mut validator_set.active_validators, i);
+            let pool_address = old_validator_info.addr;
+            let validator_config = borrow_global_mut<ValidatorConfig>(pool_address);
+            let stake_pool = borrow_global_mut<StakePool>(pool_address);
+            let new_validator_info = generate_validator_info(pool_address, stake_pool, *validator_config);
+
+            // A validator needs at least the min stake required to join the validator set.
+
+            // TODO: v7: refactor
+            let minimum_stake = 0;
+            if (new_validator_info.voting_power >= minimum_stake) {
+                spec {
+                    assume total_voting_power + new_validator_info.voting_power <= MAX_U128;
+                };
+                total_voting_power = total_voting_power + (new_validator_info.voting_power as u128);
+                vector::push_back(&mut next_epoch_validators, new_validator_info);
+            };
+            i = i + 1;
+        };
+
+        validator_set.active_validators = next_epoch_validators;
+        validator_set.total_voting_power = total_voting_power;
+        validator_set.total_joining_power = 0;
+
+        // Update validator indices, reset performance scores, and renew lockups.
+        validator_perf.validators = vector::empty();
+        // let recurring_lockup_duration_secs = staking_config::get_recurring_lockup_duration(&config);
+        let vlen = vector::length(&validator_set.active_validators);
+        let validator_index = 0;
+        while ({
+            spec {
+                invariant spec_validators_are_initialized(validator_set.active_validators);
+                invariant len(validator_set.pending_active) == 0;
+                invariant len(validator_set.pending_inactive) == 0;
+                invariant 0 <= validator_index && validator_index <= vlen;
+                invariant vlen == len(validator_set.active_validators);
+                invariant forall i in 0..validator_index:
+                    global<ValidatorConfig>(validator_set.active_validators[i].addr).validator_index < validator_index;
+                invariant len(validator_perf.validators) == validator_index;
+            };
+            validator_index < vlen
+        }) {
+            let validator_info = vector::borrow_mut(&mut validator_set.active_validators, validator_index);
+            validator_info.config.validator_index = validator_index;
+            let validator_config = borrow_global_mut<ValidatorConfig>(validator_info.addr);
+            validator_config.validator_index = validator_index;
+
+            vector::push_back(&mut validator_perf.validators, IndividualValidatorPerformance {
+                successful_proposals: 0,
+                failed_proposals: 0,
+            });
+
+            // // Automatically renew a validator's lockup for validators that will still be in the validator set in the
+            // // next epoch.
+            // let stake_pool = borrow_global_mut<StakePool>(validator_info.addr);
+            // if (stake_pool.locked_until_secs <= timestamp::now_seconds()) {
+            //     spec {
+            //         assume timestamp::spec_now_seconds() + recurring_lockup_duration_secs <= MAX_U64;
+            //     };
+            //     stake_pool.locked_until_secs =
+            //         timestamp::now_seconds() + recurring_lockup_duration_secs;
+            // };
+
+            validator_index = validator_index + 1;
+        };
     }
 
     /// Update individual validator's stake pool
