@@ -410,21 +410,6 @@ pub enum EntryFunctionCall {
         code: Vec<Vec<u8>>,
     },
 
-    /// Add `amount` of coins from the `account` owning the StakePool.
-    ValidatorAddStake {
-        amount: u64,
-    },
-
-    /// Initialize the validator account and give ownership to the signing account
-    /// except it leaves the ValidatorConfig to be set by another entity.
-    /// Note: this triggers setting the operator and owner, set it to the account's address
-    /// to set later.
-    ValidatorInitializeStakeOwner {
-        initial_stake_amount: u64,
-        operator: AccountAddress,
-        voter: AccountAddress,
-    },
-
     /// Initialize the validator account and give ownership to the signing account.
     ValidatorInitializeValidator {
         consensus_pubkey: Vec<u8>,
@@ -440,11 +425,6 @@ pub enum EntryFunctionCall {
         pool_address: AccountAddress,
     },
 
-    /// Move `amount` of coins from pending_inactive to active.
-    ValidatorReactivateStake {
-        amount: u64,
-    },
-
     /// Rotate the consensus key of the validator, it'll take effect in next epoch.
     ValidatorRotateConsensusKey {
         pool_address: AccountAddress,
@@ -452,31 +432,11 @@ pub enum EntryFunctionCall {
         proof_of_possession: Vec<u8>,
     },
 
-    /// Allows an owner to change the delegated voter of the stake pool.
-    ValidatorSetDelegatedVoter {
-        new_voter: AccountAddress,
-    },
-
-    /// Allows an owner to change the operator of the stake pool.
-    ValidatorSetOperator {
-        new_operator: AccountAddress,
-    },
-
-    /// Similar to unlock_with_cap but will use ownership capability from the signing account.
-    ValidatorUnlock {
-        amount: u64,
-    },
-
     /// Update the network and full node addresses of the validator. This only takes effect in the next epoch.
     ValidatorUpdateNetworkAndFullnodeAddresses {
         pool_address: AccountAddress,
         new_network_addresses: Vec<u8>,
         new_fullnode_addresses: Vec<u8>,
-    },
-
-    /// Withdraw from `account`'s inactive stake.
-    ValidatorWithdraw {
-        withdraw_amount: u64,
     },
 
     /// Updates the major version to a larger version.
@@ -707,12 +667,6 @@ impl EntryFunctionCall {
                 metadata_serialized,
                 code,
             ),
-            ValidatorAddStake { amount } => validator_add_stake(amount),
-            ValidatorInitializeStakeOwner {
-                initial_stake_amount,
-                operator,
-                voter,
-            } => validator_initialize_stake_owner(initial_stake_amount, operator, voter),
             ValidatorInitializeValidator {
                 consensus_pubkey,
                 proof_of_possession,
@@ -727,7 +681,6 @@ impl EntryFunctionCall {
             ValidatorJoinValidatorSet { pool_address } => {
                 validator_join_validator_set(pool_address)
             },
-            ValidatorReactivateStake { amount } => validator_reactivate_stake(amount),
             ValidatorRotateConsensusKey {
                 pool_address,
                 new_consensus_pubkey,
@@ -737,9 +690,6 @@ impl EntryFunctionCall {
                 new_consensus_pubkey,
                 proof_of_possession,
             ),
-            ValidatorSetDelegatedVoter { new_voter } => validator_set_delegated_voter(new_voter),
-            ValidatorSetOperator { new_operator } => validator_set_operator(new_operator),
-            ValidatorUnlock { amount } => validator_unlock(amount),
             ValidatorUpdateNetworkAndFullnodeAddresses {
                 pool_address,
                 new_network_addresses,
@@ -749,7 +699,6 @@ impl EntryFunctionCall {
                 new_network_addresses,
                 new_fullnode_addresses,
             ),
-            ValidatorWithdraw { withdraw_amount } => validator_withdraw(withdraw_amount),
             VersionSetVersion { major } => version_set_version(major),
         }
     }
@@ -1771,49 +1720,6 @@ pub fn resource_account_create_resource_account_and_publish_package(
     ))
 }
 
-/// Add `amount` of coins from the `account` owning the StakePool.
-pub fn validator_add_stake(amount: u64) -> TransactionPayload {
-    TransactionPayload::EntryFunction(EntryFunction::new(
-        ModuleId::new(
-            AccountAddress::new([
-                0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                0, 0, 0, 1,
-            ]),
-            ident_str!("validator").to_owned(),
-        ),
-        ident_str!("add_stake").to_owned(),
-        vec![],
-        vec![bcs::to_bytes(&amount).unwrap()],
-    ))
-}
-
-/// Initialize the validator account and give ownership to the signing account
-/// except it leaves the ValidatorConfig to be set by another entity.
-/// Note: this triggers setting the operator and owner, set it to the account's address
-/// to set later.
-pub fn validator_initialize_stake_owner(
-    initial_stake_amount: u64,
-    operator: AccountAddress,
-    voter: AccountAddress,
-) -> TransactionPayload {
-    TransactionPayload::EntryFunction(EntryFunction::new(
-        ModuleId::new(
-            AccountAddress::new([
-                0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                0, 0, 0, 1,
-            ]),
-            ident_str!("validator").to_owned(),
-        ),
-        ident_str!("initialize_stake_owner").to_owned(),
-        vec![],
-        vec![
-            bcs::to_bytes(&initial_stake_amount).unwrap(),
-            bcs::to_bytes(&operator).unwrap(),
-            bcs::to_bytes(&voter).unwrap(),
-        ],
-    ))
-}
-
 /// Initialize the validator account and give ownership to the signing account.
 pub fn validator_initialize_validator(
     consensus_pubkey: Vec<u8>,
@@ -1858,22 +1764,6 @@ pub fn validator_join_validator_set(pool_address: AccountAddress) -> Transaction
     ))
 }
 
-/// Move `amount` of coins from pending_inactive to active.
-pub fn validator_reactivate_stake(amount: u64) -> TransactionPayload {
-    TransactionPayload::EntryFunction(EntryFunction::new(
-        ModuleId::new(
-            AccountAddress::new([
-                0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                0, 0, 0, 1,
-            ]),
-            ident_str!("validator").to_owned(),
-        ),
-        ident_str!("reactivate_stake").to_owned(),
-        vec![],
-        vec![bcs::to_bytes(&amount).unwrap()],
-    ))
-}
-
 /// Rotate the consensus key of the validator, it'll take effect in next epoch.
 pub fn validator_rotate_consensus_key(
     pool_address: AccountAddress,
@@ -1898,54 +1788,6 @@ pub fn validator_rotate_consensus_key(
     ))
 }
 
-/// Allows an owner to change the delegated voter of the stake pool.
-pub fn validator_set_delegated_voter(new_voter: AccountAddress) -> TransactionPayload {
-    TransactionPayload::EntryFunction(EntryFunction::new(
-        ModuleId::new(
-            AccountAddress::new([
-                0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                0, 0, 0, 1,
-            ]),
-            ident_str!("validator").to_owned(),
-        ),
-        ident_str!("set_delegated_voter").to_owned(),
-        vec![],
-        vec![bcs::to_bytes(&new_voter).unwrap()],
-    ))
-}
-
-/// Allows an owner to change the operator of the stake pool.
-pub fn validator_set_operator(new_operator: AccountAddress) -> TransactionPayload {
-    TransactionPayload::EntryFunction(EntryFunction::new(
-        ModuleId::new(
-            AccountAddress::new([
-                0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                0, 0, 0, 1,
-            ]),
-            ident_str!("validator").to_owned(),
-        ),
-        ident_str!("set_operator").to_owned(),
-        vec![],
-        vec![bcs::to_bytes(&new_operator).unwrap()],
-    ))
-}
-
-/// Similar to unlock_with_cap but will use ownership capability from the signing account.
-pub fn validator_unlock(amount: u64) -> TransactionPayload {
-    TransactionPayload::EntryFunction(EntryFunction::new(
-        ModuleId::new(
-            AccountAddress::new([
-                0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                0, 0, 0, 1,
-            ]),
-            ident_str!("validator").to_owned(),
-        ),
-        ident_str!("unlock").to_owned(),
-        vec![],
-        vec![bcs::to_bytes(&amount).unwrap()],
-    ))
-}
-
 /// Update the network and full node addresses of the validator. This only takes effect in the next epoch.
 pub fn validator_update_network_and_fullnode_addresses(
     pool_address: AccountAddress,
@@ -1967,22 +1809,6 @@ pub fn validator_update_network_and_fullnode_addresses(
             bcs::to_bytes(&new_network_addresses).unwrap(),
             bcs::to_bytes(&new_fullnode_addresses).unwrap(),
         ],
-    ))
-}
-
-/// Withdraw from `account`'s inactive stake.
-pub fn validator_withdraw(withdraw_amount: u64) -> TransactionPayload {
-    TransactionPayload::EntryFunction(EntryFunction::new(
-        ModuleId::new(
-            AccountAddress::new([
-                0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                0, 0, 0, 1,
-            ]),
-            ident_str!("validator").to_owned(),
-        ),
-        ident_str!("withdraw").to_owned(),
-        vec![],
-        vec![bcs::to_bytes(&withdraw_amount).unwrap()],
     ))
 }
 
@@ -2561,30 +2387,6 @@ mod decoder {
         }
     }
 
-    pub fn validator_add_stake(payload: &TransactionPayload) -> Option<EntryFunctionCall> {
-        if let TransactionPayload::EntryFunction(script) = payload {
-            Some(EntryFunctionCall::ValidatorAddStake {
-                amount: bcs::from_bytes(script.args().get(0)?).ok()?,
-            })
-        } else {
-            None
-        }
-    }
-
-    pub fn validator_initialize_stake_owner(
-        payload: &TransactionPayload,
-    ) -> Option<EntryFunctionCall> {
-        if let TransactionPayload::EntryFunction(script) = payload {
-            Some(EntryFunctionCall::ValidatorInitializeStakeOwner {
-                initial_stake_amount: bcs::from_bytes(script.args().get(0)?).ok()?,
-                operator: bcs::from_bytes(script.args().get(1)?).ok()?,
-                voter: bcs::from_bytes(script.args().get(2)?).ok()?,
-            })
-        } else {
-            None
-        }
-    }
-
     pub fn validator_initialize_validator(
         payload: &TransactionPayload,
     ) -> Option<EntryFunctionCall> {
@@ -2610,16 +2412,6 @@ mod decoder {
         }
     }
 
-    pub fn validator_reactivate_stake(payload: &TransactionPayload) -> Option<EntryFunctionCall> {
-        if let TransactionPayload::EntryFunction(script) = payload {
-            Some(EntryFunctionCall::ValidatorReactivateStake {
-                amount: bcs::from_bytes(script.args().get(0)?).ok()?,
-            })
-        } else {
-            None
-        }
-    }
-
     pub fn validator_rotate_consensus_key(
         payload: &TransactionPayload,
     ) -> Option<EntryFunctionCall> {
@@ -2628,38 +2420,6 @@ mod decoder {
                 pool_address: bcs::from_bytes(script.args().get(0)?).ok()?,
                 new_consensus_pubkey: bcs::from_bytes(script.args().get(1)?).ok()?,
                 proof_of_possession: bcs::from_bytes(script.args().get(2)?).ok()?,
-            })
-        } else {
-            None
-        }
-    }
-
-    pub fn validator_set_delegated_voter(
-        payload: &TransactionPayload,
-    ) -> Option<EntryFunctionCall> {
-        if let TransactionPayload::EntryFunction(script) = payload {
-            Some(EntryFunctionCall::ValidatorSetDelegatedVoter {
-                new_voter: bcs::from_bytes(script.args().get(0)?).ok()?,
-            })
-        } else {
-            None
-        }
-    }
-
-    pub fn validator_set_operator(payload: &TransactionPayload) -> Option<EntryFunctionCall> {
-        if let TransactionPayload::EntryFunction(script) = payload {
-            Some(EntryFunctionCall::ValidatorSetOperator {
-                new_operator: bcs::from_bytes(script.args().get(0)?).ok()?,
-            })
-        } else {
-            None
-        }
-    }
-
-    pub fn validator_unlock(payload: &TransactionPayload) -> Option<EntryFunctionCall> {
-        if let TransactionPayload::EntryFunction(script) = payload {
-            Some(EntryFunctionCall::ValidatorUnlock {
-                amount: bcs::from_bytes(script.args().get(0)?).ok()?,
             })
         } else {
             None
@@ -2677,16 +2437,6 @@ mod decoder {
                     new_fullnode_addresses: bcs::from_bytes(script.args().get(2)?).ok()?,
                 },
             )
-        } else {
-            None
-        }
-    }
-
-    pub fn validator_withdraw(payload: &TransactionPayload) -> Option<EntryFunctionCall> {
-        if let TransactionPayload::EntryFunction(script) = payload {
-            Some(EntryFunctionCall::ValidatorWithdraw {
-                withdraw_amount: bcs::from_bytes(script.args().get(0)?).ok()?,
-            })
         } else {
             None
         }
@@ -2888,14 +2638,6 @@ static SCRIPT_FUNCTION_DECODER_MAP: once_cell::sync::Lazy<EntryFunctionDecoderMa
             Box::new(decoder::resource_account_create_resource_account_and_publish_package),
         );
         map.insert(
-            "validator_add_stake".to_string(),
-            Box::new(decoder::validator_add_stake),
-        );
-        map.insert(
-            "validator_initialize_stake_owner".to_string(),
-            Box::new(decoder::validator_initialize_stake_owner),
-        );
-        map.insert(
             "validator_initialize_validator".to_string(),
             Box::new(decoder::validator_initialize_validator),
         );
@@ -2904,32 +2646,12 @@ static SCRIPT_FUNCTION_DECODER_MAP: once_cell::sync::Lazy<EntryFunctionDecoderMa
             Box::new(decoder::validator_join_validator_set),
         );
         map.insert(
-            "validator_reactivate_stake".to_string(),
-            Box::new(decoder::validator_reactivate_stake),
-        );
-        map.insert(
             "validator_rotate_consensus_key".to_string(),
             Box::new(decoder::validator_rotate_consensus_key),
         );
         map.insert(
-            "validator_set_delegated_voter".to_string(),
-            Box::new(decoder::validator_set_delegated_voter),
-        );
-        map.insert(
-            "validator_set_operator".to_string(),
-            Box::new(decoder::validator_set_operator),
-        );
-        map.insert(
-            "validator_unlock".to_string(),
-            Box::new(decoder::validator_unlock),
-        );
-        map.insert(
             "validator_update_network_and_fullnode_addresses".to_string(),
             Box::new(decoder::validator_update_network_and_fullnode_addresses),
-        );
-        map.insert(
-            "validator_withdraw".to_string(),
-            Box::new(decoder::validator_withdraw),
         );
         map.insert(
             "version_set_version".to_string(),

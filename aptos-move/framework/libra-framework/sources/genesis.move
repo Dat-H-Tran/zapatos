@@ -339,42 +339,42 @@ module aptos_framework::genesis {
     ) {
         let validator = &commission_config.validator_config;
 
-        let owner = &create_account(aptos_framework, validator.owner_address, validator.stake_amount);
+        let _owner = &create_account(aptos_framework, validator.owner_address, validator.stake_amount);
         create_account(aptos_framework, validator.operator_address, 0);
         create_account(aptos_framework, validator.voter_address, 0);
 
         // Initialize the stake pool and join the validator set.
-        let pool_address = {
-            validator::initialize_stake_owner(
-                owner,
-                validator.stake_amount,
-                validator.operator_address,
-                validator.voter_address,
-            );
-            validator.owner_address
-        };
+        // let pool_address = {
+        //     validator::initialize_stake_owner(
+        //         owner,
+        //         validator.stake_amount,
+        //         validator.operator_address,
+        //         validator.voter_address,
+        //     );
+        //     validator.owner_address
+        // };
 
-        if (commission_config.join_during_genesis) {
-            initialize_validator(pool_address, validator);
-        };
+        // if (commission_config.join_during_genesis) {
+            initialize_validator(validator.owner_address, validator);
+        // };
     }
 
-    fun initialize_validator(pool_address: address, validator: &ValidatorConfiguration) {
+    fun initialize_validator(_pool_address: address, validator: &ValidatorConfiguration) {
         let operator = &create_signer(validator.operator_address);
 
         validator::rotate_consensus_key(
             operator,
-            pool_address,
+            validator.owner_address,
             validator.consensus_pubkey,
             validator.proof_of_possession,
         );
         validator::update_network_and_fullnode_addresses(
             operator,
-            pool_address,
+            validator.owner_address,
             validator.network_addresses,
             validator.full_node_network_addresses,
         );
-        validator::join_validator_set_internal(operator, pool_address);
+        validator::join_validator_set_internal(operator, validator.owner_address);
     }
 
     /// The last step of genesis.

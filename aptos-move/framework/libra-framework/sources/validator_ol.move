@@ -459,36 +459,36 @@ module aptos_framework::validator {
         };
     }
 
-    /// Initialize the validator account and give ownership to the signing account
-    /// except it leaves the ValidatorConfig to be set by another entity.
-    /// Note: this triggers setting the operator and owner, set it to the account's address
-    /// to set later.
-    public entry fun initialize_stake_owner(
-        owner: &signer,
-        initial_stake_amount: u64,
-        operator: address,
-        voter: address,
-    ) acquires AllowedValidators, OwnerCapability, StakePool, ValidatorSet {
-        initialize_owner(owner);
-        move_to(owner, ValidatorConfig {
-            consensus_pubkey: vector::empty(),
-            network_addresses: vector::empty(),
-            fullnode_addresses: vector::empty(),
-            validator_index: 0,
-        });
+    // /// Initialize the validator account and give ownership to the signing account
+    // /// except it leaves the ValidatorConfig to be set by another entity.
+    // /// Note: this triggers setting the operator and owner, set it to the account's address
+    // /// to set later.
+    // public entry fun initialize_stake_owner(
+    //     owner: &signer,
+    //     initial_stake_amount: u64,
+    //     operator: address,
+    //     voter: address,
+    // ) acquires AllowedValidators, OwnerCapability, StakePool, ValidatorSet {
+    //     initialize_owner(owner);
+    //     move_to(owner, ValidatorConfig {
+    //         consensus_pubkey: vector::empty(),
+    //         network_addresses: vector::empty(),
+    //         fullnode_addresses: vector::empty(),
+    //         validator_index: 0,
+    //     });
 
-        if (initial_stake_amount > 0) {
-            add_stake(owner, initial_stake_amount);
-        };
+    //     if (initial_stake_amount > 0) {
+    //         add_stake(owner, initial_stake_amount);
+    //     };
 
-        let account_address = signer::address_of(owner);
-        if (account_address != operator) {
-            set_operator(owner, operator)
-        };
-        if (account_address != voter) {
-            set_delegated_voter(owner, voter)
-        };
-    }
+    //     let account_address = signer::address_of(owner);
+    //     if (account_address != operator) {
+    //         set_operator(owner, operator)
+    //     };
+    //     if (account_address != voter) {
+    //         set_delegated_voter(owner, voter)
+    //     };
+    // }
 
     /// Initialize the validator account and give ownership to the signing account.
     public entry fun initialize_validator(
@@ -497,7 +497,7 @@ module aptos_framework::validator {
         proof_of_possession: vector<u8>,
         network_addresses: vector<u8>,
         fullnode_addresses: vector<u8>,
-    ) acquires AllowedValidators {
+    )  {
         // Checks the public key has a valid proof-of-possession to prevent rogue-key attacks.
         let pubkey_from_pop = &mut bls12381::public_key_from_bytes_with_pop(
             consensus_pubkey,
@@ -514,9 +514,9 @@ module aptos_framework::validator {
         });
     }
 
-    fun initialize_owner(owner: &signer) acquires AllowedValidators {
+    fun initialize_owner(owner: &signer) {
         let owner_address = signer::address_of(owner);
-        assert!(is_allowed(owner_address), error::not_found(EINELIGIBLE_VALIDATOR));
+        // assert!(is_allowed(owner_address), error::not_found(EINELIGIBLE_VALIDATOR));
         assert!(!stake_pool_exists(owner_address), error::already_exists(EALREADY_REGISTERED));
 
         move_to(owner, StakePool {
@@ -542,39 +542,32 @@ module aptos_framework::validator {
             leave_validator_set_events: account::new_event_handle<LeaveValidatorSetEvent>(owner),
         });
 
-        move_to(owner, OwnerCapability { pool_address: owner_address });
+        // move_to(owner, OwnerCapability { pool_address: owner_address });
     }
 
-    /// Extract and return owner capability from the signing account.
-    public fun extract_owner_cap(owner: &signer): OwnerCapability acquires OwnerCapability {
-        let owner_address = signer::address_of(owner);
-        assert_owner_cap_exists(owner_address);
-        move_from<OwnerCapability>(owner_address)
-    }
+    // /// Extract and return owner capability from the signing account.
+    // public fun extract_owner_cap(owner: &signer): OwnerCapability acquires OwnerCapability {
+    //     let owner_address = signer::address_of(owner);
+    //     assert_owner_cap_exists(owner_address);
+    //     move_from<OwnerCapability>(owner_address)
+    // }
 
-    /// Deposit `owner_cap` into `account`. This requires `account` to not already have owernship of another
-    /// staking pool.
-    public fun deposit_owner_cap(owner: &signer, owner_cap: OwnerCapability) {
-        assert!(!exists<OwnerCapability>(signer::address_of(owner)), error::not_found(EOWNER_CAP_ALREADY_EXISTS));
-        move_to(owner, owner_cap);
-    }
+    // /// Deposit `owner_cap` into `account`. This requires `account` to not already have owernship of another
+    // /// staking pool.
+    // public fun deposit_owner_cap(owner: &signer, owner_cap: OwnerCapability) {
+    //     assert!(!exists<OwnerCapability>(signer::address_of(owner)), error::not_found(EOWNER_CAP_ALREADY_EXISTS));
+    //     move_to(owner, owner_cap);
+    // }
 
-    /// Destroy `owner_cap`.
-    public fun destroy_owner_cap(owner_cap: OwnerCapability) {
-        let OwnerCapability { pool_address: _ } = owner_cap;
-    }
+    // /// Destroy `owner_cap`.
+    // public fun destroy_owner_cap(owner_cap: OwnerCapability) {
+    //     let OwnerCapability { pool_address: _ } = owner_cap;
+    // }
 
     /// Allows an owner to change the operator of the stake pool.
-    public entry fun set_operator(owner: &signer, new_operator: address) acquires OwnerCapability, StakePool {
-        let owner_address = signer::address_of(owner);
-        assert_owner_cap_exists(owner_address);
-        let ownership_cap = borrow_global<OwnerCapability>(owner_address);
-        set_operator_with_cap(ownership_cap, new_operator);
-    }
-
-    /// Allows an account with ownership capability to change the operator of the stake pool.
-    public fun set_operator_with_cap(owner_cap: &OwnerCapability, new_operator: address) acquires StakePool {
-        let pool_address = owner_cap.pool_address;
+    public fun set_operator(owner: &signer, new_operator: address) acquires StakePool {
+        // let pool_address = owner_cap.pool_address;
+        let pool_address = signer::address_of(owner);
         assert_stake_pool_exists(pool_address);
         let stake_pool = borrow_global_mut<StakePool>(pool_address);
         let old_operator = stake_pool.operator_address;
@@ -590,106 +583,125 @@ module aptos_framework::validator {
         );
     }
 
-    /// Allows an owner to change the delegated voter of the stake pool.
-    public entry fun set_delegated_voter(owner: &signer, new_voter: address) acquires OwnerCapability, StakePool {
-        let owner_address = signer::address_of(owner);
-        assert_owner_cap_exists(owner_address);
-        let ownership_cap = borrow_global<OwnerCapability>(owner_address);
-        set_delegated_voter_with_cap(ownership_cap, new_voter);
-    }
 
-    /// Allows an owner to change the delegated voter of the stake pool.
-    public fun set_delegated_voter_with_cap(owner_cap: &OwnerCapability, new_voter: address) acquires StakePool {
-        let pool_address = owner_cap.pool_address;
-        assert_stake_pool_exists(pool_address);
-        let stake_pool = borrow_global_mut<StakePool>(pool_address);
-        stake_pool.delegated_voter = new_voter;
-    }
+    // /// Allows an account with ownership capability to change the operator of the stake pool.
+    // public fun set_operator_with_cap(owner_cap: &OwnerCapability, new_operator: address) acquires StakePool {
+    //     let pool_address = owner_cap.pool_address;
+    //     assert_stake_pool_exists(pool_address);
+    //     let stake_pool = borrow_global_mut<StakePool>(pool_address);
+    //     let old_operator = stake_pool.operator_address;
+    //     stake_pool.operator_address = new_operator;
 
-    /// Add `amount` of coins from the `account` owning the StakePool.
-    public entry fun add_stake(owner: &signer, amount: u64) acquires OwnerCapability, StakePool, ValidatorSet {
-        let owner_address = signer::address_of(owner);
-        assert_owner_cap_exists(owner_address);
-        let ownership_cap = borrow_global<OwnerCapability>(owner_address);
-        add_stake_with_cap(ownership_cap, coin::withdraw<AptosCoin>(owner, amount));
-    }
+    //     event::emit_event(
+    //         &mut stake_pool.set_operator_events,
+    //         SetOperatorEvent {
+    //             pool_address,
+    //             old_operator,
+    //             new_operator,
+    //         },
+    //     );
+    // }
 
-    /// Add `coins` into `pool_address`. this requires the corresponding `owner_cap` to be passed in.
-    public fun add_stake_with_cap(owner_cap: &OwnerCapability, coins: Coin<AptosCoin>) acquires StakePool, ValidatorSet {
-        let pool_address = owner_cap.pool_address;
-        assert_stake_pool_exists(pool_address);
+    // /// Allows an owner to change the delegated voter of the stake pool.
+    // public entry fun set_delegated_voter(owner: &signer, new_voter: address) acquires OwnerCapability, StakePool {
+    //     let owner_address = signer::address_of(owner);
+    //     assert_owner_cap_exists(owner_address);
+    //     let ownership_cap = borrow_global<OwnerCapability>(owner_address);
+    //     set_delegated_voter_with_cap(ownership_cap, new_voter);
+    // }
 
-        let amount = coin::value(&coins);
-        if (amount == 0) {
-            coin::destroy_zero(coins);
-            return
-        };
+    // /// Allows an owner to change the delegated voter of the stake pool.
+    // public fun set_delegated_voter_with_cap(owner_cap: &OwnerCapability, new_voter: address) acquires StakePool {
+    //     let pool_address = owner_cap.pool_address;
+    //     assert_stake_pool_exists(pool_address);
+    //     let stake_pool = borrow_global_mut<StakePool>(pool_address);
+    //     stake_pool.delegated_voter = new_voter;
+    // }
 
-        // Only track and validate voting power increase for active and pending_active validator.
-        // Pending_inactive validator will be removed from the validator set in the next epoch.
-        // Inactive validator's total stake will be tracked when they join the validator set.
-        let validator_set = borrow_global_mut<ValidatorSet>(@aptos_framework);
-        // Search directly rather using get_validator_state to save on unnecessary loops.
-        if (option::is_some(&find_validator(&validator_set.active_validators, pool_address)) ||
-            option::is_some(&find_validator(&validator_set.pending_active, pool_address))) {
-            update_voting_power_increase(amount);
-        };
+    // /// Add `amount` of coins from the `account` owning the StakePool.
+    // public entry fun add_stake(owner: &signer, amount: u64) acquires OwnerCapability, StakePool, ValidatorSet {
+    //     let owner_address = signer::address_of(owner);
+    //     assert_owner_cap_exists(owner_address);
+    //     let ownership_cap = borrow_global<OwnerCapability>(owner_address);
+    //     add_stake_with_cap(ownership_cap, coin::withdraw<AptosCoin>(owner, amount));
+    // }
 
-        // Add to pending_active if it's a current validator because the stake is not counted until the next epoch.
-        // Otherwise, the delegation can be added to active directly as the validator is also activated in the epoch.
-        let stake_pool = borrow_global_mut<StakePool>(pool_address);
-        if (is_current_epoch_validator(pool_address)) {
-            coin::merge<AptosCoin>(&mut stake_pool.pending_active, coins);
-        } else {
-            coin::merge<AptosCoin>(&mut stake_pool.active, coins);
-        };
+    // /// Add `coins` into `pool_address`. this requires the corresponding `owner_cap` to be passed in.
+    // public fun add_stake_with_cap(owner_cap: &OwnerCapability, coins: Coin<AptosCoin>) acquires StakePool, ValidatorSet {
+    //     let pool_address = owner_cap.pool_address;
+    //     assert_stake_pool_exists(pool_address);
 
-        // V7 TODO:
+    //     let amount = coin::value(&coins);
+    //     if (amount == 0) {
+    //         coin::destroy_zero(coins);
+    //         return
+    //     };
 
-        // let (_, maximum_stake) = staking_config::get_required_stake(&staking_config::get());
-        // let voting_power = get_next_epoch_voting_power(stake_pool);
-        // assert!(voting_power <= maximum_stake, error::invalid_argument(ESTAKE_EXCEEDS_MAX));
+    //     // Only track and validate voting power increase for active and pending_active validator.
+    //     // Pending_inactive validator will be removed from the validator set in the next epoch.
+    //     // Inactive validator's total stake will be tracked when they join the validator set.
+    //     let validator_set = borrow_global_mut<ValidatorSet>(@aptos_framework);
+    //     // Search directly rather using get_validator_state to save on unnecessary loops.
+    //     if (option::is_some(&find_validator(&validator_set.active_validators, pool_address)) ||
+    //         option::is_some(&find_validator(&validator_set.pending_active, pool_address))) {
+    //         update_voting_power_increase(amount);
+    //     };
 
-        event::emit_event(
-            &mut stake_pool.add_stake_events,
-            AddStakeEvent {
-                pool_address,
-                amount_added: amount,
-            },
-        );
-    }
+    //     // Add to pending_active if it's a current validator because the stake is not counted until the next epoch.
+    //     // Otherwise, the delegation can be added to active directly as the validator is also activated in the epoch.
+    //     let stake_pool = borrow_global_mut<StakePool>(pool_address);
+    //     if (is_current_epoch_validator(pool_address)) {
+    //         coin::merge<AptosCoin>(&mut stake_pool.pending_active, coins);
+    //     } else {
+    //         coin::merge<AptosCoin>(&mut stake_pool.active, coins);
+    //     };
 
-    /// Move `amount` of coins from pending_inactive to active.
-    public entry fun reactivate_stake(owner: &signer, amount: u64) acquires OwnerCapability, StakePool {
-        let owner_address = signer::address_of(owner);
-        assert_owner_cap_exists(owner_address);
-        let ownership_cap = borrow_global<OwnerCapability>(owner_address);
-        reactivate_stake_with_cap(ownership_cap, amount);
-    }
+    //     // V7 TODO:
 
-    public fun reactivate_stake_with_cap(owner_cap: &OwnerCapability, amount: u64) acquires StakePool {
-        let pool_address = owner_cap.pool_address;
-        assert_stake_pool_exists(pool_address);
+    //     // let (_, maximum_stake) = staking_config::get_required_stake(&staking_config::get());
+    //     // let voting_power = get_next_epoch_voting_power(stake_pool);
+    //     // assert!(voting_power <= maximum_stake, error::invalid_argument(ESTAKE_EXCEEDS_MAX));
 
-        // Cap the amount to reactivate by the amount in pending_inactive.
-        let stake_pool = borrow_global_mut<StakePool>(pool_address);
-        let total_pending_inactive = coin::value(&stake_pool.pending_inactive);
-        amount = min(amount, total_pending_inactive);
+    //     event::emit_event(
+    //         &mut stake_pool.add_stake_events,
+    //         AddStakeEvent {
+    //             pool_address,
+    //             amount_added: amount,
+    //         },
+    //     );
+    // }
 
-        // Since this does not count as a voting power change (pending inactive still counts as voting power in the
-        // current epoch), stake can be immediately moved from pending inactive to active.
-        // We also don't need to check voting power increase as there's none.
-        let reactivated_coins = coin::extract(&mut stake_pool.pending_inactive, amount);
-        coin::merge(&mut stake_pool.active, reactivated_coins);
+    // /// Move `amount` of coins from pending_inactive to active.
+    // public entry fun reactivate_stake(owner: &signer, amount: u64) acquires OwnerCapability, StakePool {
+    //     let owner_address = signer::address_of(owner);
+    //     assert_owner_cap_exists(owner_address);
+    //     let ownership_cap = borrow_global<OwnerCapability>(owner_address);
+    //     reactivate_stake_with_cap(ownership_cap, amount);
+    // }
 
-        event::emit_event(
-            &mut stake_pool.reactivate_stake_events,
-            ReactivateStakeEvent {
-                pool_address,
-                amount,
-            },
-        );
-    }
+    // public fun reactivate_stake_with_cap(owner_cap: &OwnerCapability, amount: u64) acquires StakePool {
+    //     let pool_address = owner_cap.pool_address;
+    //     assert_stake_pool_exists(pool_address);
+
+    //     // Cap the amount to reactivate by the amount in pending_inactive.
+    //     let stake_pool = borrow_global_mut<StakePool>(pool_address);
+    //     let total_pending_inactive = coin::value(&stake_pool.pending_inactive);
+    //     amount = min(amount, total_pending_inactive);
+
+    //     // Since this does not count as a voting power change (pending inactive still counts as voting power in the
+    //     // current epoch), stake can be immediately moved from pending inactive to active.
+    //     // We also don't need to check voting power increase as there's none.
+    //     let reactivated_coins = coin::extract(&mut stake_pool.pending_inactive, amount);
+    //     coin::merge(&mut stake_pool.active, reactivated_coins);
+
+    //     event::emit_event(
+    //         &mut stake_pool.reactivate_stake_events,
+    //         ReactivateStakeEvent {
+    //             pool_address,
+    //             amount,
+    //         },
+    //     );
+    // }
 
     /// Rotate the consensus key of the validator, it'll take effect in next epoch.
     public entry fun rotate_consensus_key(
@@ -845,13 +857,13 @@ module aptos_framework::validator {
         // );
     }
 
-    /// Similar to unlock_with_cap but will use ownership capability from the signing account.
-    public entry fun unlock(owner: &signer, amount: u64) acquires OwnerCapability, StakePool {
-        let owner_address = signer::address_of(owner);
-        assert_owner_cap_exists(owner_address);
-        let ownership_cap = borrow_global<OwnerCapability>(owner_address);
-        unlock_with_cap(amount, ownership_cap);
-    }
+    // /// Similar to unlock_with_cap but will use ownership capability from the signing account.
+    // public entry fun unlock(owner: &signer, amount: u64) acquires OwnerCapability, StakePool {
+    //     let owner_address = signer::address_of(owner);
+    //     assert_owner_cap_exists(owner_address);
+    //     let ownership_cap = borrow_global<OwnerCapability>(owner_address);
+    //     unlock_with_cap(amount, ownership_cap);
+    // }
 
     /// Unlock `amount` from the active stake. Only possible if the lockup has expired.
     public fun unlock_with_cap(amount: u64, owner_cap: &OwnerCapability) acquires StakePool {
@@ -879,17 +891,17 @@ module aptos_framework::validator {
         );
     }
 
-    /// Withdraw from `account`'s inactive stake.
-    public entry fun withdraw(
-        owner: &signer,
-        withdraw_amount: u64
-    ) acquires OwnerCapability, StakePool, ValidatorSet {
-        let owner_address = signer::address_of(owner);
-        assert_owner_cap_exists(owner_address);
-        let ownership_cap = borrow_global<OwnerCapability>(owner_address);
-        let coins = withdraw_with_cap(ownership_cap, withdraw_amount);
-        coin::deposit<AptosCoin>(owner_address, coins);
-    }
+    // /// Withdraw from `account`'s inactive stake.
+    // public entry fun withdraw(
+    //     owner: &signer,
+    //     withdraw_amount: u64
+    // ) acquires OwnerCapability, StakePool, ValidatorSet {
+    //     let owner_address = signer::address_of(owner);
+    //     assert_owner_cap_exists(owner_address);
+    //     let ownership_cap = borrow_global<OwnerCapability>(owner_address);
+    //     let coins = withdraw_with_cap(ownership_cap, withdraw_amount);
+    //     coin::deposit<AptosCoin>(owner_address, coins);
+    // }
 
     /// Withdraw from `pool_address`'s inactive stake with the corresponding `owner_cap`.
     public fun withdraw_with_cap(
@@ -1348,36 +1360,36 @@ module aptos_framework::validator {
         assert!(stake_pool_exists(pool_address), error::invalid_argument(ESTAKE_POOL_DOES_NOT_EXIST));
     }
 
-    /// This provides an ACL for Testnet purposes. In testnet, everyone is a whale, a whale can be a validator.
-    /// This allows a testnet to bring additional entities into the validator set without compromising the
-    /// security of the testnet. This will NOT be enabled in Mainnet.
-    struct AllowedValidators has key {
-        accounts: vector<address>,
-    }
+    // /// This provides an ACL for Testnet purposes. In testnet, everyone is a whale, a whale can be a validator.
+    // /// This allows a testnet to bring additional entities into the validator set without compromising the
+    // /// security of the testnet. This will NOT be enabled in Mainnet.
+    // struct AllowedValidators has key {
+    //     accounts: vector<address>,
+    // }
 
-    public fun configure_allowed_validators(aptos_framework: &signer, accounts: vector<address>) acquires AllowedValidators {
-        let aptos_framework_address = signer::address_of(aptos_framework);
-        system_addresses::assert_aptos_framework(aptos_framework);
-        if (!exists<AllowedValidators>(aptos_framework_address)) {
-            move_to(aptos_framework, AllowedValidators { accounts });
-        } else {
-            let allowed = borrow_global_mut<AllowedValidators>(aptos_framework_address);
-            allowed.accounts = accounts;
-        }
-    }
+    // public fun configure_allowed_validators(aptos_framework: &signer, accounts: vector<address>) acquires AllowedValidators {
+    //     let aptos_framework_address = signer::address_of(aptos_framework);
+    //     system_addresses::assert_aptos_framework(aptos_framework);
+    //     if (!exists<AllowedValidators>(aptos_framework_address)) {
+    //         move_to(aptos_framework, AllowedValidators { accounts });
+    //     } else {
+    //         let allowed = borrow_global_mut<AllowedValidators>(aptos_framework_address);
+    //         allowed.accounts = accounts;
+    //     }
+    // }
 
-    fun is_allowed(account: address): bool acquires AllowedValidators {
-        if (!exists<AllowedValidators>(@aptos_framework)) {
-            true
-        } else {
-            let allowed = borrow_global<AllowedValidators>(@aptos_framework);
-            vector::contains(&allowed.accounts, &account)
-        }
-    }
+    // fun is_allowed(account: address): bool acquires AllowedValidators {
+    //     if (!exists<AllowedValidators>(@aptos_framework)) {
+    //         true
+    //     } else {
+    //         let allowed = borrow_global<AllowedValidators>(@aptos_framework);
+    //         vector::contains(&allowed.accounts, &account)
+    //     }
+    // }
 
-    fun assert_owner_cap_exists(owner: address) {
-        assert!(exists<OwnerCapability>(owner), error::not_found(EOWNER_CAP_NOT_FOUND));
-    }
+    // fun assert_owner_cap_exists(owner: address) {
+    //     assert!(exists<OwnerCapability>(owner), error::not_found(EOWNER_CAP_NOT_FOUND));
+    // }
 
     #[test_only]
     use aptos_framework::aptos_coin;

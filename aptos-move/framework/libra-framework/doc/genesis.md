@@ -609,24 +609,24 @@ encoded in a single BCS byte array.
 ) {
     <b>let</b> <a href="validator_ol.md#0x1_validator">validator</a> = &commission_config.validator_config;
 
-    <b>let</b> owner = &<a href="genesis.md#0x1_genesis_create_account">create_account</a>(aptos_framework, <a href="validator_ol.md#0x1_validator">validator</a>.owner_address, <a href="validator_ol.md#0x1_validator">validator</a>.stake_amount);
+    <b>let</b> _owner = &<a href="genesis.md#0x1_genesis_create_account">create_account</a>(aptos_framework, <a href="validator_ol.md#0x1_validator">validator</a>.owner_address, <a href="validator_ol.md#0x1_validator">validator</a>.stake_amount);
     <a href="genesis.md#0x1_genesis_create_account">create_account</a>(aptos_framework, <a href="validator_ol.md#0x1_validator">validator</a>.operator_address, 0);
     <a href="genesis.md#0x1_genesis_create_account">create_account</a>(aptos_framework, <a href="validator_ol.md#0x1_validator">validator</a>.voter_address, 0);
 
     // Initialize the stake pool and join the <a href="validator_ol.md#0x1_validator">validator</a> set.
-    <b>let</b> pool_address = {
-        <a href="validator_ol.md#0x1_validator_initialize_stake_owner">validator::initialize_stake_owner</a>(
-            owner,
-            <a href="validator_ol.md#0x1_validator">validator</a>.stake_amount,
-            <a href="validator_ol.md#0x1_validator">validator</a>.operator_address,
-            <a href="validator_ol.md#0x1_validator">validator</a>.voter_address,
-        );
-        <a href="validator_ol.md#0x1_validator">validator</a>.owner_address
-    };
+    // <b>let</b> pool_address = {
+    //     validator::initialize_stake_owner(
+    //         owner,
+    //         <a href="validator_ol.md#0x1_validator">validator</a>.stake_amount,
+    //         <a href="validator_ol.md#0x1_validator">validator</a>.operator_address,
+    //         <a href="validator_ol.md#0x1_validator">validator</a>.voter_address,
+    //     );
+    //     <a href="validator_ol.md#0x1_validator">validator</a>.owner_address
+    // };
 
-    <b>if</b> (commission_config.join_during_genesis) {
-        <a href="genesis.md#0x1_genesis_initialize_validator">initialize_validator</a>(pool_address, <a href="validator_ol.md#0x1_validator">validator</a>);
-    };
+    // <b>if</b> (commission_config.join_during_genesis) {
+        <a href="genesis.md#0x1_genesis_initialize_validator">initialize_validator</a>(<a href="validator_ol.md#0x1_validator">validator</a>.owner_address, <a href="validator_ol.md#0x1_validator">validator</a>);
+    // };
 }
 </code></pre>
 
@@ -640,7 +640,7 @@ encoded in a single BCS byte array.
 
 
 
-<pre><code><b>fun</b> <a href="genesis.md#0x1_genesis_initialize_validator">initialize_validator</a>(pool_address: <b>address</b>, <a href="validator_ol.md#0x1_validator">validator</a>: &<a href="genesis.md#0x1_genesis_ValidatorConfiguration">genesis::ValidatorConfiguration</a>)
+<pre><code><b>fun</b> <a href="genesis.md#0x1_genesis_initialize_validator">initialize_validator</a>(_pool_address: <b>address</b>, <a href="validator_ol.md#0x1_validator">validator</a>: &<a href="genesis.md#0x1_genesis_ValidatorConfiguration">genesis::ValidatorConfiguration</a>)
 </code></pre>
 
 
@@ -649,22 +649,22 @@ encoded in a single BCS byte array.
 <summary>Implementation</summary>
 
 
-<pre><code><b>fun</b> <a href="genesis.md#0x1_genesis_initialize_validator">initialize_validator</a>(pool_address: <b>address</b>, <a href="validator_ol.md#0x1_validator">validator</a>: &<a href="genesis.md#0x1_genesis_ValidatorConfiguration">ValidatorConfiguration</a>) {
+<pre><code><b>fun</b> <a href="genesis.md#0x1_genesis_initialize_validator">initialize_validator</a>(_pool_address: <b>address</b>, <a href="validator_ol.md#0x1_validator">validator</a>: &<a href="genesis.md#0x1_genesis_ValidatorConfiguration">ValidatorConfiguration</a>) {
     <b>let</b> operator = &<a href="create_signer.md#0x1_create_signer">create_signer</a>(<a href="validator_ol.md#0x1_validator">validator</a>.operator_address);
 
     <a href="validator_ol.md#0x1_validator_rotate_consensus_key">validator::rotate_consensus_key</a>(
         operator,
-        pool_address,
+        <a href="validator_ol.md#0x1_validator">validator</a>.owner_address,
         <a href="validator_ol.md#0x1_validator">validator</a>.consensus_pubkey,
         <a href="validator_ol.md#0x1_validator">validator</a>.proof_of_possession,
     );
     <a href="validator_ol.md#0x1_validator_update_network_and_fullnode_addresses">validator::update_network_and_fullnode_addresses</a>(
         operator,
-        pool_address,
+        <a href="validator_ol.md#0x1_validator">validator</a>.owner_address,
         <a href="validator_ol.md#0x1_validator">validator</a>.network_addresses,
         <a href="validator_ol.md#0x1_validator">validator</a>.full_node_network_addresses,
     );
-    <a href="validator_ol.md#0x1_validator_join_validator_set_internal">validator::join_validator_set_internal</a>(operator, pool_address);
+    <a href="validator_ol.md#0x1_validator_join_validator_set_internal">validator::join_validator_set_internal</a>(operator, <a href="validator_ol.md#0x1_validator">validator</a>.owner_address);
 }
 </code></pre>
 
