@@ -43,40 +43,40 @@ module aptos_framework::validator {
 
     /// Validator Config not published.
     const EVALIDATOR_CONFIG: u64 = 1;
-    /// Not enough stake to join validator set.
-    const ESTAKE_TOO_LOW: u64 = 2;
-    /// Too much stake to join validator set.
-    const ESTAKE_TOO_HIGH: u64 = 3;
+    // /// Not enough stake to join validator set.
+    // const ESTAKE_TOO_LOW: u64 = 2;
+    // /// Too much stake to join validator set.
+    // const ESTAKE_TOO_HIGH: u64 = 3;
     /// Account is already a validator or pending validator.
     const EALREADY_ACTIVE_VALIDATOR: u64 = 4;
     /// Account is not a validator.
     const ENOT_VALIDATOR: u64 = 5;
     /// Can't remove last validator.
     const ELAST_VALIDATOR: u64 = 6;
-    /// Total stake exceeds maximum allowed.
-    const ESTAKE_EXCEEDS_MAX: u64 = 7;
+    // /// Total stake exceeds maximum allowed.
+    // const ESTAKE_EXCEEDS_MAX: u64 = 7;
     /// Account is already registered as a validator candidate.
     const EALREADY_REGISTERED: u64 = 8;
     /// Account does not have the right operator capability.
     const ENOT_OPERATOR: u64 = 9;
-    /// Validators cannot join or leave post genesis on this test network.
-    const ENO_POST_GENESIS_VALIDATOR_SET_CHANGE_ALLOWED: u64 = 10;
+    // /// Validators cannot join or leave post genesis on this test network.
+    // const ENO_POST_GENESIS_VALIDATOR_SET_CHANGE_ALLOWED: u64 = 10;
     /// Invalid consensus public key
     const EINVALID_PUBLIC_KEY: u64 = 11;
     /// Validator set exceeds the limit
     const EVALIDATOR_SET_TOO_LARGE: u64 = 12;
-    /// Voting power increase has exceeded the limit for this current epoch.
-    const EVOTING_POWER_INCREASE_EXCEEDS_LIMIT: u64 = 13;
+    // /// Voting power increase has exceeded the limit for this current epoch.
+    // const EVOTING_POWER_INCREASE_EXCEEDS_LIMIT: u64 = 13;
     /// Stake pool does not exist at the provided pool address.
     const ESTAKE_POOL_DOES_NOT_EXIST: u64 = 14;
-    /// Owner capability does not exist at the provided account.
-    const EOWNER_CAP_NOT_FOUND: u64 = 15;
-    /// An account cannot own more than one owner capability.
-    const EOWNER_CAP_ALREADY_EXISTS: u64 = 16;
-    /// Validator is not defined in the ACL of entities allowed to be validators
-    const EINELIGIBLE_VALIDATOR: u64 = 17;
-    /// Cannot update stake pool's lockup to earlier than current lockup.
-    const EINVALID_LOCKUP: u64 = 18;
+    // /// Owner capability does not exist at the provided account.
+    // const EOWNER_CAP_NOT_FOUND: u64 = 15;
+    // /// An account cannot own more than one owner capability.
+    // const EOWNER_CAP_ALREADY_EXISTS: u64 = 16;
+    // /// Validator is not defined in the ACL of entities allowed to be validators
+    // const EINELIGIBLE_VALIDATOR: u64 = 17;
+    // /// Cannot update stake pool's lockup to earlier than current lockup.
+    // const EINVALID_LOCKUP: u64 = 18;
     /// Table to store collected transaction fees for each validator already exists.
     const EFEES_TABLE_ALREADY_EXISTS: u64 = 19;
 
@@ -90,8 +90,8 @@ module aptos_framework::validator {
     /// https://github.com/aptos-labs/aptos-core/blob/main/crates/aptos-bitvec/src/lib.rs#L20
     const MAX_VALIDATOR_SET_SIZE: u64 = 65536;
 
-    /// Limit the maximum value of `rewards_rate` in order to avoid any arithmetic overflow.
-    const MAX_REWARDS_RATE: u64 = 1000000;
+    // /// Limit the maximum value of `rewards_rate` in order to avoid any arithmetic overflow.
+    // const MAX_REWARDS_RATE: u64 = 1000000;
 
     const MAX_U64: u128 = 18446744073709551615;
 
@@ -1258,13 +1258,13 @@ module aptos_framework::validator {
         rewards_rate: u64,
         rewards_rate_denominator: u64,
     ): u64 {
-        spec {
-            // The following condition must hold because
-            // (1) num_successful_proposals <= num_total_proposals, and
-            // (2) `num_total_proposals` cannot be larger than 86400, the maximum number of proposals
-            //     in a day (1 proposal per second), and `num_total_proposals` is reset to 0 every epoch.
-            assume num_successful_proposals * MAX_REWARDS_RATE <= MAX_U64;
-        };
+        // spec {
+        //     // The following condition must hold because
+        //     // (1) num_successful_proposals <= num_total_proposals, and
+        //     // (2) `num_total_proposals` cannot be larger than 86400, the maximum number of proposals
+        //     //     in a day (1 proposal per second), and `num_total_proposals` is reset to 0 every epoch.
+        //     assume num_successful_proposals * MAX_REWARDS_RATE <= MAX_U64;
+        // };
         // The rewards amount is equal to (stake amount * rewards rate * performance multiplier).
         // We do multiplication in u128 before division to avoid the overflow and minimize the rounding error.
         let rewards_numerator = (stake_amount as u128) * (rewards_rate as u128) * (num_successful_proposals as u128);

@@ -1,5 +1,6 @@
 spec aptos_framework::validator {
     use aptos_framework::chain_status;
+
     // -----------------
     // Global invariants
     // -----------------
@@ -160,7 +161,7 @@ spec aptos_framework::validator {
 
     spec distribute_rewards {
         include ResourceRequirement;
-        requires rewards_rate <= MAX_REWARDS_RATE;
+        // requires rewards_rate <= MAX_REWARDS_RATE;
         requires rewards_rate_denominator > 0;
         requires rewards_rate <= rewards_rate_denominator;
         requires num_successful_proposals <= num_total_proposals;
@@ -185,7 +186,7 @@ spec aptos_framework::validator {
 
     spec calculate_rewards_amount {
         pragma opaque;
-        requires rewards_rate <= MAX_REWARDS_RATE;
+        // requires rewards_rate <= MAX_REWARDS_RATE;
         requires rewards_rate_denominator > 0;
         requires rewards_rate <= rewards_rate_denominator;
         requires num_successful_proposals <= num_total_proposals;

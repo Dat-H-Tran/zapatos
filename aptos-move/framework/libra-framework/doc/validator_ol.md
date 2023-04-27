@@ -1017,26 +1017,6 @@ Table to store collected transaction fees for each validator already exists.
 
 
 
-<a name="0x1_validator_EINELIGIBLE_VALIDATOR"></a>
-
-Validator is not defined in the ACL of entities allowed to be validators
-
-
-<pre><code><b>const</b> <a href="validator_ol.md#0x1_validator_EINELIGIBLE_VALIDATOR">EINELIGIBLE_VALIDATOR</a>: u64 = 17;
-</code></pre>
-
-
-
-<a name="0x1_validator_EINVALID_LOCKUP"></a>
-
-Cannot update stake pool's lockup to earlier than current lockup.
-
-
-<pre><code><b>const</b> <a href="validator_ol.md#0x1_validator_EINVALID_LOCKUP">EINVALID_LOCKUP</a>: u64 = 18;
-</code></pre>
-
-
-
 <a name="0x1_validator_EINVALID_PUBLIC_KEY"></a>
 
 Invalid consensus public key
@@ -1077,72 +1057,12 @@ Account is not a validator.
 
 
 
-<a name="0x1_validator_ENO_POST_GENESIS_VALIDATOR_SET_CHANGE_ALLOWED"></a>
-
-Validators cannot join or leave post genesis on this test network.
-
-
-<pre><code><b>const</b> <a href="validator_ol.md#0x1_validator_ENO_POST_GENESIS_VALIDATOR_SET_CHANGE_ALLOWED">ENO_POST_GENESIS_VALIDATOR_SET_CHANGE_ALLOWED</a>: u64 = 10;
-</code></pre>
-
-
-
-<a name="0x1_validator_EOWNER_CAP_ALREADY_EXISTS"></a>
-
-An account cannot own more than one owner capability.
-
-
-<pre><code><b>const</b> <a href="validator_ol.md#0x1_validator_EOWNER_CAP_ALREADY_EXISTS">EOWNER_CAP_ALREADY_EXISTS</a>: u64 = 16;
-</code></pre>
-
-
-
-<a name="0x1_validator_EOWNER_CAP_NOT_FOUND"></a>
-
-Owner capability does not exist at the provided account.
-
-
-<pre><code><b>const</b> <a href="validator_ol.md#0x1_validator_EOWNER_CAP_NOT_FOUND">EOWNER_CAP_NOT_FOUND</a>: u64 = 15;
-</code></pre>
-
-
-
-<a name="0x1_validator_ESTAKE_EXCEEDS_MAX"></a>
-
-Total stake exceeds maximum allowed.
-
-
-<pre><code><b>const</b> <a href="validator_ol.md#0x1_validator_ESTAKE_EXCEEDS_MAX">ESTAKE_EXCEEDS_MAX</a>: u64 = 7;
-</code></pre>
-
-
-
 <a name="0x1_validator_ESTAKE_POOL_DOES_NOT_EXIST"></a>
 
 Stake pool does not exist at the provided pool address.
 
 
 <pre><code><b>const</b> <a href="validator_ol.md#0x1_validator_ESTAKE_POOL_DOES_NOT_EXIST">ESTAKE_POOL_DOES_NOT_EXIST</a>: u64 = 14;
-</code></pre>
-
-
-
-<a name="0x1_validator_ESTAKE_TOO_HIGH"></a>
-
-Too much stake to join validator set.
-
-
-<pre><code><b>const</b> <a href="validator_ol.md#0x1_validator_ESTAKE_TOO_HIGH">ESTAKE_TOO_HIGH</a>: u64 = 3;
-</code></pre>
-
-
-
-<a name="0x1_validator_ESTAKE_TOO_LOW"></a>
-
-Not enough stake to join validator set.
-
-
-<pre><code><b>const</b> <a href="validator_ol.md#0x1_validator_ESTAKE_TOO_LOW">ESTAKE_TOO_LOW</a>: u64 = 2;
 </code></pre>
 
 
@@ -1163,26 +1083,6 @@ Validator set exceeds the limit
 
 
 <pre><code><b>const</b> <a href="validator_ol.md#0x1_validator_EVALIDATOR_SET_TOO_LARGE">EVALIDATOR_SET_TOO_LARGE</a>: u64 = 12;
-</code></pre>
-
-
-
-<a name="0x1_validator_EVOTING_POWER_INCREASE_EXCEEDS_LIMIT"></a>
-
-Voting power increase has exceeded the limit for this current epoch.
-
-
-<pre><code><b>const</b> <a href="validator_ol.md#0x1_validator_EVOTING_POWER_INCREASE_EXCEEDS_LIMIT">EVOTING_POWER_INCREASE_EXCEEDS_LIMIT</a>: u64 = 13;
-</code></pre>
-
-
-
-<a name="0x1_validator_MAX_REWARDS_RATE"></a>
-
-Limit the maximum value of <code>rewards_rate</code> in order to avoid any arithmetic overflow.
-
-
-<pre><code><b>const</b> <a href="validator_ol.md#0x1_validator_MAX_REWARDS_RATE">MAX_REWARDS_RATE</a>: u64 = 1000000;
 </code></pre>
 
 
@@ -1817,7 +1717,7 @@ Initialize the validator account and give ownership to the signing account.
 
 <pre><code><b>fun</b> <a href="validator_ol.md#0x1_validator_initialize_owner">initialize_owner</a>(owner: &<a href="../../aptos-stdlib/../move-stdlib/doc/signer.md#0x1_signer">signer</a>) {
     <b>let</b> owner_address = <a href="../../aptos-stdlib/../move-stdlib/doc/signer.md#0x1_signer_address_of">signer::address_of</a>(owner);
-    // <b>assert</b>!(is_allowed(owner_address), <a href="../../aptos-stdlib/../move-stdlib/doc/error.md#0x1_error_not_found">error::not_found</a>(<a href="validator_ol.md#0x1_validator_EINELIGIBLE_VALIDATOR">EINELIGIBLE_VALIDATOR</a>));
+    // <b>assert</b>!(is_allowed(owner_address), <a href="../../aptos-stdlib/../move-stdlib/doc/error.md#0x1_error_not_found">error::not_found</a>(EINELIGIBLE_VALIDATOR));
     <b>assert</b>!(!<a href="validator_ol.md#0x1_validator_stake_pool_exists">stake_pool_exists</a>(owner_address), <a href="../../aptos-stdlib/../move-stdlib/doc/error.md#0x1_error_already_exists">error::already_exists</a>(<a href="validator_ol.md#0x1_validator_EALREADY_REGISTERED">EALREADY_REGISTERED</a>));
 
     <b>move_to</b>(owner, <a href="validator_ol.md#0x1_validator_StakePool">StakePool</a> {
@@ -2016,7 +1916,7 @@ This can only called by the operator of the validator/staking pool.
 ) <b>acquires</b> <a href="validator_ol.md#0x1_validator_ValidatorConfig">ValidatorConfig</a>, <a href="validator_ol.md#0x1_validator_ValidatorSet">ValidatorSet</a> {
     // <b>assert</b>!(
     //     staking_config::get_allow_validator_set_change(&staking_config::get()),
-    //     <a href="../../aptos-stdlib/../move-stdlib/doc/error.md#0x1_error_invalid_argument">error::invalid_argument</a>(<a href="validator_ol.md#0x1_validator_ENO_POST_GENESIS_VALIDATOR_SET_CHANGE_ALLOWED">ENO_POST_GENESIS_VALIDATOR_SET_CHANGE_ALLOWED</a>),
+    //     <a href="../../aptos-stdlib/../move-stdlib/doc/error.md#0x1_error_invalid_argument">error::invalid_argument</a>(ENO_POST_GENESIS_VALIDATOR_SET_CHANGE_ALLOWED),
     // );
 
     <a href="validator_ol.md#0x1_validator_join_validator_set_internal">join_validator_set_internal</a>(operator, pool_address);
@@ -2063,8 +1963,8 @@ This internal version can only be called by the Genesis module during Genesis.
     // <b>let</b> config = staking_config::get();
     // <b>let</b> (minimum_stake, maximum_stake) = staking_config::get_required_stake(&config);
     // <b>let</b> voting_power = <a href="validator_ol.md#0x1_validator_get_next_epoch_voting_power">get_next_epoch_voting_power</a>(stake_pool);
-    // <b>assert</b>!(voting_power &gt;= minimum_stake, <a href="../../aptos-stdlib/../move-stdlib/doc/error.md#0x1_error_invalid_argument">error::invalid_argument</a>(<a href="validator_ol.md#0x1_validator_ESTAKE_TOO_LOW">ESTAKE_TOO_LOW</a>));
-    // <b>assert</b>!(voting_power &lt;= maximum_stake, <a href="../../aptos-stdlib/../move-stdlib/doc/error.md#0x1_error_invalid_argument">error::invalid_argument</a>(<a href="validator_ol.md#0x1_validator_ESTAKE_TOO_HIGH">ESTAKE_TOO_HIGH</a>));
+    // <b>assert</b>!(voting_power &gt;= minimum_stake, <a href="../../aptos-stdlib/../move-stdlib/doc/error.md#0x1_error_invalid_argument">error::invalid_argument</a>(ESTAKE_TOO_LOW));
+    // <b>assert</b>!(voting_power &lt;= maximum_stake, <a href="../../aptos-stdlib/../move-stdlib/doc/error.md#0x1_error_invalid_argument">error::invalid_argument</a>(ESTAKE_TOO_HIGH));
 
     // Track and validate <a href="voting.md#0x1_voting">voting</a> power increase.
     // <a href="validator_ol.md#0x1_validator_update_voting_power_increase">update_voting_power_increase</a>(voting_power);
@@ -2466,8 +2366,8 @@ This function shouldn't abort.
     //         (0u64, 1u64)
     //     } <b>else</b> {
     //         // Maximize denominator for higher precision.
-    //         // Restriction: nominator &lt;= <a href="validator_ol.md#0x1_validator_MAX_REWARDS_RATE">MAX_REWARDS_RATE</a> && denominator &lt;= <a href="validator_ol.md#0x1_validator_MAX_U64">MAX_U64</a>
-    //         <b>let</b> denominator = fixed_point64::divide_u128((<a href="validator_ol.md#0x1_validator_MAX_REWARDS_RATE">MAX_REWARDS_RATE</a> <b>as</b> u128), epoch_rewards_rate);
+    //         // Restriction: nominator &lt;= MAX_REWARDS_RATE && denominator &lt;= <a href="validator_ol.md#0x1_validator_MAX_U64">MAX_U64</a>
+    //         <b>let</b> denominator = fixed_point64::divide_u128((MAX_REWARDS_RATE <b>as</b> u128), epoch_rewards_rate);
     //         <b>if</b> (denominator &gt; <a href="validator_ol.md#0x1_validator_MAX_U64">MAX_U64</a>) {
     //             denominator = <a href="validator_ol.md#0x1_validator_MAX_U64">MAX_U64</a>
     //         };
@@ -2553,13 +2453,13 @@ Calculate the rewards amount.
     rewards_rate: u64,
     rewards_rate_denominator: u64,
 ): u64 {
-    <b>spec</b> {
-        // The following condition must hold because
-        // (1) num_successful_proposals &lt;= num_total_proposals, and
-        // (2) `num_total_proposals` cannot be larger than 86400, the maximum number of proposals
-        //     in a day (1 proposal per second), and `num_total_proposals` is reset <b>to</b> 0 every epoch.
-        <b>assume</b> num_successful_proposals * <a href="validator_ol.md#0x1_validator_MAX_REWARDS_RATE">MAX_REWARDS_RATE</a> &lt;= <a href="validator_ol.md#0x1_validator_MAX_U64">MAX_U64</a>;
-    };
+    // <b>spec</b> {
+    //     // The following condition must hold because
+    //     // (1) num_successful_proposals &lt;= num_total_proposals, and
+    //     // (2) `num_total_proposals` cannot be larger than 86400, the maximum number of proposals
+    //     //     in a day (1 proposal per second), and `num_total_proposals` is reset <b>to</b> 0 every epoch.
+    //     <b>assume</b> num_successful_proposals * MAX_REWARDS_RATE &lt;= <a href="validator_ol.md#0x1_validator_MAX_U64">MAX_U64</a>;
+    // };
     // The rewards amount is equal <b>to</b> (stake amount * rewards rate * performance multiplier).
     // We do multiplication in u128 before division <b>to</b> avoid the overflow and minimize the rounding <a href="../../aptos-stdlib/../move-stdlib/doc/error.md#0x1_error">error</a>.
     <b>let</b> rewards_numerator = (stake_amount <b>as</b> u128) * (rewards_rate <b>as</b> u128) * (num_successful_proposals <b>as</b> u128);
@@ -2766,7 +2666,7 @@ Returns validator's next epoch voting power, including pending_active, active, a
     // <b>if</b> (validator_set.total_voting_power &gt; 0) {
     //     <b>assert</b>!(
     //         validator_set.total_joining_power &lt;= validator_set.total_voting_power * voting_power_increase_limit / 100,
-    //         <a href="../../aptos-stdlib/../move-stdlib/doc/error.md#0x1_error_invalid_argument">error::invalid_argument</a>(<a href="validator_ol.md#0x1_validator_EVOTING_POWER_INCREASE_EXCEEDS_LIMIT">EVOTING_POWER_INCREASE_EXCEEDS_LIMIT</a>),
+    //         <a href="../../aptos-stdlib/../move-stdlib/doc/error.md#0x1_error_invalid_argument">error::invalid_argument</a>(EVOTING_POWER_INCREASE_EXCEEDS_LIMIT),
     //     );
     // }
 }
@@ -3146,7 +3046,6 @@ Returns validator's next epoch voting power, including pending_active, active, a
 
 
 <pre><code><b>pragma</b> opaque;
-<b>requires</b> rewards_rate &lt;= <a href="validator_ol.md#0x1_validator_MAX_REWARDS_RATE">MAX_REWARDS_RATE</a>;
 <b>requires</b> rewards_rate_denominator &gt; 0;
 <b>requires</b> rewards_rate &lt;= rewards_rate_denominator;
 <b>requires</b> num_successful_proposals &lt;= num_total_proposals;
@@ -3179,7 +3078,6 @@ Returns validator's next epoch voting power, including pending_active, active, a
 
 
 <pre><code><b>include</b> <a href="validator_ol.md#0x1_validator_ResourceRequirement">ResourceRequirement</a>;
-<b>requires</b> rewards_rate &lt;= <a href="validator_ol.md#0x1_validator_MAX_REWARDS_RATE">MAX_REWARDS_RATE</a>;
 <b>requires</b> rewards_rate_denominator &gt; 0;
 <b>requires</b> rewards_rate &lt;= rewards_rate_denominator;
 <b>requires</b> num_successful_proposals &lt;= num_total_proposals;
